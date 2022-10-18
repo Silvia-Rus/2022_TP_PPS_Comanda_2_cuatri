@@ -6,7 +6,9 @@ El barcito de Pedro y Rus.
 Rus Mata, Silvia
 Sánchez, Pedro
 
-## EL BARCITO DE PEDRO Y RUS - SEMANA 1 
+## CRONOGRAMA
+
+### EL BARCITO DE PEDRO Y RUS - SEMANA 1 
 | # | Tarea | Responsable | Estado | Rama |
 | :------: | :------: | :------: | :------: | :------: |
 | - | Generacion de proyecto | Rus |  En proceso | Rama main |
@@ -14,7 +16,7 @@ Sánchez, Pedro
 | - | Acceso | Rus |  En proceso | Rama main |
 | - | Registro | Rus |  En proceso | Rama main |
 
-## EL BARCITO DE PEDRO Y RUS - SEMANA 2
+### EL BARCITO DE PEDRO Y RUS - SEMANA 2
 | # | Tarea | Responsable | Estado | Rama |
 | :------: | :------: | :------: | :------: | :------: |
 | - | Alta de dueño / supervisor | Rus |  Nueva | Rama altas |
@@ -22,7 +24,7 @@ Sánchez, Pedro
 | - | Alta de clientes | Pedro |  Nueva | Rama altas |
 | - | Alta de productos | Pedro |  Nuevq | Rama altas |
 
-## EL BARCITO DE PEDRO Y RUS - SEMANA 3
+### EL BARCITO DE PEDRO Y RUS - SEMANA 3
 | # | Tarea | Responsable | Estado | Rama |
 | :------: | :------: | :------: | :------: | :------: |
 | - | QR de ingreso al local | Rus |  Nueva | Rama QR |
@@ -32,7 +34,7 @@ Sánchez, Pedro
 | - | Encuesta empleados | Pedro |  Nueva | Rama Encuestas |
 | - | Encuesta empleados | Pedro |  Nueva | Rama Encuestas |
 
-## EL BARCITO DE PEDRO Y RUS - SEMANA 4
+### EL BARCITO DE PEDRO Y RUS - SEMANA 4
 | # | Tarea | Responsable | Estado | Rama |
 | :------: | :------: | :------: | :------: | :------: |
 | - | Agregar cliente registrado | Rus |  Nueva | Rama altas |
