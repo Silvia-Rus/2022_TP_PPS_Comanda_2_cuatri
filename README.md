@@ -11,9 +11,9 @@ Sánchez, Pedro
 ### EL BARCITO DE PEDRO Y RUS - SEMANA 1 
 | # | Tarea | Responsable | Estado | Rama |
 | :------: | :------: | :------: | :------: | :------: |
-| - | Generación de proyecto | Rus |  En proceso | Rama main |
-| - | Diseño de logos | Rus |  En proceso | Rama main |
-| - | Acceso | Rus |  En proceso | Rama main |
+| - | Generación de proyecto | Rus |  Hecho | Rama main |
+| - | Diseño de logos | Rus |  Hecho | Rama main |
+| - | Acceso | Rus |  Hecho | Rama main |
 | - | Registro | Rus |  En proceso | Rama main |
 
 ### EL BARCITO DE PEDRO Y RUS - SEMANA 2
