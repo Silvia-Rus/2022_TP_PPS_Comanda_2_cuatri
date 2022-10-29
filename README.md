@@ -14,15 +14,16 @@ Sánchez, Pedro
 | - | Generación de proyecto | Rus |  Hecho | Rama main |
 | - | Diseño de logos | Rus |  Hecho | Rama main |
 | - | Acceso | Rus |  Hecho | Rama main |
-| - | Registro | Rus |  En proceso | Rama main |
+
 
 ### EL BARCITO DE PEDRO Y RUS - SEMANA 2
 | # | Tarea | Responsable | Estado | Rama |
 | :------: | :------: | :------: | :------: | :------: |
-| - | Alta de dueño / supervisor | Rus |  Nueva | Rama altas |
-| - | Alta de empleados | Pedro |  Nueva | Rama altas |
-| - | Alta de clientes | Pedro |  Nueva | Rama altas |
-| - | Alta de productos | Pedro |  Nueva | Rama altas |
+| - | Diagramas | Rus |  Hecho | Rama altas |
+| - | Alta de dueño / supervisor | Rus |  En proceso | Rama altas |
+| - | Alta de empleados | Pedro |  En proceso | Rama altas |
+| - | Alta de clientes | Pedro |  En proceso | Rama altas |
+| - | Alta de productos | Pedro |  En proceso | Rama altas |
 
 ### EL BARCITO DE PEDRO Y RUS - SEMANA 3
 | # | Tarea | Responsable | Estado | Rama |
