@@ -33,7 +33,7 @@ Sánchez, Pedro
 | - | QR de la propina | Rus |  Nueva | Rama QR |
 | - | Encuesta clientes | Pedro |  Nueva | Rama Encuestas |
 | - | Encuesta empleados | Pedro |  Nueva | Rama Encuestas |
-| - | Encuesta empleados | Pedro |  Nueva | Rama Encuestas |
+| - | Encuesta supervisor | Pedro |  Nueva | Rama Encuestas |
 
 ### EL BARCITO DE PEDRO Y RUS - SEMANA 4
 | # | Tarea | Responsable | Estado | Rama |
