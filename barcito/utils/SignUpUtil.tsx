@@ -8,7 +8,7 @@ import { Camera } from 'expo-camera';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { useForm } from 'react-hook-form';
 import Toast from 'react-native-simple-toast';
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth"; 
 import { ref, uploadBytes } from 'firebase/storage';
 import { addDoc, collection, runTransaction } from "firebase/firestore";
 import { auth, db, storage } from "../database/firebase";
