@@ -11,7 +11,7 @@ const HomeScreen = () => {
 
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
 
-    async function handlerSingOut() {
+    async function handlerSignOut() {
         await auth
             .signOut()
             .then(() => {navigation.replace('Index')})
@@ -25,7 +25,7 @@ const HomeScreen = () => {
 
         <View style={styles.buttonContainer} >   
                 <TouchableOpacity 
-                    onPress={handlerSingOut}
+                    onPress={handlerSignOut}
                     style={styles.button}
                 >
                 <Text style={styles.buttonText}>Cerrar Sesión</Text>

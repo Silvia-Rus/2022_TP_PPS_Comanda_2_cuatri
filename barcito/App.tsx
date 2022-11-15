@@ -3,7 +3,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from './screens/LoginScreen';
 import IndexScreen from './screens/IndexScreen';
 import HomeScreen from './screens/HomeScreen';
-import SignUpScreen from './screens/SignUpScreen';
+import RegistroDuenioScreen from './screens/RegistroDuenioScreen';
+import RegistroDuenioScreen2 from './screens/RegistroDuenioScreen2';
+import RegistroEmpleadoScreen from './screens/RegistroEmpleadoScreen';
 
 import AnimatedLottieView from 'lottie-react-native';
 import { StyleSheet } from 'react-native';
@@ -15,6 +17,10 @@ export type RootStackParamList = {
   Home: any;
   Index: any;
   SignUp: any;
+  RegistroDuenio: any;
+  RegistroDuenio2: any;
+  RegistroEmpleado: any;
+
 }
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -52,7 +58,9 @@ export default function App() {
        <Stack.Screen options={{ headerShown: false }} name="Index" component={IndexScreen} />
        <Stack.Screen options={{ headerShown: false }} name="Home" component={HomeScreen} />
        <Stack.Screen options={{ headerShown: false }} name="Login" component={LoginScreen} />
-       <Stack.Screen options={{ headerShown: false }} name="SignUp" component={SignUpScreen} />
+       <Stack.Screen options={{ headerShown: false }} name="RegistroDuenio" component={RegistroDuenioScreen} />
+       <Stack.Screen options={{ headerShown: false }} name="RegistroDuenio2" component={RegistroDuenioScreen2} />
+       <Stack.Screen options={{ headerShown: false }} name="RegistroEmpleado" component={RegistroEmpleadoScreen} />
 
       </Stack.Navigator>
     </NavigationContainer>

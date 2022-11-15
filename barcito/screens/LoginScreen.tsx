@@ -7,7 +7,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { RootStackParamList } from "./../App";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 //import Spinner from "react-native-loading-spinner-overlay/lib";
-import Spinner from "../utils/SpinnerUtil";;
+import Spinner from "../utils/SpinnerUtil";
 
 
 export let admin = false;

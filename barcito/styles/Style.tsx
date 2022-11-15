@@ -57,7 +57,7 @@ export default StyleSheet.create({
         width: '80%',
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: '5%',
+        marginTop: '2%',
     },
     button: {
         backgroundColor: '#4d3e6b',
@@ -184,8 +184,83 @@ export default StyleSheet.create({
         borderColor: '#fff',
         borderWidth: 2,
         borderRadius: 30,
-    } 
- 
+    } ,
+    cameraQrContainer: {
+        flexDirection: 'row', 
+        alignContent: 'center', 
+        justifyContent: 'center', 
+        marginBottom: 5
+    }, 
+    qrIcon: {
+        height:120, 
+        width:120, 
+        borderRadius:20, 
+        margin:10,
+        backgroundColor: 'white',
+    },
+    inputText: {
+        color: 'black',
+        fontSize: 16,
+        width: '100%',
+    },
+    tagText: {
+        color: 'white',
+        fontFamily: 'Oswald_300Light',
+        fontSize: 16,
+        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center',
+    },
+    inputFieldRadioLayout: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginTop: 0,
+        marginBottom: 0,
+    },
+    inputFieldRadio: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: ' rgba(220, 220, 225, 0.5);',
+        borderBottomColor: '#F7AD3B',
+        width: '48%',
+        borderBottomWidth: 0,
+        paddingHorizontal: 15,
+        paddingVertical: 10,
+        marginTop: 0,
+        marginBottom: 0,
+        borderRadius: 10,
+    },
+    submitContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    headerText: {
+        color: 'white',
+        fontSize: 15,
+      
+        textAlign: 'center',
+        alignContent: 'center',
+    },
+    headerIcon: {
+        height: 45,
+        width: 45,
+        resizeMode: 'contain',
+        marginRight: 10,
+    },
+    cameraIcon: {
+        height:120, 
+        width:120, 
+        borderRadius:20, 
+        margin:10
+    },
+    cameraImage: {
+        height:120, 
+        width:120, 
+        borderRadius:20, 
+        margin:10
+    },
 
     
 })
