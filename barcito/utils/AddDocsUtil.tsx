@@ -5,6 +5,7 @@ import Toast from 'react-native-simple-toast';
 
 const coleccionUsers = "userInfo";
 const coleccionMesas = "tableInfo";
+const coleccionProductos = "productInfo"
 
 export const addDuenioEmpleado = async (imageValue : string, 
                                         values, 
@@ -102,4 +103,44 @@ export const addMesa = async (imageValue : string,
         Toast.LONG, 
         Toast.CENTER);
     }
+}
+
+export const addProducto = async (imageValue1 : string, 
+                                  imageValue2 : string,
+                                  imageValue3 : string,
+                                  values) => {
+    try
+    {
+        await addDoc(collection(db, coleccionProductos), {   
+            name: values.name,
+            description: values.description,
+            elaborationTime: values.elaborationTime,
+            price: values.price,
+            type: values.type,
+            image1:imageValue1,
+            image2:imageValue2,
+            image3:imageValue3,
+            //jaja wtf
+            qString: "producto"+"@"+
+                      values.name+"@"+
+                      values.description+"@"+
+                      values.elaborationTime+"@"+
+                      values.price+"@"+
+                      values.type+"@"+
+                      imageValue1+"@"+
+                      imageValue2+"@"+
+                      imageValue3,
+            creationDate:new Date()         
+        });  
     }
+    catch (error:any) 
+    {
+        console.log("ERROR GRABANDO PRODUCTO EN BD: "+error.code);
+        Toast.showWithGravity(
+        "ERROR GRABANDO PRODUCTO EN BD: "+error.code,
+        Toast.LONG, 
+        Toast.CENTER);
+    }
+}
+
+    
