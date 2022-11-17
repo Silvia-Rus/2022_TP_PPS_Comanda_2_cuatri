@@ -1,7 +1,7 @@
 import React from 'react'
 import {Image} from 'react-native'
 
-const Spinner = () => {;
+const Spinner = () => {
     return (
         <Image source={require('../assets/spinner.gif')}
         />
