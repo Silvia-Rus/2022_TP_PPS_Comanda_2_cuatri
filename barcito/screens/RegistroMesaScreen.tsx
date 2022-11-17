@@ -3,7 +3,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React, { useLayoutEffect, useEffect, useState, useCallback  } from "react";
 import styles from "../styles/Style";
 import { Image, ImageBackground, Text, TextInput, TouchableOpacity, View, StyleSheet, PermissionsAndroid } from "react-native";
-import Modal from "react-native-modal";
+import Modal from "react-native-modal"; 
 import { Camera } from 'expo-camera';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { useForm } from 'react-hook-form';
