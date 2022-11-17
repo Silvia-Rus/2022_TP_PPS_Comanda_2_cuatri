@@ -20,15 +20,17 @@ Sánchez, Pedro
 | # | Tarea | Responsable | Estado | Rama |
 | :------: | :------: | :------: | :------: | :------: |
 | - | Diagramas | Rus |  Hecho | Rama altas |
-| - | Alta de dueño / supervisor | Rus |  Hecho | Rama altasUsuarios |
-| - | Alta de empleados | Rus |  Hecho | Rama altasUsuarios |
-| - | Alta de clientes | Rus |  Hecho | Rama altasUsuarios |
-| - | Alta de mesas | Rus |  Hecho | Rama altasMesa|
-| - | Alta de productos | Rus|  En proceso | Rama altasProducto |
+
 
 ### EL BARCITO DE PEDRO Y RUS - SEMANA 3
 | # | Tarea | Responsable | Estado | Rama |
 | :------: | :------: | :------: | :------: | :------: |
+| - | Alta de dueño / supervisor | Rus |  Hecho | Rama altasUsuarios |
+| - | Alta de empleados | Rus |  Hecho | Rama altasUsuarios |
+| - | Alta de clientes registrado | Rus |  Hecho | Rama altasUsuarios |
+| - | Agregar cliente anónimo | Rus |  Nueva | Rama altas |
+| - | Alta de mesas | Rus |  Hecho | Rama altasMesa|
+| - | Alta de productos | Rus|  En proceso | Rama altasProducto |
 | - | QR de ingreso al local | Rus |  Nueva | Rama QR |
 | - | QR de la mesa | Rus |  Nueva | Rama QR |
 | - | QR de la propina | Rus |  Nueva | Rama QR |
@@ -37,7 +39,6 @@ Sánchez, Pedro
 ### EL BARCITO DE PEDRO Y RUS - SEMANA 4
 | # | Tarea | Responsable | Estado | Rama |
 | :------: | :------: | :------: | :------: | :------: |
-| - | Agregar cliente registrado | Rus |  Nueva | Rama altas |
 | - | Ingreso al local | Rus |  Nueva | Rama gestión |
 | - | Realizar pedido | Rus |  Nueva | Rama gestión |
 | - | Confirmar pedido | Rus |  Nueva | Rama gestión |
@@ -45,6 +46,8 @@ Sánchez, Pedro
 | - | Notificaciones push | Pedro |  Nueva | Rama notificaciones |
 
 ### EL BARCITO DE PEDRO Y RUS - SEMANA 5
+| # | Tarea | Responsable | Estado | Rama |
+| :------: | :------: | :------: | :------: | :------: |
 | - | Encuesta clientes | Pedro |  Nueva | Rama Encuestas |
 | - | Encuesta empleados | Pedro |  Nueva | Rama Encuestas |
 | - | Encuesta supervisor | Pedro |  Nueva | Rama Encuestas |
