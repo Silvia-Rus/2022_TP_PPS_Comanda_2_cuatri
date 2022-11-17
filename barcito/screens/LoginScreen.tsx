@@ -1,13 +1,16 @@
-import { useNavigation } from "@react-navigation/core";
-import React, { useState } from "react";
+import { useFocusEffect, useNavigation } from "@react-navigation/core";
+import React, { useCallback, useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, Image, ImageBackground } from "react-native";
-import { auth } from "../database/firebase";
+import { auth, db } from "../database/firebase";
 import styles from "../styles/Style";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { RootStackParamList } from "./../App";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 //import Spinner from "react-native-loading-spinner-overlay/lib";
 import Spinner from "../utils/SpinnerUtil";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import Toast from 'react-native-simple-toast';
+
 
 
 export let admin = false;
@@ -17,8 +20,75 @@ const LoginScreen = () => {
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
     const [loading, setLoading] = useState(false);
+    const [rol, setRol] = useState("");
 
-    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
+    const [isModalSpinnerVisible, setModalSpinnerVisible] = useState(false);
+
+    //const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
+    const navigation = useNavigation<NativeStackNavigationProp<any>>();
+
+    const toggleSpinnerAlert = () => {
+        setModalSpinnerVisible(true);
+        setTimeout(() => {
+            setModalSpinnerVisible(false);
+        }, 3000);
+        };
+
+        const loginManager = async (userMail) => {
+
+            // setLoading(true)
+            // toggleSpinnerAlert();
+
+            const q = query(collection(db, "userInfo"), where("email", "==", userMail));
+            const querySnapshot = await getDocs(q);
+            querySnapshot.forEach((doc) => {
+                setRol(doc.data().rol);
+            });
+                    
+            if(querySnapshot.size  == 0){
+                Toast.showWithGravity(
+                    "USUARIO NO ENCONTRADO",
+                    Toast.LONG, 
+                    Toast.CENTER);
+            } 
+       
+            
+            // toggleSpinnerAlert();
+            // setLoading(false);
+        };
+          
+
+    useFocusEffect(
+        useCallback(() => {
+            console.log(rol);
+            Redireccionador(rol);
+    }, [rol]));
+    
+    const Redireccionador = (rol) => {
+
+        if(rol === 'Dueño' || rol === 'Supervisor')
+        {
+            navigation.replace("HomeDuenio");
+        }
+        else if(rol === 'Mozo')
+        {
+            navigation.replace("HomeMozo");
+        }
+        else if(rol === 'Bar')
+        {
+            navigation.replace("HomeBar");
+        }
+        else if(rol === 'Cocina')
+        {
+            navigation.replace("HomeCocina");
+        }
+        else if(rol === 'Metre')
+        {
+            navigation.replace("HomeMetre");
+        }
+                
+
+    }
 
     const handlerLogin = async () => {
         setLoading(true);
@@ -26,7 +96,9 @@ const LoginScreen = () => {
             .then((userCredential: { user: any; }) => {
                 const user = userCredential.user;
                 console.log("Logged in with", user.email);
-                navigation.replace('Home');
+                loginManager(email)
+                Redireccionador(rol);
+                //navigation.replace('Home');
             })
             .catch(error => {
                 switch (error.code) {
@@ -53,7 +125,7 @@ const LoginScreen = () => {
 
     const duenioLogin = () => {
         //setEmail("duenio@rus.com");
-        setEmail("invitado@rus.com");
+        setEmail("Russsss@gmaim.xmn");
 
         setPassword("123456");
         admin = false;
@@ -61,14 +133,14 @@ const LoginScreen = () => {
 
     const supervisorLogin = () => {
         //setEmail("supervisor@rus.com");
-        setEmail("invitado@rus.com");
+        setEmail("Russsss@gmaim.xmn");
 
         admin = true;
     }
 
     const empleadoLogin = () => {
         //setEmail("empleado@rus.com");
-        setEmail("invitado@rus.com");
+        setEmail("Hhhjjjjjjjj@gmail.com");
 
         setPassword("123456");
         admin = false;
@@ -151,3 +223,5 @@ const LoginScreen = () => {
     );
 }
 export default LoginScreen
+
+

@@ -10,6 +10,17 @@ import RegistroClienteRegistradoScreen from './screens/RegistroClienteRegistrado
 import RegistroClienteAnonimoScreen from './screens/RegistroClienteAnonimoScreen';
 import RegistroMesaScreen from './screens/RegistroMesaScreen';
 import RegistroProductoScreen from './screens/RegistroProductoScreen';
+import HomeDuenioScreen from './screens/HomeDuenioScreen';
+import HomeBarScreen from './screens/HomeBarScreen';
+import HomeCocinaScreen from './screens/HomeCocinaScreen';
+import HomeMetreScreen from './screens/HomeMetreScreen';
+import HomeMozoScreen from './screens/HomeMozoScreen';
+
+
+
+
+
+
 // import { LogBox } from 'react-native';
 // LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
 // LogBox.ignoreAllLogs();//Ignore all log notifications
@@ -31,6 +42,11 @@ export type RootStackParamList = {
   RegistroClienteAnonimo: any;
   RegistroMesa: any;
   RegistroProducto: any;
+  HomeBar: any;
+  HomeCocina: any;
+  HomeDuenio: any;
+  HomeMetre: any;
+  HomeMozo: any;
 }
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -65,16 +81,24 @@ export default function App() {
   return (
     <NavigationContainer theme={MyTheme}>
       <Stack.Navigator>
+       <Stack.Screen options={{ headerShown: false }} name="Login" component={LoginScreen} />
        <Stack.Screen options={{ headerShown: false }} name="RegistroProducto" component={RegistroProductoScreen} />
        <Stack.Screen options={{ headerShown: false }} name="RegistroMesa" component={RegistroMesaScreen} />
        <Stack.Screen options={{ headerShown: false }} name="RegistroClienteAnonimo" component={RegistroClienteAnonimoScreen} />
        <Stack.Screen options={{ headerShown: false }} name="RegistroClienteRegistrado" component={RegistroClienteRegistradoScreen} />
        <Stack.Screen options={{ headerShown: false }} name="Index" component={IndexScreen} />
        <Stack.Screen options={{ headerShown: false }} name="Home" component={HomeScreen} />
-       <Stack.Screen options={{ headerShown: false }} name="Login" component={LoginScreen} />
        <Stack.Screen options={{ headerShown: false }} name="RegistroDuenio" component={RegistroDuenioScreen} />
        <Stack.Screen options={{ headerShown: false }} name="RegistroDuenio2" component={RegistroDuenioScreen2} />
        <Stack.Screen options={{ headerShown: false }} name="RegistroEmpleado" component={RegistroEmpleadoScreen} />
+       <Stack.Screen options={{ headerShown: false }} name="HomeBar" component={HomeBarScreen} />
+       <Stack.Screen options={{ headerShown: false }} name="HomeCocina" component={HomeCocinaScreen} />
+       <Stack.Screen options={{ headerShown: false }} name="HomeDuenio" component={HomeDuenioScreen} />
+       <Stack.Screen options={{ headerShown: false }} name="HomeMetre" component={HomeMetreScreen} />
+       <Stack.Screen options={{ headerShown: false }} name="HomeMozo" component={HomeMozoScreen} />
+
+
+
       </Stack.Navigator>
     </NavigationContainer>
   );
