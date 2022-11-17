@@ -30,7 +30,7 @@ Sánchez, Pedro
 | - | Alta de clientes registrado | Rus |  Hecho | Rama altasUsuarios |
 | - | Agregar cliente anónimo | Rus |  Nueva | Rama altas |
 | - | Alta de mesas | Rus |  Hecho | Rama altasMesa|
-| - | Alta de productos | Rus|  En proceso | Rama altasProducto |
+| - | Alta de productos | Rus|  Hecho | Rama altasProducto |
 | - | QR de ingreso al local | Rus |  Nueva | Rama QR |
 | - | QR de la mesa | Rus |  Nueva | Rama QR |
 | - | QR de la propina | Rus |  Nueva | Rama QR |
