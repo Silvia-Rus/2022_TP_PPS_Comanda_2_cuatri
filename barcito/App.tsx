@@ -9,7 +9,10 @@ import RegistroEmpleadoScreen from './screens/RegistroEmpleadoScreen';
 import RegistroClienteRegistradoScreen from './screens/RegistroClienteRegistradoScreen';
 import RegistroClienteAnonimoScreen from './screens/RegistroClienteAnonimoScreen';
 import RegistroMesaScreen from './screens/RegistroMesaScreen';
-
+import RegistroProductoScreen from './screens/RegistroProductoScreen';
+// import { LogBox } from 'react-native';
+// LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+// LogBox.ignoreAllLogs();//Ignore all log notifications
 
 import AnimatedLottieView from 'lottie-react-native';
 import { StyleSheet } from 'react-native';
@@ -27,7 +30,7 @@ export type RootStackParamList = {
   RegistroEmpleado: any;
   RegistroClienteAnonimo: any;
   RegistroMesa: any;
-
+  RegistroProducto: any;
 }
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -62,6 +65,7 @@ export default function App() {
   return (
     <NavigationContainer theme={MyTheme}>
       <Stack.Navigator>
+       <Stack.Screen options={{ headerShown: false }} name="RegistroProducto" component={RegistroProductoScreen} />
        <Stack.Screen options={{ headerShown: false }} name="RegistroMesa" component={RegistroMesaScreen} />
        <Stack.Screen options={{ headerShown: false }} name="RegistroClienteAnonimo" component={RegistroClienteAnonimoScreen} />
        <Stack.Screen options={{ headerShown: false }} name="RegistroClienteRegistrado" component={RegistroClienteRegistradoScreen} />

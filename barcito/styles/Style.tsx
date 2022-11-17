@@ -261,6 +261,18 @@ export default StyleSheet.create({
         borderRadius:20, 
         margin:10
     },
+    cameraIconRow: {
+        height:100, 
+        width:100, 
+        borderRadius:20, 
+        margin:10
+    },
+    cameraImageRow: {
+        height:100, 
+        width:100, 
+        borderRadius:20, 
+        margin:10
+    },
 
     
 })

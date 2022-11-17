@@ -22,7 +22,7 @@ import { RootStackParamList } from "../App";
 // import ImagePicker from 'react-native-image-crop-picker';
 import { addMesa } from "../utils/AddDocsUtil";
 import LanzarCamara from "../utils/CameraUtil";
-import ValidacionCamposMesa from "../utils/ValidacionCamposMesa";
+import ValidacionCamposMesa from "../utils/ValidacionCamposMesaUtil";
 import CargarImagen from "../utils/CargarImagenUtil";
 
 
@@ -168,11 +168,13 @@ const RegistroMesaScreen = () => {
                 <TextInput
                     placeholder={numberForm}
                     style={[styles.buttonRole, styles.buttonOutlineRole]}
+                    keyboardType={'numeric'}
                     onChangeText={(text) => setValue("number",text)}
                 />
                 <TextInput
                     placeholder={capacityForm}
                     style={[styles.buttonRole, styles.buttonOutlineRole]}
+                    keyboardType={'numeric'}
                     onChangeText={(text) => setValue("capacity",text)}
                 />
             </View>

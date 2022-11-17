@@ -68,21 +68,4 @@ const capacidadMayorACero = (values) => {
 
 }
 
-const existeLaMesa = async (values) => {
-
-    let retorno = false;
-
-    const q = query(collection(db, "tableInfo"), where("tableNumber", "==", values.number));
-    const querySnapshot = await getDocs(q);
-
-    console.log("query" + querySnapshot.size);
-    
-    if(querySnapshot.size > 0){
-        console.log("query" + querySnapshot.size);
-        console.log("llega aquíiiii");
-        retorno = true;
-    }
-    return retorno;
-}
-
 export default ValidacionCamposMesa;
