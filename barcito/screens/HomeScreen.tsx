@@ -14,7 +14,7 @@ const HomeScreen = () => {
     async function handlerSignOut() {
         await auth
             .signOut()
-            .then(() => {navigation.replace('Index')})
+            .then(() => {navigation.replace('RegistroMesa')})
             .catch((error: any) => alert(error.message))
     }    
 

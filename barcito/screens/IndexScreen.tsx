@@ -5,14 +5,12 @@ import { RootStackParamList } from "./../App";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import styles from "../styles/Style";
 
-
-
 const IndexScreen = () => {
 
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
 
     const handlerSignUp = () => {  
-        navigation.replace('RegistroEmpleado'); /// CAMBIAR
+        navigation.replace('RegistroClienteRegistrado'); /// CAMBIAR
     }
 
     const handlerSignIn = () => {

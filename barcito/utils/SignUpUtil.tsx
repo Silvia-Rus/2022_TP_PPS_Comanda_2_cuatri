@@ -17,6 +17,13 @@ import * as ImagePicker from "expo-image-picker";
 import { RadioButton } from 'react-native-paper';
 import Spinner from "../utils/SpinnerUtil";
 import { RootStackParamList } from "../App";
+//import { launchCamera } from "react-native-image-picker";
+//import * as ImagePicker from "react-native-image-picker";
+// import ImagePicker from 'react-native-image-crop-picker';
+import { addClienteRegistrado, addDuenioEmpleado, addClienteAnonimo } from "./AddDocsUtil";
+import LanzarCamara from "./CameraUtil";
+import CargarImagen from "./CargarImagenUtil";
+
 
 const SignUp = (rol : string) => {
 
@@ -58,6 +65,12 @@ const SignUp = (rol : string) => {
                 case 'empleado':
                     return 'Mozo';
                     break;
+                case 'clienteRegistrado':
+                    return 'clienteRegistrado';
+                    break;
+                case 'clienteAnonimo':
+                    return 'clienteRegistrado';
+                    break;
             }
         }
         const [checked, setChecked] = React.useState(check(rol));
@@ -65,18 +78,13 @@ const SignUp = (rol : string) => {
         let originalUser = auth.currentUser;
 
         //PERMISOS CAMARA
-        // useEffect(() => {
-        //     (async () => {
-        //         await Camera.requestCameraPermissionsAsync();
-        //         await BarCodeScanner.requestPermissionsAsync();
-        //     })();
-        // }, [])
-
         useEffect(() => {
             (async () => {
-              await Camera.requestCameraPermissionsAsync();
+                await Camera.requestCameraPermissionsAsync();
+                await BarCodeScanner.requestPermissionsAsync();
             })();
-          }, []);
+        }, [])
+
 
         //HANDLERS
         //RETURN
@@ -106,29 +114,23 @@ const SignUp = (rol : string) => {
             setOpenQR(true);
         }
         const handleCamera = async () => {
-            console.log("handlecamera");
             setLoading(true);
-            console.log("handlecamera");
-
-            let result = await ImagePicker.launchCameraAsync({
-                mediaTypes: ImagePicker.MediaTypeOptions.All,
-                //allowsEditing: true,
-                aspect: [4, 3],
-                quality: 1,
-            })
-            console.log("uri");
-            if (!result.cancelled) {
-                // setImage(result["uri"]);
-                console.log(result["uri"]);
-            }
-            setLoading(false)
+            setImage(await LanzarCamara());
+            // let result = await ImagePicker.launchImageLibraryAsync({
+            //     mediaTypes: ImagePicker.MediaTypeOptions.All,
+            //     //allowsEditing: true,
+            //     aspect: [4, 3],
+            //     quality: 1,
+            // })
+            // if (!result.cancelled) {
+            //     setImage(result["uri"]);
+            // }
+            setLoading(false)         
         };
 
         const handlerBack = () => {
             navigation.replace('Index');
         }
-
-
         //SUBMIT DEL FORM
         const onSubmit = async () => {
             const values=getValues();
@@ -136,7 +138,7 @@ const SignUp = (rol : string) => {
             let error=false;
       
             //VALIDACION CAMPOS
-            if(rol === 'duenio' || rol === 'cliente')
+            if(rol === 'duenio' || rol === 'clienteRegistrado')
             {
                 if(!image){
                     Toast.showWithGravity(
@@ -147,104 +149,127 @@ const SignUp = (rol : string) => {
                   }
             }
 
-           
-            if(values.password === undefined ||
+            if( values.nombre === undefined){
+                     Toast.showWithGravity(
+                         "Todos los campos son obligatorios",
+                         Toast.LONG, 
+                         Toast.CENTER);
+                     return;
+                }
+            if((rol !== 'clienteAnonimo') && 
+                (values.apellido === undefined ||
+                values.dni === undefined))
+            { 
+                Toast.showWithGravity(
+                "Todos los campos son obligatorios",
+                Toast.LONG, 
+                Toast.CENTER);
+                return;
+            }
+
+            if((rol === 'duenio' || rol === 'empleado') &&
+               (values.password === undefined ||
                values.confirmPassword === undefined ||
-               values.nombre === undefined ||
-               values.apellido === undefined ||
-               values.dni === undefined ||
                values.cuil === undefined ||
-               values.email === undefined ){
+               values.email === undefined )){
                     Toast.showWithGravity(
                         "Todos los campos son obligatorios",
                         Toast.LONG, 
                         Toast.CENTER);
                     return;
-               }
+                if(values.password.length<6){
+                    Toast.showWithGravity(
+                        "La contraseña debe tener al menos 6 caracteres",
+                        Toast.LONG,
+                        Toast.CENTER);
+                    return;
+                    }
+                if(values.cuil.length!==11){
+                    Toast.showWithGravity(
+                        "El CUIL debe tener 11 caracteres",
+                        Toast.LONG,
+                        Toast.CENTER);
+                    }      
+                    if(!values.email.includes("@")){
+                        Toast.showWithGravity(
+                        "El correo electrónico no es válido",
+                        Toast.LONG,
+                        Toast.CENTER);
+                        return;
+                    }
+                    if(!values.email.includes(".")){
+                        Toast.showWithGravity(
+                        "El correo electrónico no es válido",
+                        Toast.LONG,
+                        Toast.CENTER);
+                        return;
+                    }               
+               }  
+            
+            if(rol !== 'clienteAnonimo')
+            {
+                if(values.dni.length!==8){
+                    Toast.showWithGravity(
+                      "El DNI debe tener 8 caracteres",
+                      Toast.LONG,
+                      Toast.CENTER);
+                    return;
+                  }
+            }
           
-            if(values.password!==values.confirmPassword){
-              Toast.showWithGravity(
-                "Las contraseñas no coinciden",
-                Toast.LONG, 
-                Toast.CENTER);
-              return;
-            }
-            if(values.password.length<6){
-              Toast.showWithGravity(
-                "La contraseña debe tener al menos 6 caracteres",
-                Toast.LONG,
-                Toast.CENTER);
-              return;
-            }
-            if(values.dni.length!==8){
-              Toast.showWithGravity(
-                "El DNI debe tener 8 caracteres",
-                Toast.LONG,
-                Toast.CENTER);
-              return;
-            }
-            if(values.cuil.length!==11){
-            Toast.showWithGravity(
-              "El CUIL debe tener 11 caracteres",
-              Toast.LONG,
-              Toast.CENTER);
-            }      
-            if(!values.email.includes("@")){
-              Toast.showWithGravity(
-                "El correo electrónico no es válido",
-                Toast.LONG,
-                Toast.CENTER);
-              return;
-            }
-            if(!values.email.includes(".")){
-              Toast.showWithGravity(
-                "El correo electrónico no es válido",
-                Toast.LONG,
-                Toast.CENTER);
-              return;
-            }
-      
+            
             setLoading(true)
             toggleSpinnerAlert();
             try {
               console.log(auth.currentUser?.email);
               //CREACION DE USUARIO
-              await createUserWithEmailAndPassword(auth,values.email,values.password);
-              console.log(auth.currentUser?.email);
-      
-              //DESLOGUEO DEL USUARIO CREADO Y REESTABLECIMIENTO DEL USUARIO ORIGINAL
-              await auth.signOut();
-              await auth.updateCurrentUser(originalUser);
+
+              if(rol === 'duenio' || rol === 'empleado'){
+                await createUserWithEmailAndPassword(auth,values.email,values.password);
+                console.log("entra al create noseque");
+                console.log(auth.currentUser?.email);
+                //DESLOGUEO DEL USUARIO CREADO Y REESTABLECIMIENTO DEL USUARIO ORIGINAL
+                await auth.signOut();
+                await auth.updateCurrentUser(originalUser);
+              }
       
               //UPLOAD IMAGEN
 
               let imageValue = "";
            
               if(image){
-                const blob:any = await getBlob(image);
-                const fileName = image.substring(image.lastIndexOf("/") + 1);
-                const fileRef = ref(storage, "userInfo/" + fileName);
-                await uploadBytes(fileRef, blob);
-                imageValue = fileRef.fullPath;
-              }
-              
                 // const blob:any = await getBlob(image);
                 // const fileName = image.substring(image.lastIndexOf("/") + 1);
                 // const fileRef = ref(storage, "userInfo/" + fileName);
                 // await uploadBytes(fileRef, blob);
-
-                // let imageValue = fileRef.fullPath;
+                // imageValue = fileRef.fullPath;
+                imageValue = (await CargarImagen(image));
+              }
+              console.log("llega al addoc");   
               //UPLOAD DATA
-              await addDoc(collection(db, "userInfo"), {
-                lastName:values.apellido,
-                name:values.nombre,
-                dni:values.dni,
-                cuil:values.cuil,
-                email:values.email,
-                rol:checked,
-                image:imageValue,
-                creationDate:new Date()          
-              });        
+            //   await addDoc(collection(db, "userInfo"), {
+                
+            //     lastName:values.apellido,
+            //     name:values.nombre,
+            //     dni:values.dni,
+            //     cuil:values.cuil,
+            //     email:values.email,
+            //     rol:checked,
+            //     image:imageValue,
+            //     creationDate:new Date()          
+            //   });  
+
+            if(rol === 'duenio' || rol === 'empleado'){
+                addDuenioEmpleado(imageValue, values, checked);
+            }
+            else if(rol === 'clienteRegistrado'){
+                addClienteRegistrado(imageValue, values, checked)
+            }
+            else if(rol === 'clienteAnonimo'){
+                addClienteAnonimo(imageValue, values, checked)
+            }
+            console.log("sale del addoc");   
+        
               Toast.showWithGravity(
                 "Usuario creado exitosamente",
                 Toast.LONG, 
@@ -396,6 +421,10 @@ const SignUp = (rol : string) => {
                     style={[styles.buttonRole, styles.buttonOutlineRole]}
                     onChangeText={(text) => setValue("nombre",text)}
                 />
+            </View>
+
+            { rol != 'clienteAnonimo' ?
+                <View style={styles.inputContainer}>
                 <TextInput
                     placeholder= {apellidoForm}
                     style={[styles.buttonRole, styles.buttonOutlineRole]}
@@ -407,30 +436,39 @@ const SignUp = (rol : string) => {
                     keyboardType={'numeric'}
                     onChangeText={(text) => setValue("dni",text)}
                 />
-                <TextInput
-                    placeholder={cuilForm}
-                    style={[styles.buttonRole, styles.buttonOutlineRole]}
-                    keyboardType={'numeric'}
-                    onChangeText={(text) => setValue("cuil",text)}
-                />
-                <TextInput
-                    placeholder= {emailForm}
-                    style={[styles.buttonRole, styles.buttonOutlineRole]}
-                    onChangeText={(text) => setValue("email",text)}
-                />
-                <TextInput
-                    placeholder= {passwordForm}
-                    style={[styles.buttonRole, styles.buttonOutlineRole]}
-                    onChangeText={(text) => setValue("password",text)}
-                    secureTextEntry = {true}             
-                />
-                <TextInput
-                    placeholder= {confirmPasswordForm}
-                    style={[styles.buttonRole, styles.buttonOutlineRole]}
-                    onChangeText={(text) => setValue("confirmPassword",text)}
-                    secureTextEntry = {true}
-                />              
-            </View> 
+                </View>
+                :null
+            }
+          
+            {rol == 'duenio' || rol == 'empleado' ?
+                <View style={styles.inputContainer}>
+                   <TextInput
+                   placeholder={cuilForm}
+                   style={[styles.buttonRole, styles.buttonOutlineRole]}
+                   keyboardType={'numeric'}
+                   onChangeText={(text) => setValue("cuil",text)}
+                   />
+                      
+                    <TextInput
+                        placeholder= {emailForm}
+                        style={[styles.buttonRole, styles.buttonOutlineRole]}
+                        onChangeText={(text) => setValue("email",text)}
+                    />
+                    <TextInput
+                        placeholder= {passwordForm}
+                        style={[styles.buttonRole, styles.buttonOutlineRole]}
+                        onChangeText={(text) => setValue("password",text)}
+                        secureTextEntry = {true}             
+                    />
+                    <TextInput
+                        placeholder= {confirmPasswordForm}
+                        style={[styles.buttonRole, styles.buttonOutlineRole]}
+                        onChangeText={(text) => setValue("confirmPassword",text)}
+                        secureTextEntry = {true}
+                    />              
+                </View> 
+                :null
+            }  
         </View>  
 
          {rol == 'duenio' ?
@@ -535,3 +573,5 @@ const SignUp = (rol : string) => {
 }
 
 export default SignUp;
+
+
