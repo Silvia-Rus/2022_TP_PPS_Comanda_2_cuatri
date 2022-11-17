@@ -28,7 +28,7 @@ Sánchez, Pedro
 | - | Alta de dueño / supervisor | Rus |  Hecho | Rama altasUsuarios |
 | - | Alta de empleados | Rus |  Hecho | Rama altasUsuarios |
 | - | Alta de clientes registrado | Rus |  Hecho | Rama altasUsuarios |
-| - | Agregar cliente anónimo | Rus |  Nueva | Rama altas |
+| - | Agregar cliente anónimo | Rus |  Hecho | Rama altas |
 | - | Alta de mesas | Rus |  Hecho | Rama altasMesa|
 | - | Alta de productos | Rus|  Hecho | Rama altasProducto |
 | - | QR de ingreso al local | Rus |  Nueva | Rama QR |
