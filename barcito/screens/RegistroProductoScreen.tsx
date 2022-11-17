@@ -4,7 +4,7 @@ import React, { useLayoutEffect, useEffect, useState, useCallback  } from "react
 import styles from "../styles/Style";
 import { Image, ImageBackground, Text, TextInput, TouchableOpacity, View, StyleSheet, PermissionsAndroid } from "react-native";
 import Modal from "react-native-modal"; 
-import { Camera } from 'expo-camera';
+import { Camera } from 'expo-camera'; 
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { useForm } from 'react-hook-form';
 import Toast from 'react-native-simple-toast';
