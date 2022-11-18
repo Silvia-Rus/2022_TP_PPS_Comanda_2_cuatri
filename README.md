@@ -11,26 +11,26 @@ Sánchez, Pedro
 ### EL BARCITO DE PEDRO Y RUS - SEMANA 1 
 | # | Tarea | Responsable | Estado | Rama |
 | :------: | :------: | :------: | :------: | :------: |
-| - | Generación de proyecto | Rus |  Hecho | Rama main |
-| - | Diseño de logos | Rus |  Hecho | Rama main |
-| - | Acceso | Rus |  Hecho | Rama main |
+| 1 | Generación de proyecto | Rus |  Hecho | Rama main |
+| 2 | Diseño de logos | Rus |  Hecho | Rama main |
+| 3 | Acceso | Rus |  Hecho | Rama main |
 
 
 ### EL BARCITO DE PEDRO Y RUS - SEMANA 2
 | # | Tarea | Responsable | Estado | Rama |
 | :------: | :------: | :------: | :------: | :------: |
-| - | Diagramas | Rus |  Hecho | Rama altas |
+| 4 | Diagramas | Rus |  Hecho | Rama altas |
 
 
 ### EL BARCITO DE PEDRO Y RUS - SEMANA 3
 | # | Tarea | Responsable | Estado | Rama |
 | :------: | :------: | :------: | :------: | :------: |
-| - | Alta de dueño / supervisor | Rus |  Hecho | Rama altasUsuarios |
-| - | Alta de empleados | Rus |  Hecho | Rama altasUsuarios |
-| - | Alta de clientes registrado | Rus |  Hecho | Rama altasUsuarios |
-| - | Agregar cliente anónimo | Rus |  Hecho | Rama altas |
-| - | Alta de mesas | Rus |  Hecho | Rama altasMesa|
-| - | Alta de productos | Rus|  Hecho | Rama altasProducto |
+| 5 | Alta de dueño / supervisor | Rus |  Hecho | Rama altasUsuarios |
+| 6 | Alta de empleados | Rus |  Hecho | Rama altasUsuarios |
+| 7 | Alta de clientes registrado | Rus |  Hecho | Rama altasUsuarios |
+| 8 | Agregar cliente anónimo | Rus |  Hecho | Rama altas |
+| 9 | Alta de mesas | Rus |  Hecho | Rama altasMesa|
+| 10 | Alta de productos | Rus|  Hecho | Rama altasProducto |
 | - | Ingreso al local | Rus |  En proceso | Rama gestión |
 | - | QR de ingreso al local | Rus |  En proceso | Rama QR |
 | - | QR de la mesa | Rus |  Nueva | Rama QR |
