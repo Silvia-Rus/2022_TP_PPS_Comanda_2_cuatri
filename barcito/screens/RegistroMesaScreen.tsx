@@ -50,7 +50,7 @@ const RegistroMesaScreen = () => {
       }
 
       const handlerBack = () => {
-        navigation.replace('Index');
+        navigation.replace('HomeDuenio');
       }
 
       const toggleSpinnerAlert = () => {

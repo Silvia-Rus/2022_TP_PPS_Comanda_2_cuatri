@@ -156,6 +156,18 @@ export default StyleSheet.create({
         color: '#27191c',
         fontWeight: 'bold',        
     },
+    textHomeMediano:{
+        fontSize: 75,
+        marginTop: 5, 
+        color: '#4d3e6b',
+        fontWeight: 'bold',        
+    },
+    textHomePequeño:{
+        fontSize:15,
+        marginTop: 5, 
+        color: '#4d3e6b',
+        fontWeight: 'bold',        
+    },
     textPreTitleHome:{
         fontSize: 20,
         marginTop: 5, 

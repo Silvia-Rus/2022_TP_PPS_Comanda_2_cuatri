@@ -89,7 +89,14 @@ const SignUp = (rol : string) => {
         //HANDLERS
         //RETURN
         const handleReturn = () => {
-            navigation.replace("Home");
+            if(rol === 'clienteAnonimo' || rol === 'clienteRegistrado')
+            {
+                navigation.replace('HomeMozo');
+            }
+            else
+            {
+                navigation.replace('HomeDuenio');
+            }
         }
 
         //COMPLETADO DEL FORM A PARTIR DEL QR
@@ -129,7 +136,15 @@ const SignUp = (rol : string) => {
         };
 
         const handlerBack = () => {
-            navigation.replace('Index');
+
+            if(rol === 'clienteAnonimo' || rol === 'clienteRegistrado')
+            {
+                navigation.replace('Index');
+            }
+            else
+            {
+                navigation.replace('HomeDuenio');
+            }
         }
         //SUBMIT DEL FORM
         const onSubmit = async () => {

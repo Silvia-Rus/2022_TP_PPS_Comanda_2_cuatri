@@ -11,8 +11,6 @@ import Spinner from "../utils/SpinnerUtil";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import Toast from 'react-native-simple-toast';
 
-
-
 export let admin = false;
 
 const LoginScreen = () => {
@@ -52,11 +50,9 @@ const LoginScreen = () => {
                     Toast.CENTER);
             } 
        
-            
             // toggleSpinnerAlert();
             // setLoading(false);
-        };
-          
+        }; 
 
     useFocusEffect(
         useCallback(() => {
@@ -74,20 +70,14 @@ const LoginScreen = () => {
         {
             navigation.replace("HomeMozo");
         }
-        else if(rol === 'Bar')
+        else if(rol === 'Bartender' || rol === 'Cocinero' )
         {
-            navigation.replace("HomeBar");
-        }
-        else if(rol === 'Cocina')
-        {
-            navigation.replace("HomeCocina");
+            navigation.replace("HomeCocinaBar");
         }
         else if(rol === 'Metre')
         {
             navigation.replace("HomeMetre");
         }
-                
-
     }
 
     const handlerLogin = async () => {
@@ -124,28 +114,38 @@ const LoginScreen = () => {
     }
 
     const duenioLogin = () => {
-        //setEmail("duenio@rus.com");
-        setEmail("Russsss@gmaim.xmn");
+        //setEmail("supervisor@barcito.com");
+        setEmail("duenio@barcito.com");
+        setPassword("123456");
+        admin = false;
+    }
+
+    // const supervisorLogin = () => {
+    //     //setEmail("supervisor@rus.com");
+    //     setEmail("Russsss@gmaim.xmn");
+
+    //     admin = true;
+    // }
+
+    const cocinaBarLogin = () => {
+        //setEmail("cocinero@barcito.com");
+        setEmail("bartender@barcito.com");
 
         setPassword("123456");
         admin = false;
     }
 
-    const supervisorLogin = () => {
-        //setEmail("supervisor@rus.com");
-        setEmail("Russsss@gmaim.xmn");
-
-        admin = true;
+    const metreLogin = () => {
+        setEmail("metre@barcito.com");
+        setPassword("123456");
+        admin = false;
     }
-
-    const empleadoLogin = () => {
+    const mozoLogin = () => {
         //setEmail("empleado@rus.com");
-        setEmail("Hhhjjjjjjjj@gmail.com");
-
+        setEmail("mozo@barcito.com");
         setPassword("123456");
         admin = false;
     }
-
     const handlerBack = () => {
         navigation.replace('Index');
     }
@@ -207,16 +207,22 @@ const LoginScreen = () => {
                         <Text style={styles.buttonOutlineTextRole}>Dueño</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={supervisorLogin}
+                        onPress={cocinaBarLogin}
                         style={[styles.buttonRole, styles.buttonOutlineRole]}
                     >
-                        <Text style={styles.buttonOutlineTextRole}>Supervisor</Text>
+                        <Text style={styles.buttonOutlineTextRole}>Cocina / Bar</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={empleadoLogin}
+                        onPress={metreLogin}
                         style={[styles.buttonRole, styles.buttonOutlineRole]}
                     >
-                        <Text style={styles.buttonOutlineTextRole}>Empleado</Text>
+                        <Text style={styles.buttonOutlineTextRole}>Metre</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={mozoLogin}
+                        style={[styles.buttonRole, styles.buttonOutlineRole]}
+                    >
+                        <Text style={styles.buttonOutlineTextRole}>Mozo</Text>
                     </TouchableOpacity>
                 </View>
             </View>

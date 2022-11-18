@@ -9,7 +9,7 @@ import { auth } from "../database/firebase";
 import Spinner from "../utils/SpinnerUtil";
 
 
-const HomeMozoScreen = () => {
+const HomeCocinaBarScreen = () => {
 
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
     const [loading, setLoading] = useState(false);
@@ -25,18 +25,18 @@ const HomeMozoScreen = () => {
 
     // const displayName = auth.currentUser.email;
     
-    const handlerGestionPedidos = () => {
+    const handlerRegistroProducto = () => {
         setLoading(true);
-        navigation.replace('GestionPedidosMozo');
+        navigation.replace('RegistroProducto');
         setLoading(false);
       }
 
-    const handlerChat = () => {
-        navigation.replace('ChatMozo');
+    const handlerGestionPedidos = () => {
+        navigation.replace('EnConstruccionCocinaBar');
       }
 
     const handlerEncuestaLugarTrabajo = () => {
-        navigation.replace('EncuestaLugarDeTrabajoMozo');
+        navigation.replace('EncuestaLugarDeTrabajoCocinaBar');
       }
     
   return (
@@ -53,16 +53,16 @@ const HomeMozoScreen = () => {
         <View style={styles.buttonContainer} >
              
                 <TouchableOpacity
-                    onPress={handlerGestionPedidos}
+                    onPress={handlerRegistroProducto}
                     style={[styles.buttonRole, styles.buttonOutlineRole]}
                     >
-                    <Text style={styles.buttonOutlineTextRole}>Gestión Pedidos</Text>
+                    <Text style={styles.buttonOutlineTextRole}>Registro Producto</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                        onPress={handlerChat}
+                        onPress={handlerGestionPedidos}
                         style={[styles.buttonRole, styles.buttonOutlineRole]}
                     >
-                        <Text style={styles.buttonOutlineTextRole}>Chat</Text>
+                        <Text style={styles.buttonOutlineTextRole}>Gestionar Pedidos</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
@@ -89,4 +89,4 @@ const HomeMozoScreen = () => {
   );
 }
 
-export default HomeMozoScreen;
+export default HomeCocinaBarScreen;

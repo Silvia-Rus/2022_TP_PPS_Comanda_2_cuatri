@@ -9,8 +9,12 @@ const IndexScreen = () => {
 
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
 
-    const handlerSignUp = () => {  
+    const handlerAccederClienteRegistrado = () => {  
         navigation.replace('RegistroClienteRegistrado'); /// CAMBIAR
+    }
+
+    const handlerAccederClienteAnonimo = () => {  
+        navigation.replace('RegistroClienteAnonimo'); /// CAMBIAR
     }
 
     const handlerSignIn = () => {
@@ -19,27 +23,34 @@ const IndexScreen = () => {
 
     return (   
         <View style={styles.container}>  
-            {  <Image
-                    source={require('../assets/logo.png')}
-                    resizeMode="contain"
-                    style={styles.logoIndex}
-                />}
+      
+            {<Image
+                source={require('../assets/logo.png')}
+                resizeMode="contain"
+                style={styles.logoIndex}
+            />}
 
             <View style={styles.buttonContainer} >   
                 <TouchableOpacity
-                    onPress={handlerSignIn}                   
+                    onPress={handlerAccederClienteRegistrado}                   
                     style={styles.button}
                     >
-                    <Text style={styles.buttonText}>Iniciar Sesión</Text>
+                    <Text style={styles.buttonText}>Registrarse como cliente</Text>
                 </TouchableOpacity>
                 
                 <TouchableOpacity
-                    onPress={handlerSignUp}
+                    onPress={handlerAccederClienteAnonimo}
                     style={styles.button}
                     //style={[styles.button, styles.buttonOutline]}
                     >
-                    <Text style={styles.buttonText}>Registrarse</Text>
-                    {/* <Text style={styles.buttonOutlineText}>Registrarse</Text> */}
+                    <Text style={styles.buttonText}>Acceder como anónimo</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    onPress={handlerSignIn}
+                    style={[styles.buttonRole, styles.buttonOutlineRole]}
+                    >
+                    <Text style={styles.buttonOutlineTextRole}>Iniciar Sesión (solo staff)</Text>
                 </TouchableOpacity>
             </View>              
         </View> 

@@ -3,7 +3,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from './screens/LoginScreen';
 import IndexScreen from './screens/IndexScreen';
 import HomeScreen from './screens/HomeScreen';
-import RegistroDuenioScreen from './screens/RegistroDuenioScreen';
 import RegistroDuenioScreen2 from './screens/RegistroDuenioScreen2';
 import RegistroEmpleadoScreen from './screens/RegistroEmpleadoScreen';
 import RegistroClienteRegistradoScreen from './screens/RegistroClienteRegistradoScreen';
@@ -11,11 +10,20 @@ import RegistroClienteAnonimoScreen from './screens/RegistroClienteAnonimoScreen
 import RegistroMesaScreen from './screens/RegistroMesaScreen';
 import RegistroProductoScreen from './screens/RegistroProductoScreen';
 import HomeDuenioScreen from './screens/HomeDuenioScreen';
-import HomeBarScreen from './screens/HomeBarScreen';
-import HomeCocinaScreen from './screens/HomeCocinaScreen';
+import HomeCocinaBarScreen from './screens/HomeCocinaBarScreen';
 import HomeMetreScreen from './screens/HomeMetreScreen';
 import HomeMozoScreen from './screens/HomeMozoScreen';
-
+import HomeClienteScreen from './screens/HomeClienteScreen';
+import GestionClienteDuenioScreen from './screens/GestionClientesDuenioScreen';
+import EncuestaEmpleadosDuenioScreen from './screens/EncuestaEmpleadosDuenioScreen';
+import EnConstruccionCocinaBarScreen from './screens/GestionPedidosCocinaBarScreen';
+import ChatMozoScreen from './screens/ChatMozoScreen';
+import GestionClientesMetreScreen from './screens/GestionClientesMetreScreen';
+import EncuestaLugarDeTrabajoMetreScreen from './screens/EncuestaLugarDeTrabajoMetreScreen';
+import GestionPedidosMozoScreen from './screens/GestionPedidosMozoScreen';
+import GestionPedidosCocinaBarScreen from './screens/GestionPedidosCocinaBarScreen';
+import EncuestaLugarDeTrabajoMozoScreen from './screens/EncuestaLugarDeTrabajoMozoScreen';
+import EncuestaLugarDeTrabajoCocinaBarScreen from './screens/EncuestaLugarDeTrabajoCocinaBarScreen';
 
 
 
@@ -36,17 +44,27 @@ export type RootStackParamList = {
   Home: any;
   Index: any;
   SignUp: any;
-  RegistroDuenio: any;
   RegistroDuenio2: any;
   RegistroEmpleado: any;
   RegistroClienteAnonimo: any;
   RegistroMesa: any;
   RegistroProducto: any;
-  HomeBar: any;
-  HomeCocina: any;
+  HomeCocinaBar: any;
   HomeDuenio: any;
   HomeMetre: any;
   HomeMozo: any;
+  HomeCliente: any;
+  GestionClienteDuenio: any;
+  EnConstruccionCocinaBar: any;
+  ChatMozo: any;
+  GestionClientesMetre: any;
+  EncuestaEmpleadosDuenio: any;
+  EncuestaLugarDeTrabajoMetre: any;
+  EncuestaLugarDeTrabajoMozo: any;
+  EncuestaLugarDeTrabajoCocinaBar: any;
+  GestionPedidosCocinaBar : any;
+
+  GestionPedidosMozo : any;
 }
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -81,24 +99,30 @@ export default function App() {
   return (
     <NavigationContainer theme={MyTheme}>
       <Stack.Navigator>
+       <Stack.Screen options={{ headerShown: false }} name="Index" component={IndexScreen} />
+       <Stack.Screen options={{ headerShown: false }} name="RegistroEmpleado" component={RegistroEmpleadoScreen} />
+       <Stack.Screen options={{ headerShown: false }} name="RegistroDuenio2" component={RegistroDuenioScreen2} />
+       <Stack.Screen options={{ headerShown: false }} name="HomeDuenio" component={HomeDuenioScreen} />
        <Stack.Screen options={{ headerShown: false }} name="Login" component={LoginScreen} />
        <Stack.Screen options={{ headerShown: false }} name="RegistroProducto" component={RegistroProductoScreen} />
        <Stack.Screen options={{ headerShown: false }} name="RegistroMesa" component={RegistroMesaScreen} />
        <Stack.Screen options={{ headerShown: false }} name="RegistroClienteAnonimo" component={RegistroClienteAnonimoScreen} />
        <Stack.Screen options={{ headerShown: false }} name="RegistroClienteRegistrado" component={RegistroClienteRegistradoScreen} />
-       <Stack.Screen options={{ headerShown: false }} name="Index" component={IndexScreen} />
        <Stack.Screen options={{ headerShown: false }} name="Home" component={HomeScreen} />
-       <Stack.Screen options={{ headerShown: false }} name="RegistroDuenio" component={RegistroDuenioScreen} />
-       <Stack.Screen options={{ headerShown: false }} name="RegistroDuenio2" component={RegistroDuenioScreen2} />
-       <Stack.Screen options={{ headerShown: false }} name="RegistroEmpleado" component={RegistroEmpleadoScreen} />
-       <Stack.Screen options={{ headerShown: false }} name="HomeBar" component={HomeBarScreen} />
-       <Stack.Screen options={{ headerShown: false }} name="HomeCocina" component={HomeCocinaScreen} />
-       <Stack.Screen options={{ headerShown: false }} name="HomeDuenio" component={HomeDuenioScreen} />
+       <Stack.Screen options={{ headerShown: false }} name="HomeCocinaBar" component={HomeCocinaBarScreen} />
        <Stack.Screen options={{ headerShown: false }} name="HomeMetre" component={HomeMetreScreen} />
        <Stack.Screen options={{ headerShown: false }} name="HomeMozo" component={HomeMozoScreen} />
-
-
-
+       <Stack.Screen options={{ headerShown: false }} name="HomeCliente" component={HomeClienteScreen} />
+       <Stack.Screen options={{ headerShown: false }} name="GestionClienteDuenio" component={GestionClienteDuenioScreen} />
+       <Stack.Screen options={{ headerShown: false }} name="EnConstruccionCocinaBar" component={EnConstruccionCocinaBarScreen} />
+       <Stack.Screen options={{ headerShown: false }} name="ChatMozo" component={ChatMozoScreen} />
+       <Stack.Screen options={{ headerShown: false }} name="GestionClientesMetre" component={GestionClientesMetreScreen} />
+       <Stack.Screen options={{ headerShown: false }} name="EncuestaEmpleadosDuenio" component={EncuestaEmpleadosDuenioScreen} />
+       <Stack.Screen options={{ headerShown: false }} name="EncuestaLugarDeTrabajoMetre" component={EncuestaLugarDeTrabajoMetreScreen} />
+       <Stack.Screen options={{ headerShown: false }} name="GestionPedidosMozo" component={GestionPedidosMozoScreen} />
+       <Stack.Screen options={{ headerShown: false }} name="GestionPedidosCocinaBar" component={GestionPedidosCocinaBarScreen} />
+       <Stack.Screen options={{ headerShown: false }} name="EncuestaLugarDeTrabajoMozo" component={EncuestaLugarDeTrabajoMozoScreen} />
+       <Stack.Screen options={{ headerShown: false }} name="EncuestaLugarDeTrabajoCocinaBar" component={EncuestaLugarDeTrabajoCocinaBarScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

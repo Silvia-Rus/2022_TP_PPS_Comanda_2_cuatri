@@ -57,7 +57,7 @@ const RegistroProducto = () => {
           }
     
         const handlerBack = () => {
-            navigation.replace('RegistroProducto');
+            navigation.replace('HomeCocinaBar');
             }
 
         const pressComida = () => {
