@@ -31,6 +31,7 @@ Sánchez, Pedro
 | - | Agregar cliente anónimo | Rus |  Hecho | Rama altas |
 | - | Alta de mesas | Rus |  Hecho | Rama altasMesa|
 | - | Alta de productos | Rus|  Hecho | Rama altasProducto |
+| - | Ingreso al local | Rus |  En proceso | Rama gestión |
 | - | QR de ingreso al local | Rus |  Nueva | Rama QR |
 | - | QR de la mesa | Rus |  Nueva | Rama QR |
 | - | QR de la propina | Rus |  Nueva | Rama QR |
@@ -39,7 +40,6 @@ Sánchez, Pedro
 ### EL BARCITO DE PEDRO Y RUS - SEMANA 4
 | # | Tarea | Responsable | Estado | Rama |
 | :------: | :------: | :------: | :------: | :------: |
-| - | Ingreso al local | Rus |  Nueva | Rama gestión |
 | - | Realizar pedido | Rus |  Nueva | Rama gestión |
 | - | Confirmar pedido | Rus |  Nueva | Rama gestión |
 | - | Generar reservas agendadas | Pedro |  Nueva | Rama gestión |
