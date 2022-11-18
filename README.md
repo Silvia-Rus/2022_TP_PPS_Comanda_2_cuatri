@@ -32,7 +32,7 @@ Sánchez, Pedro
 | - | Alta de mesas | Rus |  Hecho | Rama altasMesa|
 | - | Alta de productos | Rus|  Hecho | Rama altasProducto |
 | - | Ingreso al local | Rus |  En proceso | Rama gestión |
-| - | QR de ingreso al local | Rus |  Nueva | Rama QR |
+| - | QR de ingreso al local | Rus |  En proceso | Rama QR |
 | - | QR de la mesa | Rus |  Nueva | Rama QR |
 | - | QR de la propina | Rus |  Nueva | Rama QR |
 
