@@ -69,7 +69,7 @@ const HomeMozoScreen = () => {
                     </TouchableOpacity>         
                 </View>
             </View>
-            <Text style={styles.textHomePequeño}>Russsss@gmaim.xmn</Text>
+            <Text style={styles.textHomePequeño}>metre@barcito.com</Text>
 
         
     </View>

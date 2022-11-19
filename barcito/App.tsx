@@ -100,6 +100,7 @@ export default function App() {
     <NavigationContainer theme={MyTheme}>
       <Stack.Navigator>
        <Stack.Screen options={{ headerShown: false }} name="Index" component={IndexScreen} />
+       <Stack.Screen options={{ headerShown: false }} name="GestionClienteDuenio" component={GestionClienteDuenioScreen} />
        <Stack.Screen options={{ headerShown: false }} name="RegistroEmpleado" component={RegistroEmpleadoScreen} />
        <Stack.Screen options={{ headerShown: false }} name="RegistroDuenio2" component={RegistroDuenioScreen2} />
        <Stack.Screen options={{ headerShown: false }} name="HomeDuenio" component={HomeDuenioScreen} />
@@ -113,7 +114,6 @@ export default function App() {
        <Stack.Screen options={{ headerShown: false }} name="HomeMetre" component={HomeMetreScreen} />
        <Stack.Screen options={{ headerShown: false }} name="HomeMozo" component={HomeMozoScreen} />
        <Stack.Screen options={{ headerShown: false }} name="HomeCliente" component={HomeClienteScreen} />
-       <Stack.Screen options={{ headerShown: false }} name="GestionClienteDuenio" component={GestionClienteDuenioScreen} />
        <Stack.Screen options={{ headerShown: false }} name="EnConstruccionCocinaBar" component={EnConstruccionCocinaBarScreen} />
        <Stack.Screen options={{ headerShown: false }} name="ChatMozo" component={ChatMozoScreen} />
        <Stack.Screen options={{ headerShown: false }} name="GestionClientesMetre" component={GestionClientesMetreScreen} />

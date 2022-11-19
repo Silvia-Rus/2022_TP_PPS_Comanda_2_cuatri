@@ -102,7 +102,7 @@ const HomeDuenioScreen = () => {
                     </TouchableOpacity>         
                 </View>
             </View>
-            <Text style={styles.textHomePequeño}>Russsss@gmaim.xmn</Text>
+            <Text style={styles.textHomePequeño}>duenio@barcito.com</Text>
 
         
     </View>

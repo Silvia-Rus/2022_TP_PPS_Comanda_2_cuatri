@@ -50,7 +50,7 @@ const IndexScreen = () => {
                     onPress={handlerSignIn}
                     style={[styles.buttonRole, styles.buttonOutlineRole]}
                     >
-                    <Text style={styles.buttonOutlineTextRole}>Iniciar Sesión (solo staff)</Text>
+                    <Text style={styles.buttonOutlineTextRole}>Iniciar Sesión</Text>
                 </TouchableOpacity>
             </View>              
         </View> 

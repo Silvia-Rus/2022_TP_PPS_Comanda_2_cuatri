@@ -82,7 +82,7 @@ const HomeCocinaBarScreen = () => {
                     </TouchableOpacity>         
                 </View>
             </View>
-            <Text style={styles.textHomePequeño}>Russsss@gmaim.xmn</Text>
+            <Text style={styles.textHomePequeño}>bartender@barcito</Text>
 
         
     </View>

@@ -91,7 +91,7 @@ const SignUp = (rol : string) => {
         const handleReturn = () => {
             if(rol === 'clienteAnonimo' || rol === 'clienteRegistrado')
             {
-                navigation.replace('HomeMozo');
+                navigation.replace('HomeCliente');
             }
             else
             {
@@ -239,14 +239,16 @@ const SignUp = (rol : string) => {
               console.log(auth.currentUser?.email);
               //CREACION DE USUARIO
 
-              if(rol === 'duenio' || rol === 'empleado'){
                 await createUserWithEmailAndPassword(auth,values.email,values.password);
                 console.log("entra al create noseque");
                 console.log(auth.currentUser?.email);
-                //DESLOGUEO DEL USUARIO CREADO Y REESTABLECIMIENTO DEL USUARIO ORIGINAL
-                await auth.signOut();
-                await auth.updateCurrentUser(originalUser);
-              }
+
+                if(rol === 'duenio' || rol === 'empleado'){
+                   //DESLOGUEO DEL USUARIO CREADO Y REESTABLECIMIENTO DEL USUARIO ORIGINAL
+                    await auth.signOut();
+                    await auth.updateCurrentUser(originalUser);
+                }
+              //rol !== 'clienteAnonimo')
       
               //UPLOAD IMAGEN
 
@@ -463,7 +465,10 @@ const SignUp = (rol : string) => {
                    keyboardType={'numeric'}
                    onChangeText={(text) => setValue("cuil",text)}
                    />
-                      
+                </View>
+            : null}
+                <View style={styles.inputContainer}>
+                            
                     <TextInput
                         placeholder= {emailForm}
                         style={[styles.buttonRole, styles.buttonOutlineRole]}
@@ -482,8 +487,6 @@ const SignUp = (rol : string) => {
                         secureTextEntry = {true}
                     />              
                 </View> 
-                :null
-            }  
         </View>  
 
          {rol == 'duenio' ?

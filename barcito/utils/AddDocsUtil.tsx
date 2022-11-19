@@ -6,6 +6,8 @@ import Toast from 'react-native-simple-toast';
 const coleccionUsers = "userInfo";
 const coleccionMesas = "tableInfo";
 const coleccionProductos = "productInfo"
+const coleccionWaitingList = "waitingList"
+
 
 export const addDuenioEmpleado = async (imageValue : string, 
                                         values, 
@@ -43,7 +45,10 @@ export const addClienteRegistrado = async (imageValue : string,
             name:values.nombre,
             dni:values.dni,
             rol:checked,
+            email:values.email,
             image:imageValue,
+            clientStatus: "Pending" ,
+            rejectedReason: "",
             creationDate:new Date()          
           });  
     }
@@ -65,6 +70,9 @@ export const addClienteAnonimo = async (imageValue : string,
             name:values.nombre,
             rol:checked,
             image:imageValue,
+            clientStatus: "Accepted",
+            rejectedReason: "",
+            email:values.email,
             creationDate:new Date()          
         });  
     }
@@ -138,6 +146,27 @@ export const addProducto = async (imageValue1 : string,
         console.log("ERROR GRABANDO PRODUCTO EN BD: "+error.code);
         Toast.showWithGravity(
         "ERROR GRABANDO PRODUCTO EN BD: "+error.code,
+        Toast.LONG, 
+        Toast.CENTER);
+    }
+}
+
+export const addListaDeEspera = async (mailCliente : string, 
+                                       idMesa) => {
+    try
+    {
+        await addDoc(collection(db, coleccionWaitingList), {   
+            mailCliente: mailCliente,
+            idMesa: idMesa,
+            status: "enEspera" ,
+            creationDate:new Date()          
+        });  
+    }
+    catch (error:any) 
+    {
+        console.log("ERROR GRABANDO EN LISTA DE ESPERA: "+error.code);
+        Toast.showWithGravity(
+        "ERROR GRABANDO CLIENTE EN BD: "+error.code,
         Toast.LONG, 
         Toast.CENTER);
     }

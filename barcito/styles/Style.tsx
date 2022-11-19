@@ -59,6 +59,12 @@ export default StyleSheet.create({
         alignItems: 'center',
         marginTop: '2%',
     },
+    buttonContainerArriba: {
+        width: '80%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: '10%',
+    },
     button: {
         backgroundColor: '#4d3e6b',
         width: '100%',
@@ -152,6 +158,13 @@ export default StyleSheet.create({
     },
     textHome:{
         fontSize: 150,
+        marginTop: 5, 
+        color: '#27191c',
+        fontWeight: 'bold',        
+    },
+    textEnEspera:{
+        textAlign: 'center',
+        fontSize: 50,
         marginTop: 5, 
         color: '#27191c',
         fontWeight: 'bold',        
@@ -284,6 +297,89 @@ export default StyleSheet.create({
         width:100, 
         borderRadius:20, 
         margin:10
+    },
+
+    body: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'transparent',
+    },
+    cardStyle: {
+        backgroundColor: '#81749c',
+        borderColor: '#DCDCE1',
+        margin: 10,
+        borderRadius: 10,
+        borderWidth: 2,
+    },
+    imageIconContainer: {
+        flexDirection: 'row', 
+        alignContent: 'center', 
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 5
+    },
+
+    cardImage: {
+        // flex: 1, 
+        padding: 10,
+        margin: 5,
+        borderRadius: 10,
+        height:90, 
+        width: 90,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    cardIcon: {
+        padding: 10,
+        margin: 5,
+        height: 100,
+        width: 100,
+        resizeMode: 'contain',
+    },
+    tableHeaderText: {
+        color: '#4d3e6b',
+        fontSize: 20,
+    },
+
+    tableCellText: {
+        color: '#4d3e6b',
+        fontSize: 15,
+    },
+    modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+    },
+    modalBody: {
+        borderColor: '#4d3e6b',
+        backgroundColor: '#4d3e6b',
+        borderWidth: 2,
+        width: '100%',
+        padding: 15,
+        borderRadius: 25,
+        alignItems: 'center',
+    },
+
+    modalIconContainer: {
+        flexDirection: 'row', 
+        alignContent: 'center', 
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 10,
+        marginTop: 10
+    },
+
+    inputField: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'rgba(220, 220, 225, 0.5);',
+        borderBottomColor: '#F7AD3B',
+        borderBottomWidth: 0,
+        paddingHorizontal: 15,
+        paddingVertical: 10,
+        marginTop: 5,
+        borderRadius: 10,
     },
 
     

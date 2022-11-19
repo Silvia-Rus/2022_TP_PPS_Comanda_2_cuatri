@@ -78,6 +78,10 @@ const LoginScreen = () => {
         {
             navigation.replace("HomeMetre");
         }
+        else if(rol === 'clienteRegistrado')
+        {
+            navigation.replace("HomeCliente");
+        }
     }
 
     const handlerLogin = async () => {
@@ -116,6 +120,7 @@ const LoginScreen = () => {
     const duenioLogin = () => {
         //setEmail("supervisor@barcito.com");
         setEmail("duenio@barcito.com");
+        //setEmail("silrusma@gmail.com");
         setPassword("123456");
         admin = false;
     }
