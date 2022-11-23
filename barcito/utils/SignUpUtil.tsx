@@ -7,22 +7,16 @@ import Modal from "react-native-modal";
 import { Camera } from 'expo-camera';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { useForm } from 'react-hook-form';
-import Toast from 'react-native-simple-toast';
+import insertarToast from "./ToastUtil";
 import { createUserWithEmailAndPassword } from "firebase/auth"; 
-import { ref, uploadBytes } from 'firebase/storage';
-import { addDoc, collection, runTransaction } from "firebase/firestore";
 import { auth, db, storage } from "../database/firebase";
-import getBlob from "../utils/BlobUtil";
-import * as ImagePicker from "expo-image-picker";
 import { RadioButton } from 'react-native-paper';
 import Spinner from "../utils/SpinnerUtil";
 import { RootStackParamList } from "../App";
-//import { launchCamera } from "react-native-image-picker";
-//import * as ImagePicker from "react-native-image-picker";
-// import ImagePicker from 'react-native-image-crop-picker';
 import { addClienteRegistrado, addDuenioEmpleado, addClienteAnonimo } from "./AddDocsUtil";
 import LanzarCamara from "./CameraUtil";
 import CargarImagen from "./CargarImagenUtil";
+import ValidacionCamposUsuario from "./ValidacionCamposUsuariosUtil"
 
 
 const SignUp = (rol : string) => {
@@ -89,30 +83,36 @@ const SignUp = (rol : string) => {
         //HANDLERS
         //RETURN
         const handleReturn = () => {
-            if(rol === 'clienteAnonimo' || rol === 'clienteRegistrado')
-            {
-                navigation.replace('HomeCliente');
-            }
-            else
-            {
-                navigation.replace('HomeDuenio');
-            }
+            if(rol === 'clienteAnonimo')        {navigation.replace('HomeCliente');}
+            else if(rol === 'clienteRegistrado'){navigation.replace('HomeClienteEspera');}
+            else                                {navigation.replace('HomeDuenio');}
         }
 
         //COMPLETADO DEL FORM A PARTIR DEL QR
         const handleBarCodeScanned = ({ data }) => {
             setScanned(true);
             setOpenQR(false);
+            //console.log(data);
             const dataSplit = data.split('@');
-            const dni = dataSplit[4].trim();
-            const nombre = dataSplit[2].trim();
-            const apellido = dataSplit[1].trim();
-            setValue("dni",dni);
-            setValue("nombre",nombre);
-            setValue("apellido",apellido);
-            setApellido(apellido);
-            setNombre(nombre);
-            setDni(dni);
+            console.log(dataSplit);
+            if(dataSplit.length === 9)
+            {
+                setValue("dni",dataSplit[4].trim());
+                setValue("nombre",dataSplit[2].trim());
+                setValue("apellido", dataSplit[1].trim());
+                setApellido(dataSplit[1].trim());
+                setNombre(dataSplit[2].trim());
+                setDni(dataSplit[4].trim());
+            }
+            else
+            {
+                setValue("dni",dataSplit[1].trim());
+                setValue("nombre",dataSplit[5].trim());
+                setValue("apellido", dataSplit[4].trim());
+                setApellido(dataSplit[4].trim());
+                setNombre(dataSplit[5].trim());
+                setDni(dataSplit[1].trim());
+            }              
         };
     
         //MANEJADOR DEL QR Y CAMARA
@@ -123,15 +123,6 @@ const SignUp = (rol : string) => {
         const handleCamera = async () => {
             setLoading(true);
             setImage(await LanzarCamara());
-            // let result = await ImagePicker.launchImageLibraryAsync({
-            //     mediaTypes: ImagePicker.MediaTypeOptions.All,
-            //     //allowsEditing: true,
-            //     aspect: [4, 3],
-            //     quality: 1,
-            // })
-            // if (!result.cancelled) {
-            //     setImage(result["uri"]);
-            // }
             setLoading(false)         
         };
 
@@ -153,85 +144,16 @@ const SignUp = (rol : string) => {
             let error=false;
       
             //VALIDACION CAMPOS
-            if(rol === 'duenio' || rol === 'clienteRegistrado')
+            let validacion = ValidacionCamposUsuario(values, image, rol);
+            console.log("la validacion "+validacion);
+            if(validacion === false)
             {
-                if(!image){
-                    Toast.showWithGravity(
-                      "Pulse en la cámara para subir una foto.",
-                      Toast.LONG, 
-                      Toast.CENTER);
-                    return;
-                  }
-            }
+                console.log("entra a campos obligatorios");
+                insertarToast("Todos los campos y la imagen son requeridos.")
+                insertarToast("Compruebe que todos los campos son correctis.")
 
-            if( values.nombre === undefined){
-                     Toast.showWithGravity(
-                         "Todos los campos son obligatorios",
-                         Toast.LONG, 
-                         Toast.CENTER);
-                     return;
-                }
-            if((rol !== 'clienteAnonimo') && 
-                (values.apellido === undefined ||
-                values.dni === undefined))
-            { 
-                Toast.showWithGravity(
-                "Todos los campos son obligatorios",
-                Toast.LONG, 
-                Toast.CENTER);
                 return;
-            }
-
-            if((rol === 'duenio' || rol === 'empleado') &&
-               (values.password === undefined ||
-               values.confirmPassword === undefined ||
-               values.cuil === undefined ||
-               values.email === undefined )){
-                    Toast.showWithGravity(
-                        "Todos los campos son obligatorios",
-                        Toast.LONG, 
-                        Toast.CENTER);
-                    return;
-                if(values.password.length<6){
-                    Toast.showWithGravity(
-                        "La contraseña debe tener al menos 6 caracteres",
-                        Toast.LONG,
-                        Toast.CENTER);
-                    return;
-                    }
-                if(values.cuil.length!==11){
-                    Toast.showWithGravity(
-                        "El CUIL debe tener 11 caracteres",
-                        Toast.LONG,
-                        Toast.CENTER);
-                    }      
-                    if(!values.email.includes("@")){
-                        Toast.showWithGravity(
-                        "El correo electrónico no es válido",
-                        Toast.LONG,
-                        Toast.CENTER);
-                        return;
-                    }
-                    if(!values.email.includes(".")){
-                        Toast.showWithGravity(
-                        "El correo electrónico no es válido",
-                        Toast.LONG,
-                        Toast.CENTER);
-                        return;
-                    }               
-               }  
-            
-            if(rol !== 'clienteAnonimo')
-            {
-                if(values.dni.length!==8){
-                    Toast.showWithGravity(
-                      "El DNI debe tener 8 caracteres",
-                      Toast.LONG,
-                      Toast.CENTER);
-                    return;
-                  }
-            }
-          
+            }          
             
             setLoading(true)
             toggleSpinnerAlert();
@@ -239,67 +161,42 @@ const SignUp = (rol : string) => {
               console.log(auth.currentUser?.email);
               //CREACION DE USUARIO
 
-                await createUserWithEmailAndPassword(auth,values.email,values.password);
-                console.log("entra al create noseque");
-                console.log(auth.currentUser?.email);
+                if(rol !== 'clienteAnonimo')
+                {   
+                    await createUserWithEmailAndPassword(auth,values.email,values.password);
+                    console.log(auth.currentUser?.email);
+                }
 
                 if(rol === 'duenio' || rol === 'empleado'){
                    //DESLOGUEO DEL USUARIO CREADO Y REESTABLECIMIENTO DEL USUARIO ORIGINAL
                     await auth.signOut();
                     await auth.updateCurrentUser(originalUser);
                 }
-              //rol !== 'clienteAnonimo')
-      
-              //UPLOAD IMAGEN
-
-              let imageValue = "";
-           
-              if(image){
-                // const blob:any = await getBlob(image);
-                // const fileName = image.substring(image.lastIndexOf("/") + 1);
-                // const fileRef = ref(storage, "userInfo/" + fileName);
-                // await uploadBytes(fileRef, blob);
-                // imageValue = fileRef.fullPath;
+    
+                //UPLOAD IMAGEN
+                let imageValue = "";
+                if(image){
                 imageValue = (await CargarImagen(image));
-              }
-              console.log("llega al addoc");   
-              //UPLOAD DATA
-            //   await addDoc(collection(db, "userInfo"), {
-                
-            //     lastName:values.apellido,
-            //     name:values.nombre,
-            //     dni:values.dni,
-            //     cuil:values.cuil,
-            //     email:values.email,
-            //     rol:checked,
-            //     image:imageValue,
-            //     creationDate:new Date()          
-            //   });  
+                }
 
-            if(rol === 'duenio' || rol === 'empleado'){
-                addDuenioEmpleado(imageValue, values, checked);
-            }
-            else if(rol === 'clienteRegistrado'){
-                addClienteRegistrado(imageValue, values, checked)
-            }
-            else if(rol === 'clienteAnonimo'){
-                addClienteAnonimo(imageValue, values, checked)
-            }
-            console.log("sale del addoc");   
-        
-              Toast.showWithGravity(
-                "Usuario creado exitosamente",
-                Toast.LONG, 
-                Toast.CENTER);      
-            reset();
-            setImage("");
-            //VUELTA AL CONTROL PANEL ( VER DE PONER EL QUE CORRESPONDE EN CADA CASO)
-            handleReturn();
-            } catch (error:any) {
-              Toast.showWithGravity(
-               "EL CATCH: "+error.code,
-                Toast.LONG, 
-                Toast.CENTER); 
+                if(rol === 'duenio' || rol === 'empleado'){
+                    addDuenioEmpleado(imageValue, values, checked);
+                }
+                else if(rol === 'clienteRegistrado'){
+                    console.log("en el add: "+values);
+                    addClienteRegistrado(imageValue, values, checked)
+                }
+                else if(rol === 'clienteAnonimo'){
+                    addClienteAnonimo(imageValue, values, checked)
+                }
+                insertarToast("Usuario creado exitosamente");    
+                reset();
+                setImage("");
+
+                //ENTRAR
+                handleReturn();
+            }catch (error:any) {
+                insertarToast(error.code);
             }finally{
               setLoading(false);
               resetForm();  
@@ -383,19 +280,6 @@ const SignUp = (rol : string) => {
         useFocusEffect(
         useCallback(() => {
             console.log("el callback: "+checked);
-
-            // switch(checked){
-            //     case 'Supervisor':
-            //         setValue("rol",checked);
-            //         break;
-            //     case 'Dueño':
-            //         setValue("rol",checked);
-            //         break;
-            //     case 'Mozo':
-            //         setValue("rol",checked);
-            //         break;
-            // }
-
             if(checked=='Supervisor'){
             setValue("rol",checked);
             }
@@ -423,7 +307,7 @@ const SignUp = (rol : string) => {
                 </View>
                 }
             </View>
-
+            { rol != 'clienteAnonimo' ?
             <View style={styles.buttonContainer} >
                 <TouchableOpacity
                         onPress={handleOpenQR}
@@ -432,6 +316,8 @@ const SignUp = (rol : string) => {
                         <Text style={styles.buttonText}>Escanear DNI</Text>
                 </TouchableOpacity>
             </View>
+            : null}
+
             <View style={styles.inputContainer}>
                 <TextInput
                     placeholder={nombreForm}
@@ -467,6 +353,7 @@ const SignUp = (rol : string) => {
                    />
                 </View>
             : null}
+            {rol != 'clienteAnonimo' ?
                 <View style={styles.inputContainer}>
                             
                     <TextInput
@@ -486,7 +373,8 @@ const SignUp = (rol : string) => {
                         onChangeText={(text) => setValue("confirmPassword",text)}
                         secureTextEntry = {true}
                     />              
-                </View> 
+                </View>
+            :null} 
         </View>  
 
          {rol == 'duenio' ?

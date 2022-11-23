@@ -1,28 +1,49 @@
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, KeyboardAvoidingView, Image, TextInput } from 'react-native';
 import { RootStackParamList } from './../App';
 import styles from "../styles/Style";
 import Toast from 'react-native-simple-toast';
+import { BarCodeScanner } from "expo-barcode-scanner";
+
 
 
 import { auth, db } from "../database/firebase";
 import Spinner from "../utils/SpinnerUtil";
 import { collection, getDocs, query, where } from 'firebase/firestore';
-import EnConstruccionScreen from "../utils/EnConstruccionUtil";
 import { addListaDeEspera } from "../utils/AddDocsUtil";
+import { Camera } from "expo-camera";
 
 const HomeClienteScreen = () => {
 
         const navigation = useNavigation<NativeStackNavigationProp<any>>();
         const [loading, setLoading] = useState(false);
         const [data, setData] = useState<any>([]);
-        const [clientStatus, setClientStatus] = useState(false);
+        const [clientStatus, setClientStatus] = useState("Pending");
         const [numeroMesa, setNumeroMesa] = useState("");
         const [mesaStatus, setMesaStatus] = useState("");
+        const [motivoRechazo, setMotivoRechazo] = useState("");
+        const [scanned, setScanned] = useState(false);
+        const [openQR, setOpenQR] = useState(false);
 
- 
+       const backgroundImage = require("../assets/common/background.png");
+       const logoutIcon = require("../assets/common/logout.png");
+       const userIcon = require("../assets/profiles/client.png");
+      const qrIcon = require("../assets/common/qr.png");
+
+
+        useEffect(() => {
+           (async () => {
+            await Camera.requestCameraPermissionsAsync();
+            await BarCodeScanner.requestPermissionsAsync();
+            })();
+         }, []);
+
+         const handleOpenQR = () => {
+            setScanned(false);
+            setOpenQR(true);
+          };
 
       //   const handlerElegirMesa = async () => {
       //    //Chequear si está libre
@@ -73,6 +94,26 @@ const HomeClienteScreen = () => {
                   
       //   }
 
+       //COMPLETADO DEL FORM A PARTIR DEL QR
+      const handleBarCodeScanned = ({ data }) => {
+      setScanned(true);
+      setOpenQR(false);
+      const dataSplit = data.split("@");
+      const qrType = dataSplit[0];
+      console.log(dataSplit);
+
+      // if (qrType === "ingresoLocal") {
+      //    addToWaitingList();
+      //    //sendPushNotification( {title:"CLIENTE ESPERANDO MESA", description: "Hay un nuevo cliente en la lista de espera"} );
+      // } else {
+      //    Toast.showWithGravity(
+      //       "QR Eroneo. Debe ingresar a la lista de espera",
+      //       Toast.LONG,
+      //       Toast.CENTER
+      //    );
+      // }
+      };
+
         async function handlerSignOut() {
          await auth
              .signOut()
@@ -83,26 +124,39 @@ const HomeClienteScreen = () => {
         useFocusEffect(
             useCallback(() => {
                checkClientStatus();
-               handlerElegirMesa();
-               
-               }, []))
+               //handlerElegirMesa();
+         }, []))
       
        const checkClientStatus = async () => {
          const query1 = query(
             collection(db, "userInfo"),
             where("email", "==", auth.currentUser?.email)
             );
-        const querySnapshot1 = await getDocs(query1);
-        querySnapshot1.forEach(async (doc) => {
+         const querySnapshot1 = await getDocs(query1);
+         querySnapshot1.forEach(async (doc) => {
             const statusAux = doc.data().clientStatus;
-            if(statusAux === 'Accepted')
+            const motivoRechazoAux = doc.data().rejectedReason;
+            setClientStatus(statusAux);
+            setMotivoRechazo(motivoRechazoAux);
+            if(statusAux === 'Pending')
             {
-               setClientStatus(true);
+               navigation.replace("HomeClienteEspera");
+               //setClientStatus('Accepted');
                console.log(clientStatus);
+               return
             }
+            // else if (statusAux === 'Rejected')
+            // {
+            //    console.log("llega aquíiiiii yyyy?");
+            //    navigation.replace("HomeClienteEspera");
+
+            //    return
+            // }
         });
        }
-         const handlerElegirMesa = async () => {
+         
+       
+   const handlerElegirMesa = async () => {
 
          console.log('llega aquí?');
             setLoading(true);    
@@ -118,7 +172,6 @@ const HomeClienteScreen = () => {
                querySnapshot.forEach(async (doc) => {
                const res: any = { ...doc.data()};
                console.log(res);
-               console.log("el estatussssssskhe"+res.status)
                
                if(res.status === "free")
                      {
@@ -151,57 +204,64 @@ const HomeClienteScreen = () => {
             }
        }
 
-       return (
+       return !openQR ?  (
          <View style={styles.container}>
-         {loading?
-            <View style={styles.spinContainer}><Spinner/></View>
-         : null}
-         {<Image
-            source={require('../assets/logo.png')}
-            resizeMode="contain"
-            style={styles.logoHome}
-         />}
-
-         {clientStatus ?
-               <View style={styles.buttonContainer}> 
-                     <TextInput placeholder="Número de mesa"
-                        value={numeroMesa}
-                        onChangeText={text => setNumeroMesa(text)}
-                        style={styles.input}
-                     />
-         
-                  <View style={styles.buttonContainer}> 
-                     <TouchableOpacity
-                           onPress={handlerElegirMesa}
+            {loading?
+               <View style={styles.spinContainer}><Spinner/></View>
+            : null}
+            {clientStatus == 'Accepted' ?
+               <View style={styles.buttonContainer}>
+                  <TouchableOpacity onPress={handleOpenQR}>
+                     <Image style={styles.qrIcon} resizeMode="cover" source={qrIcon} />
+                  </TouchableOpacity>
+                     <View style={styles.inputContainer}> 
+                        <TouchableOpacity
+                              onPress={handlerElegirMesa}
+                              style={styles.button}
+                        >
+                              <Text style={styles.buttonText}>Elegir Mesa</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity 
+                           onPress={handlerSignOut}
                            style={styles.button}
-                     >
-                           <Text style={styles.buttonText}>Elegir Mesa</Text>
-                     </TouchableOpacity>
-                     <TouchableOpacity 
-                        onPress={handlerSignOut}
-                        style={styles.button}
-                     >
-                        <Text style={styles.buttonText}>Salir</Text>
-                     </TouchableOpacity>
-                  </View>
+                        >
+                           <Text style={styles.buttonText}>Salir</Text>
+                        </TouchableOpacity>
+                     </View>
                </View>            
-               :
-               <View style={styles.buttonContainer}>         
-                  <Text style={styles.textEnEspera}>Espere a que lo acepten para poder continuar.</Text> 
-                  <View style={styles.buttonContainer} >   
-                     <TouchableOpacity 
-                        onPress={handlerSignOut}
-                        style={styles.button}
-                     >
-                        <Text style={styles.buttonText}>Salir</Text>
-                     </TouchableOpacity>
-                  </View>  
+            :
+               <View style={styles.buttonContainer}>
+                  <Image style={styles.logoHomeDos} resizeMode="contain" source={require('../assets/logo.png')} />
+                  <View style={styles.buttonContainer}>    
+                     {clientStatus == 'Pendent'? 
+                     <Text style={styles.textEnEspera}>Espere a que lo acepten para poder continuar.</Text> 
+                     : 
+                     <Text style={styles.textHomeMedianoDos}>Su petición fue rechazada.{"\n"}Motivo: {motivoRechazo}</Text> 
+                     } 
+                        <TouchableOpacity 
+                           onPress={handlerSignOut}
+                           style={styles.button}
+                        >
+                           <Text style={styles.buttonText}>Salir</Text>
+                        </TouchableOpacity>
+                  </View>
                </View>  
-            }                      
+            }                     
+         </View> )
+         : (
+         <View>
+            <BarCodeScanner
+               onBarCodeScanned={scanned && openQR ? undefined : handleBarCodeScanned}
+               style={StyleSheet.absoluteFillObject}
+            />
+            <Text style={styles.textEnEspera}>Espere a que lo acepten para poder continuar.</Text> 
          </View>
-       );
+         );
 
+      
+   
 }
 
 export default HomeClienteScreen;
+
 

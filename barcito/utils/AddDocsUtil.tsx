@@ -38,7 +38,8 @@ export const addDuenioEmpleado = async (imageValue : string,
 export const addClienteRegistrado = async (imageValue : string, 
                                            values, 
                                            checked : string ) => {
-    try
+    
+try
     {
         await addDoc(collection(db, coleccionUsers), {   
             lastName:values.apellido,
@@ -72,7 +73,6 @@ export const addClienteAnonimo = async (imageValue : string,
             image:imageValue,
             clientStatus: "Accepted",
             rejectedReason: "",
-            email:values.email,
             creationDate:new Date()          
         });  
     }

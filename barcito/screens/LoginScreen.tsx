@@ -151,6 +151,20 @@ const LoginScreen = () => {
         setPassword("123456");
         admin = false;
     }
+
+    const clienteAnonimoLogin = () => {
+        //setEmail("empleado@rus.com");
+        setEmail("silviarus.biblio@gmail.com");
+        setPassword("123456");
+        admin = false;
+    }
+
+    const clienteRegistradoLogin = () => {
+        //setEmail("empleado@rus.com");
+        setEmail("mozo@barcito.com");
+        setPassword("123456");
+        admin = false;
+    }
     const handlerBack = () => {
         navigation.replace('Index');
     }
@@ -228,6 +242,18 @@ const LoginScreen = () => {
                         style={[styles.buttonRole, styles.buttonOutlineRole]}
                     >
                         <Text style={styles.buttonOutlineTextRole}>Mozo</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={clienteRegistradoLogin}
+                        style={[styles.buttonRole, styles.buttonOutlineRole]}
+                    >
+                        <Text style={styles.buttonOutlineTextRole}>Cliente registrado</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={clienteAnonimoLogin}
+                        style={[styles.buttonRole, styles.buttonOutlineRole]}
+                    >
+                        <Text style={styles.buttonOutlineTextRole}>Cliente anónimo</Text>
                     </TouchableOpacity>
                 </View>
             </View>

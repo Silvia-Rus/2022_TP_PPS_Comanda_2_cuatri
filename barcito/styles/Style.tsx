@@ -175,6 +175,13 @@ export default StyleSheet.create({
         color: '#4d3e6b',
         fontWeight: 'bold',        
     },
+    textHomeMedianoDos:{
+        fontSize: 25,
+        marginTop: 5, 
+        textAlign: 'center',
+        color: '#4d3e6b',
+        fontWeight: 'bold',        
+    },
     textHomePequeño:{
         fontSize:15,
         marginTop: 5, 
@@ -217,8 +224,8 @@ export default StyleSheet.create({
         marginBottom: 5
     }, 
     qrIcon: {
-        height:120, 
-        width:120, 
+        height:180, 
+        width:180, 
         borderRadius:20, 
         margin:10,
         backgroundColor: 'white',
@@ -381,6 +388,31 @@ export default StyleSheet.create({
         marginTop: 5,
         borderRadius: 10,
     },
+
+    buttonLayout: {
+        backgroundColor: '#A4C3B2',
+        borderColor: '#A4C3B2',
+        marginTop: 20,
+        margin: 5,
+        width: "80%",
+        height: 60,
+        padding: 15,
+        borderRadius: 30,
+        borderWidth: 0,
+        justifyContent: 'center',
+        alignItems: 'center',
+    }, 
+
+    logoHomeDos: {
+        height:130, 
+        width:130, 
+        // width: '100%',
+        // height: '15%',
+        borderRadius:20, 
+        margin:10,
+        backgroundColor: 'white',
+    },
+
 
     
 })

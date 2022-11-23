@@ -29,28 +29,28 @@ const IndexScreen = () => {
                 resizeMode="contain"
                 style={styles.logoIndex}
             />}
+        <View style={styles.buttonContainer} >  
 
-            <View style={styles.buttonContainer} >   
+             <TouchableOpacity
+                onPress={handlerSignIn}
+                style={styles.button}
+                >
+                <Text style={styles.buttonText}>Iniciar Sesión</Text>
+            </TouchableOpacity>
+
+        
                 <TouchableOpacity
                     onPress={handlerAccederClienteRegistrado}                   
-                    style={styles.button}
+                    style={[styles.buttonRole, styles.buttonOutlineRole]}
                     >
-                    <Text style={styles.buttonText}>Registrarse como cliente</Text>
+                    <Text style={styles.buttonOutlineTextRole}>Registrarse como cliente</Text>
                 </TouchableOpacity>
                 
                 <TouchableOpacity
                     onPress={handlerAccederClienteAnonimo}
-                    style={styles.button}
-                    //style={[styles.button, styles.buttonOutline]}
-                    >
-                    <Text style={styles.buttonText}>Acceder como anónimo</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                    onPress={handlerSignIn}
                     style={[styles.buttonRole, styles.buttonOutlineRole]}
                     >
-                    <Text style={styles.buttonOutlineTextRole}>Iniciar Sesión</Text>
+                    <Text style={styles.buttonOutlineTextRole}>Acceder como anónimo</Text>
                 </TouchableOpacity>
             </View>              
         </View> 
