@@ -6,7 +6,7 @@ import Toast from 'react-native-simple-toast';
 const coleccionUsers = "userInfo";
 const coleccionMesas = "tableInfo";
 const coleccionProductos = "productInfo"
-const coleccionWaitingList = "waitingList"
+const coleccionClienteMesa = "clienteMesa"
 
 
 export const addDuenioEmpleado = async (imageValue : string, 
@@ -92,15 +92,16 @@ export const addMesa = async (imageValue : string,
     try
     {
         await addDoc(collection(db, coleccionMesas), {   
-        tableNumber:values.number,
-        tableCapacity:values.capacity,
-        tableType:checked,
-        image:imageValue,
-        status: "free",
-        assignedClient: "",
-        orderStatus: "waitingOrder",
-        survey: "no",
-        creationDate:new Date()          
+            tableNumber:values.number,
+            tableCapacity:values.capacity,
+            tableType:checked,
+            image:imageValue,
+            status: "free",
+            assignedClient: "",
+            orderStatus: "waitingOrder",
+            survey: "no",
+            qString: "mesa"+"@"+values.number,
+            creationDate:new Date()          
         });  
     }
     catch (error:any) 
@@ -116,7 +117,8 @@ export const addMesa = async (imageValue : string,
 export const addProducto = async (imageValue1 : string, 
                                   imageValue2 : string,
                                   imageValue3 : string,
-                                  values) => {
+                                  values,
+                                  tipo) => {
     try
     {
         await addDoc(collection(db, coleccionProductos), {   
@@ -124,7 +126,7 @@ export const addProducto = async (imageValue1 : string,
             description: values.description,
             elaborationTime: values.elaborationTime,
             price: values.price,
-            type: values.type,
+            type: tipo,
             image1:imageValue1,
             image2:imageValue2,
             image3:imageValue3,
@@ -151,14 +153,15 @@ export const addProducto = async (imageValue1 : string,
     }
 }
 
-export const addListaDeEspera = async (mailCliente : string, 
-                                       idMesa) => {
+export const addClienteMesa = async (idCliente : string, 
+                                    idMesa,
+                                    estado) => {
     try
     {
-        await addDoc(collection(db, coleccionWaitingList), {   
-            mailCliente: mailCliente,
+        await addDoc(collection(db, coleccionClienteMesa), {   
+            idCliente: idCliente,
             idMesa: idMesa,
-            status: "enEspera" ,
+            status: estado ,
             creationDate:new Date()          
         });  
     }
@@ -166,7 +169,7 @@ export const addListaDeEspera = async (mailCliente : string,
     {
         console.log("ERROR GRABANDO EN LISTA DE ESPERA: "+error.code);
         Toast.showWithGravity(
-        "ERROR GRABANDO CLIENTE EN BD: "+error.code,
+        "ERROR GRABANDO CLIENTE MESA EN BD: "+error.code,
         Toast.LONG, 
         Toast.CENTER);
     }

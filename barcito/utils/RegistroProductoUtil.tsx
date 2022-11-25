@@ -15,7 +15,6 @@ import { auth, db, storage } from "../database/firebase";
 import getBlob from "../utils/BlobUtil";
 import * as ImagePicker from "expo-image-picker";
 import { RadioButton } from 'react-native-paper';
-import Spinner from "../utils/SpinnerUtil";
 import { RootStackParamList } from "../App";
 //import { launchCamera } from "react-native-image-picker";
 //import * as ImagePicker from "react-native-image-picker";
@@ -24,6 +23,9 @@ import { addProducto } from "../utils/AddDocsUtil";
 import LanzarCamara from "../utils/CameraUtil";
 import ValidacionCamposProducto from "../utils/ValidacionCamposProductoUtil";
 import CargarImagen from "../utils/CargarImagenUtil";
+import Spinner from "../utils/SpinnerUtil";
+import insertarToast from "./ToastUtil";
+
 
 
 type NewProduct = {
@@ -34,7 +36,7 @@ type NewProduct = {
     type:string;
   }
 
-const RegistroProducto = () => {
+const RegistroProducto = (tipo : string) => {
 
         //CONSTANTES
         const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
@@ -53,47 +55,24 @@ const RegistroProducto = () => {
         const [employeeType, setEmployeeType] = React.useState('');
 
         const handleReturn = () => {
-            navigation.replace("Home")
+            navigation.replace("HomeCocinaBar")
           }
     
         const handlerBack = () => {
             navigation.replace('HomeCocinaBar');
             }
 
-        const pressComida = () => {
-            setChecked('Comida');
-            }
+        // const pressComida = () => {
+        //     setChecked('Comida');
+        //     }
         
-        const pressBebida = () => {
-            setChecked('Bebida');
-            }
+        // const pressBebida = () => {
+        //     setChecked('Bebida');
+        //     }
 
           //NAVEGACIÓN
         ///VER PORQUE NO FUNCIONA EL RETURN POR CUALQUIER mail
 
-    //   useFocusEffect(
-    //     useCallback(() => {
-    //       async () => {
-    //         const q = query(collection(db, "userInfo"), where("email", "==", auth.currentUser?.email));
-    //         const querySnapshot = await getDocs(q);
-    //         console.log(querySnapshot.size);
-    //         querySnapshot.forEach((doc) => {
-    //           setEmployeeType(doc.data().employeeType); 
-    //           console.log(doc.data().employeeType);          
-    //         });        
-    //       };
-    //   }, [checked]))
-
-
-    //   const handleReturn = () => {
-        
-    //     if(auth.currentUser?.email == "cincotenedorescocina@gmail.com"){
-    //       navigation.replace("ControlPanelCocina")
-    //     }
-    //     if(auth.currentUser?.email == "cincotenedoresbar@gmail.com"){
-    //       navigation.replace("ControlPanelBar")
-    //     }
-    //   }
 
     useFocusEffect(
         useCallback(() => {
@@ -132,12 +111,12 @@ const RegistroProducto = () => {
         setLoading(false)         
       };
 
-    const toggleSpinnerAlert = () => {
-    setModalSpinnerVisible(true);
-    setTimeout(() => {
-        setModalSpinnerVisible(false);
-    }, 3000);
-    };
+    // const toggleSpinnerAlert = () => {
+    // setModalSpinnerVisible(true);
+    // setTimeout(() => {
+    //     setModalSpinnerVisible(false);
+    // }, 3000);
+    // };
 
     const onSubmit = async () => {
         const values=getValues();
@@ -145,7 +124,7 @@ const RegistroProducto = () => {
         let error=false;
 
         setLoading(true)
-        toggleSpinnerAlert();
+        //toggleSpinnerAlert();
 
         if(ValidacionCamposProducto(values, image1, image2, image3) !== false){
 
@@ -159,18 +138,17 @@ const RegistroProducto = () => {
                 imageValue3 = (await CargarImagen(image3));
             }
 
-            addProducto(imageValue1, imageValue2, imageValue3, values);
+            addProducto(imageValue1, imageValue2, imageValue3, values, tipo);
 
-            Toast.showWithGravity(
-                "Producto creado con éxito",
-                Toast.LONG, 
-                Toast.CENTER); 
+            insertarToast("Producto creado con éxito");      
 
             reset();
             setImage1("");
             setImage2("");
             setImage3("");
             handleReturn();
+
+            setLoading(false)
         }
     }
 
@@ -191,7 +169,11 @@ const RegistroProducto = () => {
     
     return(
         <View style={styles.container}> 
-        {loading}
+        {loading?
+            <View style={styles.spinContainer}><Spinner/></View>
+        : null}
+            <Text style={styles.textHomeMedianoDos}>Introduzca {tipo}</Text> 
+
             <View style={styles.cameraQrContainer}>
                 {!image1?
                 <TouchableOpacity onPress={handleCamera1}>
@@ -245,7 +227,7 @@ const RegistroProducto = () => {
                         onChangeText={(text) => setValue("price",text)}
                     />
             </View>
-            <View style={styles.buttonContainer} >
+            {/* <View style={styles.buttonContainer} >
                 <View style={styles.inputFieldRadioLayout}>
                     <View style={styles.inputFieldRadio}>
                         <RadioButton
@@ -261,10 +243,10 @@ const RegistroProducto = () => {
                             status={ checked === 'Bebida' ? 'checked' : 'unchecked' }
                             onPress={ pressBebida }
                         />
-                        <Text style={styles.buttonOutlineText}>Estándar</Text>               
+                        <Text style={styles.buttonOutlineText}>Bebida</Text>               
                     </View>
                 </View>
-            </View>
+            </View> */}
             <View style={styles.buttonContainer} >
                 <View style={styles.buttonContainer} >
                     <TouchableOpacity
@@ -283,8 +265,6 @@ const RegistroProducto = () => {
                 </View>
             </View>
         </View>
-
     )
-
 }
 export default RegistroProducto;

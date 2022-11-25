@@ -5,8 +5,9 @@ import { StyleSheet, Text, View, TouchableOpacity, KeyboardAvoidingView, Image }
 import { RootStackParamList } from './../App';
 import styles from "../styles/Style";
 
-import { auth } from "../database/firebase";
+import { auth, db } from "../database/firebase";
 import Spinner from "../utils/SpinnerUtil";
+import { collection, getDocs, query, where } from 'firebase/firestore';
 
 
 const HomeCocinaBarScreen = () => {
@@ -25,9 +26,16 @@ const HomeCocinaBarScreen = () => {
 
     // const displayName = auth.currentUser.email;
     
-    const handlerRegistroProducto = () => {
+    const handlerRegistroProducto = async () => {
         setLoading(true);
-        navigation.replace('RegistroProducto');
+        const q2 = query(collection(db, "userInfo"), where("email", "==", auth.currentUser?.email));
+        const querySnapshot2 = await getDocs(q2);
+        querySnapshot2.forEach(async (item2) =>{
+            const tipoUsuarioAux = item2.data().rol;
+            if(tipoUsuarioAux === 'Bartender') { navigation.replace('RegistroBebida');}
+            else{navigation.replace('RegistroComida');}
+        });
+
         setLoading(false);
       }
 

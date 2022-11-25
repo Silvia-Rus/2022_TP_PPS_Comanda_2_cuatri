@@ -1,57 +1,44 @@
 
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-//import styles from "../styles/StylePrueba";
 import styles from "../styles/Style";
 
-import { Image, ImageBackground, Text, TouchableOpacity, View, ScrollView, TextInput, Alert } from "react-native";
-// import { returnIcon, backgroundImage, confirmIcon, cancelIcon } from "./AssetsClientManagmentScreen";
+import { Image, Text, TouchableOpacity, View, ScrollView, TextInput} from "react-native";
 import Modal from "react-native-modal";
-import React, { useCallback, useLayoutEffect, useState } from 'react'
+import React, { useCallback,  useState } from 'react'
 import Spinner from "../utils/SpinnerUtil";
 import { db, storage } from "../database/firebase";
 import { collection, query, where, getDocs, updateDoc, doc } from "firebase/firestore";
 import { getDownloadURL, ref } from 'firebase/storage'
 import { format } from 'date-fns'
-import Toast from 'react-native-simple-toast';
 import emailjs from '@emailjs/browser';
+import insertarToast from "../utils/ToastUtil";
+import { cambioClienteAPending, cambioClienteARejected, cambioClienteAAccepted } from "../utils/ManejoEstadosClienteUtil";
+
+
 
 const ClientManagment = () => {
 
   //CONSTANTES
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
-  const [isModalSpinnerVisible, setModalSpinnerVisible] = useState(false);
   const [isModalCancelVisible, setModalCancelVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<any>([]);
   const [rejectMotive, setRejectMotive] = useState('');
   const [rejectId, setRejectId] = useState('');
 
-  const backgroundImage = require("../assets/common/background.png");
-  const returnIcon = require("../assets/common/return.png");
-  const confirmIcon = require("../assets/common/confirm.png");
-  const cancelIcon = require("../assets/common/cancel.png");
+  const confirmIcon = require("../assets/confirm.png");
+  const cancelIcon = require("../assets/cancel.png");
   
 
   //RETURN
-  const handleReturn = () => {
-    navigation.replace("HomeDuenio");
-  }
+  const handleReturn = () => { navigation.replace("HomeDuenio"); }
 
   //REFRESH DE LA DATA
   useFocusEffect(
     useCallback(() => {
         getDocuments();
-        toggleSpinnerAlert();
   }, []))
-
-  //TOOGLE SPINNER
-  const toggleSpinnerAlert = () => {
-    setModalSpinnerVisible(true);
-    setTimeout(() => {
-      setModalSpinnerVisible(false);
-    }, 3000);
-  };
 
   //TOOGLE CANCEL USER
   const toggleModalCancel = () => {
@@ -60,7 +47,6 @@ const ClientManagment = () => {
 
   //GET DATA
   const getDocuments = async () => {
-    console.log('llega aquí?');
     setLoading(true);    
     setData([]);    
     try {
@@ -71,33 +57,20 @@ const ClientManagment = () => {
         const imageUrl = await getDownloadURL(ref(storage, res.image));
         setData((arr: any) => [...arr, { ...res, id: doc.id, imageUrl: imageUrl}].sort((a, b) => (a.creationDate < b.creationDate ? 1 : a.creationDate > b.creationDate ? -1 : 0)));
       });
-    } catch (error) {
-        console.log("ERROR GETDOCUMENTS: "+error)                    
-    }finally{
-        setLoading(false);
-    }
+    } catch(error){console.log("ERROR GETDOCUMENTS: "+error)                    
+    } finally{setLoading(false);}
   }
 
   //MANEJADORES DE ACEPTAR / RECHAZAR USUARIO
   const handleConfirm = async (id, mail) => {
     try {
-      const ref = doc(db, "userInfo", id);
-      const data =  'Accepted';
-      await updateDoc(ref, {clientStatus:data});
+      setLoading(true);
+      cambioClienteAAccepted(id);
       handleAcceptEmail(mail);
       getDocuments();
-      toggleSpinnerAlert();
-      setTimeout(() => {
-        Toast.showWithGravity(
-          "CLIENTE APROBADO",
-          Toast.LONG, 
-          Toast.CENTER);
-      }, 4000);      
-    } catch (error) {
-      console.log(error)
-    } finally{
-        setLoading(false);        
-    }
+      insertarToast("Cliente aprobado.");
+    } catch (error) { console.log(error) } 
+      finally{ setLoading(false); }
   } 
 
   const handleCancel = async (id) => {
@@ -107,25 +80,15 @@ const ClientManagment = () => {
   
   const completeReject = async (mail) => {
     try {
-      const ref = doc(db, "userInfo", rejectId);
-      const data =  'Rejected';
-      await updateDoc(ref, {clientStatus:data});
-      await updateDoc(ref, {rejectedReason:rejectMotive});
+      setLoading(true);
+      cambioClienteARejected(rejectId, rejectMotive);
       toggleModalCancel();
       handleRejectEmail(mail,rejectMotive);      
       getDocuments();
-      toggleSpinnerAlert();
-      setTimeout(() => {
-        Toast.showWithGravity(
-          "CLIENTE RECHAZADO",
-          Toast.LONG, 
-          Toast.CENTER);
-      }, 4000);      
-    } catch (error) {
-      console.log(error)
-    } finally{
-        setLoading(false);        
-    }
+      //toggleSpinnerAlert();
+      setTimeout(() => { insertarToast("Cliente rechazado.")}, 4000);      
+    } catch (error) { console.log(error) } 
+      finally{ setLoading(false);}
   }
 
   //MANEJADORES DE ENVIAR CORREO
@@ -142,31 +105,11 @@ const ClientManagment = () => {
       }, 'B503gv6hA_xtZPpgT');
   }
 
-  //HEADER
-//   useLayoutEffect(() => {
-//       navigation.setOptions({
-//         headerLeft: () => (
-//           <TouchableOpacity onPress={handleReturn}>
-//               <Image source={returnIcon} style={styles.headerIcon}/>
-//           </TouchableOpacity>
-//         ),
-//         headerTitle: () => (
-//           <Text style={styles.headerText}>ALTA NUEVOS CLIENTES</Text>
-//         ),
-//         headerTintColor: "transparent",
-//         headerBackButtonMenuEnabled: false,
-//         headerStyle: {
-//           backgroundColor: 'rgba(61, 69, 68, 0.4);',
-//         },         
-//       });
-//     }, []);
-
   return (
     <View style={styles.container} >
-        {/* <View style={styles.container}> */}
-          {loading && <View style={styles.spinContainer}>
-              <Spinner/>
-          </View>}
+        {loading?
+          <View style={styles.spinContainer}><Spinner/></View>
+        : null}
           <View style={styles.buttonContainerArriba} >
           <Text style={styles.textHomePequeño}>Lista de espera</Text> 
           <View style={styles.buttonContainer} >
@@ -198,13 +141,13 @@ const ClientManagment = () => {
                   </TouchableOpacity>
                 </View> 
                 <View>      
-                  <Text style={styles.tableHeaderText}>-----------------------------------------------------</Text>                      
+                  {/* <Text style={styles.tableHeaderText}>-----------------------------------------------------</Text>                       */}
                   <Text style={styles.tableHeaderText}> CORREO: {item.email}</Text> 
                   <Text style={styles.tableCellText}> NOMBRE: {item.name}</Text>
                   <Text style={styles.tableCellText}> APELLIDO: {item.lastName}</Text>
                   <Text style={styles.tableCellText}> DNI: {item.dni}</Text>
-                  <Text style={styles.tableCellText}> CREACIÓN: {format(item.creationDate.toDate(), 'dd/MM/yyyy HH:mm:ss')} hs</Text>
-                  <Text style={styles.tableHeaderText}>-----------------------------------------------------</Text>                      
+                  {/* <Text style={styles.tableCellText}> CREACIÓN: {format(item.creationDate.toDate(), 'dd/MM/yyyy HH:mm:ss')} hs</Text> */}
+                  {/* <Text style={styles.tableHeaderText}>-----------------------------------------------------</Text>                       */}
                 </View>
 
                 <Modal backdropOpacity={0.5} isVisible={isModalCancelVisible}>
@@ -221,12 +164,18 @@ const ClientManagment = () => {
                             secureTextEntry = {true}
                           />
                         </View>
-                        <View style={styles.modalIconContainer}>
-                          <TouchableOpacity onPress={() => completeReject(item.email)} >
-                          <Image source={confirmIcon} style={styles.cardIcon} />
+                        <View style={styles.buttonContainer} >
+                          <TouchableOpacity
+                            onPress={() => completeReject(item.email)}
+                            style={[styles.buttonRole, styles.buttonOutlineRole]}
+                          >
+                            <Text style={styles.buttonOutlineTextRole}>Rechazar</Text>
                           </TouchableOpacity>
-                          <TouchableOpacity  onPress={toggleModalCancel} >
-                          <Image source={cancelIcon} style={styles.cardIcon} />
+                          <TouchableOpacity
+                              onPress={toggleModalCancel}
+                              style={[styles.buttonRole, styles.buttonOutlineRole]}
+                          >
+                              <Text style={styles.buttonOutlineTextRole}>Volver</Text>
                           </TouchableOpacity>
                         </View>
                       </View>
@@ -237,11 +186,11 @@ const ClientManagment = () => {
             ))}
           </ScrollView> 
         </View> 
-
+      {/* 
         <View>
           <Modal backdropOpacity={0.5} animationIn="rotate" animationOut="rotate" isVisible={isModalSpinnerVisible}>
           </Modal>
-        </View>
+        </View> */}
         </View> 
   );
 };

@@ -71,6 +71,8 @@ export default StyleSheet.create({
         padding: 20,
         borderRadius: buttonBorderRadius,
         alignItems: 'center',
+        marginTop: '6%',
+
         marginBottom: '8%',
     },
     buttonHome: {
@@ -184,6 +186,13 @@ export default StyleSheet.create({
     },
     textHomePequeño:{
         fontSize:15,
+        marginTop: 5, 
+        color: '#4d3e6b',
+        fontWeight: 'bold',        
+    },
+    textHomePequeñoCentrado:{
+        fontSize:15,
+        textAlign: "center",
         marginTop: 5, 
         color: '#4d3e6b',
         fontWeight: 'bold',        
@@ -337,6 +346,17 @@ export default StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
+
+    cardImagePequenia: {
+        // flex: 1, 
+        padding: 10,
+        margin: 5,
+        borderRadius: 10,
+        height:60, 
+        width: 60,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     cardIcon: {
         padding: 10,
         margin: 5,
@@ -352,6 +372,12 @@ export default StyleSheet.create({
     tableCellText: {
         color: '#4d3e6b',
         fontSize: 15,
+    },
+    tableCellTextCentrado: {
+        color: '#4d3e6b',
+        fontSize: 15,
+        textAlign: "center",
+        fontWeight: "bold"
     },
     modalContainer: {
         flex: 1,

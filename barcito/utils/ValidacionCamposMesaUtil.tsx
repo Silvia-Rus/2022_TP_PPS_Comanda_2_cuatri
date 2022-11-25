@@ -4,40 +4,21 @@ import { ref, uploadBytes } from 'firebase/storage';
 import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
 import { auth, db, storage } from "../database/firebase";
 
-
+//PRIMER NIVEL
 const ValidacionCamposMesa =  (values, image) => {
 
-    if(!estanTodosLosObligatorios(values))
-    {
-        console.log("entra a campos obligatorios");
-        Toast.showWithGravity(
-            "Todos los campos son requeridos",
-            Toast.LONG, 
-            Toast.CENTER);
-        console.log("Todos los campos son requeridos");
-        return false;
-    }
-    else if(!hayImagen(image))
-    {
-        Toast.showWithGravity(
-            "Cargue una imagen",
-            Toast.LONG, 
-            Toast.CENTER);
-        console.log("Cargue una imagen");
-        return false;
-    }
-    else if(!capacidadMayorACero(values))
-    {
-        Toast.showWithGravity(
-            "La capacidad debe ser mayor a cero.",
-            Toast.LONG, 
-            Toast.CENTER);
-        console.log("La capacidad debe ser mayor a cero.");
-        return false;
-    }
+    let retorno = false;
 
+    if(estanTodosLosObligatorios(values) &&
+       hayImagen(image)                  &&
+       capacidadMayorACero(values))
+    {
+        retorno = true;
+    }
+    return retorno;
 }
 
+//SEGUNDO NIVEL
 const estanTodosLosObligatorios = (values) => {
     let retorno = true;
     console.log(values);

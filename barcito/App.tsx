@@ -8,7 +8,9 @@ import RegistroEmpleadoScreen from './screens/RegistroEmpleadoScreen';
 import RegistroClienteRegistradoScreen from './screens/RegistroClienteRegistradoScreen';
 import RegistroClienteAnonimoScreen from './screens/RegistroClienteAnonimoScreen';
 import RegistroMesaScreen from './screens/RegistroMesaScreen';
-import RegistroProductoScreen from './screens/RegistroProductoScreen';
+import RegistroComidaScreen from './screens/RegistroComidaScreen';
+import RegistroBebidaScreen from './screens/RegistroBebidaScreen';
+
 import HomeDuenioScreen from './screens/HomeDuenioScreen';
 import HomeCocinaBarScreen from './screens/HomeCocinaBarScreen';
 import HomeMetreScreen from './screens/HomeMetreScreen';
@@ -26,6 +28,8 @@ import GestionPedidosMozoScreen from './screens/GestionPedidosMozoScreen';
 import GestionPedidosCocinaBarScreen from './screens/GestionPedidosCocinaBarScreen';
 import EncuestaLugarDeTrabajoMozoScreen from './screens/EncuestaLugarDeTrabajoMozoScreen';
 import EncuestaLugarDeTrabajoCocinaBarScreen from './screens/EncuestaLugarDeTrabajoCocinaBarScreen';
+import MenuScreen from './screens/MenuScreen';
+
 
 
 
@@ -50,7 +54,8 @@ export type RootStackParamList = {
   RegistroEmpleado: any;
   RegistroClienteAnonimo: any;
   RegistroMesa: any;
-  RegistroProducto: any;
+  RegistroComida: any;
+  RegistroBebida: any;
   HomeCocinaBar: any;
   HomeDuenio: any;
   HomeMetre: any;
@@ -65,9 +70,9 @@ export type RootStackParamList = {
   EncuestaLugarDeTrabajoMetre: any;
   EncuestaLugarDeTrabajoMozo: any;
   EncuestaLugarDeTrabajoCocinaBar: any;
-  GestionPedidosCocinaBar : any;
-
-  GestionPedidosMozo : any;
+  GestionPedidosCocinaBar: any;
+  GestionPedidosMozo: any;
+  Menu: any;
 }
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -108,7 +113,8 @@ export default function App() {
        <Stack.Screen options={{ headerShown: false }} name="RegistroDuenio2" component={RegistroDuenioScreen2} />
        <Stack.Screen options={{ headerShown: false }} name="HomeDuenio" component={HomeDuenioScreen} />
        <Stack.Screen options={{ headerShown: false }} name="Login" component={LoginScreen} />
-       <Stack.Screen options={{ headerShown: false }} name="RegistroProducto" component={RegistroProductoScreen} />
+       <Stack.Screen options={{ headerShown: false }} name="RegistroComida" component={RegistroComidaScreen} />
+       <Stack.Screen options={{ headerShown: false }} name="RegistroBebida" component={RegistroBebidaScreen} />
        <Stack.Screen options={{ headerShown: false }} name="RegistroMesa" component={RegistroMesaScreen} />
        <Stack.Screen options={{ headerShown: false }} name="RegistroClienteAnonimo" component={RegistroClienteAnonimoScreen} />
        <Stack.Screen options={{ headerShown: false }} name="RegistroClienteRegistrado" component={RegistroClienteRegistradoScreen} />
@@ -127,6 +133,7 @@ export default function App() {
        <Stack.Screen options={{ headerShown: false }} name="GestionPedidosCocinaBar" component={GestionPedidosCocinaBarScreen} />
        <Stack.Screen options={{ headerShown: false }} name="EncuestaLugarDeTrabajoMozo" component={EncuestaLugarDeTrabajoMozoScreen} />
        <Stack.Screen options={{ headerShown: false }} name="EncuestaLugarDeTrabajoCocinaBar" component={EncuestaLugarDeTrabajoCocinaBarScreen} />
+       <Stack.Screen options={{ headerShown: false }} name="Menu" component={MenuScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

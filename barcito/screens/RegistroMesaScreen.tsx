@@ -24,6 +24,7 @@ import { addMesa } from "../utils/AddDocsUtil";
 import LanzarCamara from "../utils/CameraUtil";
 import ValidacionCamposMesa from "../utils/ValidacionCamposMesaUtil";
 import CargarImagen from "../utils/CargarImagenUtil";
+import insertarToast from "../utils/ToastUtil"
 
 
 type NewTable = {
@@ -46,19 +47,19 @@ const RegistroMesaScreen = () => {
       const [checked, setChecked] = React.useState('Estandar');
 
       const handleReturn = () => {
-        navigation.replace("Home")
+        navigation.replace("RegistroMesa")
       }
 
       const handlerBack = () => {
         navigation.replace('HomeDuenio');
       }
 
-      const toggleSpinnerAlert = () => {
-        setModalSpinnerVisible(true);
-        setTimeout(() => {
-            setModalSpinnerVisible(false);
-        }, 3000);
-        };
+      // const toggleSpinnerAlert = () => {
+      //   setModalSpinnerVisible(true);
+      //   setTimeout(() => {
+      //       setModalSpinnerVisible(false);
+      //   }, 3000);
+      //   };
 
       //PERMISOS CAMARA
       useEffect(() => {
@@ -118,29 +119,30 @@ const RegistroMesaScreen = () => {
         let error=false;
 
         setLoading(true)
-        toggleSpinnerAlert();
 
-        if(ValidacionCamposMesa(values, image) !== false)
+        if(ValidacionCamposMesa(values, image))
         {
             const q = query(collection(db, "tableInfo"), where("tableNumber", "==", values.number));
             const querySnapshot = await getDocs(q);
 
             if(querySnapshot.size > 0){
-            Toast.showWithGravity(
-                "El numero de mesa ya existe",
-                Toast.LONG, 
-                Toast.CENTER);
-            toggleSpinnerAlert();
-            setLoading(false);
-            resetForm();  
-            return;        
+              insertarToast("El numero de mesa ya existe.");
+              setLoading(false);
+              resetForm();  
+              return;        
             } 
             let imageValue = "";
             if(image){
                 imageValue = (await CargarImagen(image));
               }
             addMesa(imageValue, values, checked);
+            insertarToast("Mesa añadida con éxito.");
             handleReturn();
+        }
+        else{
+          insertarToast("Revise los campos. Todos son obligatorios.");
+          setLoading(false);
+          return
         }
         reset();
         setImage("");
@@ -150,7 +152,9 @@ const RegistroMesaScreen = () => {
     
      return (
         <View style={styles.container}> 
-        {loading}
+         {loading?
+               <View style={styles.spinContainer}><Spinner/></View>
+            : null}
             <View style={styles.buttonContainer}>
                 <View style={styles.cameraQrContainer}>
                 {!image?

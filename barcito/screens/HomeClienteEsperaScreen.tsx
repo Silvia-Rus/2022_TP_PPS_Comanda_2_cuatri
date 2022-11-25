@@ -11,7 +11,7 @@ import { auth, db } from "../database/firebase";
 import Spinner from "../utils/SpinnerUtil";
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import EnConstruccionScreen from "../utils/EnConstruccionUtil";
-import { addListaDeEspera } from "../utils/AddDocsUtil";
+//import { addListaDeEspera } from "../utils/AddDocsUtil";
 
 const HomeClienteEsperaScreen = () => {
 
