@@ -44,7 +44,7 @@ const HomeClienteScreen = () => {
          };
       
       const handleChat = () => {
-         insertarToast("ir al chat");
+        navigation.replace("Chat");
       }
 
       const handleMenu = () => {

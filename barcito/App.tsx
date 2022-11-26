@@ -21,7 +21,7 @@ import HomeClienteEsperaScreen from './screens/HomeClienteEsperaScreen';
 import GestionClienteDuenioScreen from './screens/GestionClientesDuenioScreen';
 import EncuestaEmpleadosDuenioScreen from './screens/EncuestaEmpleadosDuenioScreen';
 import EnConstruccionCocinaBarScreen from './screens/GestionPedidosCocinaBarScreen';
-import ChatMozoScreen from './screens/ChatMozoScreen';
+import ChatScreen from './screens/ChatScreen';
 import GestionClientesMetreScreen from './screens/GestionClientesMetreScreen';
 import EncuestaLugarDeTrabajoMetreScreen from './screens/EncuestaLugarDeTrabajoMetreScreen';
 import GestionPedidosMozoScreen from './screens/GestionPedidosMozoScreen';
@@ -64,7 +64,7 @@ export type RootStackParamList = {
   HomeClienteEspera: any;
   GestionClienteDuenio: any;
   EnConstruccionCocinaBar: any;
-  ChatMozo: any;
+  Chat: any;
   GestionClientesMetre: any;
   EncuestaEmpleadosDuenio: any;
   EncuestaLugarDeTrabajoMetre: any;
@@ -125,7 +125,7 @@ export default function App() {
        <Stack.Screen options={{ headerShown: false }} name="HomeCliente" component={HomeClienteScreen} />
        <Stack.Screen options={{ headerShown: false }} name="HomeClienteEspera" component={HomeClienteEsperaScreen} />
        <Stack.Screen options={{ headerShown: false }} name="EnConstruccionCocinaBar" component={EnConstruccionCocinaBarScreen} />
-       <Stack.Screen options={{ headerShown: false }} name="ChatMozo" component={ChatMozoScreen} />
+       <Stack.Screen options={{ headerShown: true }} name="Chat" component={ChatScreen} />
        <Stack.Screen options={{ headerShown: false }} name="GestionClientesMetre" component={GestionClientesMetreScreen} />
        <Stack.Screen options={{ headerShown: false }} name="EncuestaEmpleadosDuenio" component={EncuestaEmpleadosDuenioScreen} />
        <Stack.Screen options={{ headerShown: false }} name="EncuestaLugarDeTrabajoMetre" component={EncuestaLugarDeTrabajoMetreScreen} />

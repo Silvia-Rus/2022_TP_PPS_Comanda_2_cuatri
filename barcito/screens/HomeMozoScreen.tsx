@@ -32,7 +32,7 @@ const HomeMozoScreen = () => {
       }
 
     const handlerChat = () => {
-        navigation.replace('ChatMozo');
+        navigation.replace('Chat');
       }
 
     const handlerEncuestaLugarTrabajo = () => {

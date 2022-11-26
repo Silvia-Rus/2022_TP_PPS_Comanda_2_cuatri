@@ -1,11 +1,9 @@
-import { Dimensions, StyleSheet } from 'react-native';
-
-const win = Dimensions.get("window");
+import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#3D4544',
+        ackgroundColor: 'transparent',        
         justifyContent: 'space-around',
     },
     backgroundImage: {
@@ -14,10 +12,6 @@ export default StyleSheet.create({
     },
     body: {
         flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'transparent',
-        width: '100%',
     },
     headerIcon: {
         height: 45,
@@ -27,7 +21,7 @@ export default StyleSheet.create({
     },
     headerText: {
         color: 'white',
-        fontSize: 25,
+        fontSize: 15,
         //fontFamily: 'Oswald_500Medium',
         textAlign: 'center',
         alignContent: 'center',
@@ -38,19 +32,10 @@ export default StyleSheet.create({
         margin: 10,
         borderRadius: 10,
         borderWidth: 2,
-        width: win.width * 0.9,
+        width: '90%',
         justifyContent: 'space-between',
         alignContent: 'center',
         alignItems: 'center',
-        height:410, 
-
-    },
-    imageContainer: {
-        flexDirection: 'row', 
-        alignContent: 'center', 
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginBottom: 5
     },
     infoContainer: {
         flexDirection: 'row', 
@@ -63,6 +48,8 @@ export default StyleSheet.create({
     cardImage: {
         flex: 1, 
         borderRadius: 10,
+        height:120, 
+        width:120,
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -75,12 +62,12 @@ export default StyleSheet.create({
     },
     tableHeaderText: {
         color: '#3D4544',
-        fontSize: 25,
+        fontSize: 14,
         //fontFamily: 'Oswald_500Medium',
     },
     tableCellText: {
         color: 'black',
-        fontSize: 18,
+        fontSize: 25,
         //fontFamily: 'Oswald_500Medium',
     },
     modalContainer: {
@@ -115,7 +102,7 @@ export default StyleSheet.create({
     },
     inputText: {
         color: 'black',
-        // fontFamily: 'Oswald_300Light',
+        //fontFamily: 'Oswald_300Light',
         fontSize: 16,
         width: '100%',
     },
@@ -135,6 +122,6 @@ export default StyleSheet.create({
       buttonText: {
         color: 'black',
         fontSize: 15,
-        // fontFamily: 'Oswald_500Medium',
+        //fontFamily: 'Oswald_500Medium',
     },
 });

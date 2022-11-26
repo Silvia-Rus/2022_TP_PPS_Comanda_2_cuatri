@@ -87,7 +87,7 @@ const MenuScreen = () => {
 
 
     return (
-        <View style={styles.container} >
+        <View style={styles.containerMenu} >
             {loading?
               <View style={styles.spinContainer}><Spinner/></View>
             : null}
@@ -102,9 +102,10 @@ const MenuScreen = () => {
               </View>
             </View>
            
-            <View style={styles.body}>
-              <ScrollView>
+            <View style={styles.bodyMenu}>
+            {/* <View style={styles.containerMenu} > */}
                 <Text style={styles.textHomePequeñoCentrado}>Comida</Text> 
+                <ScrollView horizontal={true}>
                 {dataComida.map((item: { imageUrl1: any;
                                          imageUrl2: any;
                                          imageUrl3: any;                                      
@@ -113,19 +114,22 @@ const MenuScreen = () => {
                                          elaborationTime: any;
                                          creationDate: {toDate: () => Date; }; 
                                          id: string;}) => (               
-                <View style={styles.cardStyle}>
+                <View style={styles.cardScrollHorizontalStyle}>
                     <View>      
                       <Text style={styles.tableCellTextCentrado}> {item.name} -  ${item.price} - Elaboración: {item.elaborationTime} min. </Text> 
                     </View>
-                    <View style={styles.imageIconContainer}>
+                    <View style={styles.imageIconContainer2}>
                       <Image style={styles.cardImage} resizeMode="cover" source={{ uri: item.imageUrl1 }} />
                       <Image style={styles.cardImage} resizeMode="cover" source={{ uri: item.imageUrl2 }} />
                       <Image style={styles.cardImage} resizeMode="cover" source={{ uri: item.imageUrl3 }} />
                     </View>                     
                   </View>              
                 ))}
-
+            </ScrollView>
+            </View>
+            <View style={styles.bodyMenu}>
             <Text style={styles.textHomePequeñoCentrado}>Bebida</Text> 
+            <ScrollView horizontal={true}>
                 {dataBebida.map((item: { imageUrl1: any;
                                          imageUrl2: any;
                                          imageUrl3: any;                                      
@@ -134,7 +138,7 @@ const MenuScreen = () => {
                                          elaborationTime: any;
                                          creationDate: {toDate: () => Date; }; 
                                          id: string;}) => (               
-                <View style={styles.cardStyle}>
+                <View style={styles.cardScrollHorizontalStyle}>
                     <View>      
                       <Text style={styles.tableCellTextCentrado}> {item.name} -  ${item.price} - Elaboración: {item.elaborationTime} min. </Text> 
                     </View>
@@ -146,7 +150,7 @@ const MenuScreen = () => {
                   </View>              
                 ))}
 
-                
+                </ScrollView> 
                   {/* <View style={styles.buttonContainerArriba} > */}
                     <View style={styles.buttonContainer} >
                         <TouchableOpacity
@@ -157,7 +161,7 @@ const MenuScreen = () => {
                         </TouchableOpacity>
                     </View>
                   {/* </View> */}
-              </ScrollView> 
+      
               
             </View> 
           {/* 

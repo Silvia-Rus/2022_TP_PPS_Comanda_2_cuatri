@@ -161,7 +161,8 @@ const LoginScreen = () => {
 
     const clienteRegistradoLogin = () => {
         //setEmail("empleado@rus.com");
-        setEmail("mozo@barcito.com");
+        //setEmail("mozo@barcito.com");
+        setEmail("Ttttt@hh.com");
         setPassword("123456");
         admin = false;
     }

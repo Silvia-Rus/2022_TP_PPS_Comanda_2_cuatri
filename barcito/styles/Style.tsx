@@ -15,6 +15,12 @@ export default StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    containerMenu: {
+        flex: 1,
+        backgroundColor: 'transparent',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
     container2: {
         flex: 1,
         flexDirection: 'column',
@@ -321,10 +327,29 @@ export default StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: 'transparent',
     },
+    bodyMenu: {
+       
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        backgroundColor: 'transparent',
+        flexDirection: 'column',
+        height: 10,
+        
+    },
     cardStyle: {
         backgroundColor: '#81749c',
         borderColor: '#DCDCE1',
         margin: 10,
+        borderRadius: 10,
+        borderWidth: 2,
+    },
+    cardScrollHorizontalStyle: {
+        backgroundColor: '#81749c',
+        borderColor: '#DCDCE1',
+        height: 140,
+        margin: 10,
+        marginBottom: 2,
         borderRadius: 10,
         borderWidth: 2,
     },
@@ -334,6 +359,13 @@ export default StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 5
+    },
+    imageIconContainer2: {
+        flexDirection: 'row', 
+        alignContent: 'center', 
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 0
     },
 
     cardImage: {
