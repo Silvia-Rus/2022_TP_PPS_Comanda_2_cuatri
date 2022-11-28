@@ -5,8 +5,10 @@ import Toast from 'react-native-simple-toast';
 
 const coleccionUsers = "userInfo";
 const coleccionMesas = "tableInfo";
-const coleccionProductos = "productInfo"
-const coleccionClienteMesa = "clienteMesa"
+const coleccionProductos = "productInfo";
+const coleccionClienteMesa = "clienteMesa";
+const coleccionPedido = "pedidos";
+
 
 
 export const addDuenioEmpleado = async (imageValue : string, 
@@ -154,12 +156,14 @@ export const addProducto = async (imageValue1 : string,
 }
 
 export const addClienteMesa = async (idCliente : string, 
+                                    mailCliente: string,
                                     idMesa,
                                     estado) => {
     try
     {
-        await addDoc(collection(db, coleccionClienteMesa), {   
+        await addDoc(collection(db, coleccionPedido), {   
             idCliente: idCliente,
+            mailCliente: mailCliente,
             idMesa: idMesa,
             status: estado ,
             creationDate:new Date()          
@@ -173,6 +177,36 @@ export const addClienteMesa = async (idCliente : string,
         Toast.LONG, 
         Toast.CENTER);
     }
+}
+
+export const AddPedido = async (mailCliente, 
+                                idMesa, 
+                                nombreProducto, 
+                                cantidad, 
+                                tiempoElaboracionTotal, 
+                                precioTotal) => {
+    try
+    {
+        await addDoc(collection(db, coleccionClienteMesa), {   
+            mailCliente: mailCliente,
+            idMesa: idMesa,
+            nombreProducto: nombreProducto,
+            cantidad: cantidad,
+            tiempoElaboracionTotal: tiempoElaboracionTotal,
+            precioTotal: precioTotal,
+            status: "pedido" ,
+            creationDate:new Date()  
+        });  
+    }
+    catch (error:any) 
+    {
+        console.log("ERROR GRABANDO EL PEDIDO: "+error.code);
+        Toast.showWithGravity(
+            "ERROR GRABANDO EL PEDIDO: "+error.code,
+            Toast.LONG, 
+            Toast.CENTER);
+    }
+
 }
 
     

@@ -6,6 +6,8 @@ const tertiaryColor = '#b9b9b9';
 const fourthColor = '#3176bb';
 const buttonBorderRadius = 30;
 const buttonBorderRadiusImput = 20;
+const lilaClarito = '#81749c';
+const vainilla = '#fcfce2';
 
 export default StyleSheet.create({
 
@@ -150,6 +152,7 @@ export default StyleSheet.create({
         fontWeight: '700',
         fontSize: 16,
     },
+  
     spinnerTextStyle: {
         color: 'white',
     },
@@ -180,6 +183,12 @@ export default StyleSheet.create({
     textHomeMediano:{
         fontSize: 75,
         marginTop: 5, 
+        color: '#4d3e6b',
+        fontWeight: 'bold',        
+    },
+    textCuenta:{
+        fontSize: 45,
+        marginTop: 0, 
         color: '#4d3e6b',
         fontWeight: 'bold',        
     },
@@ -337,6 +346,16 @@ export default StyleSheet.create({
         height: 10,
         
     },
+    bodyPedido: {
+       
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        backgroundColor: 'transparent',
+        flexDirection: 'column',
+        height: 5,
+        
+    },
     cardStyle: {
         backgroundColor: '#81749c',
         borderColor: '#DCDCE1',
@@ -347,7 +366,16 @@ export default StyleSheet.create({
     cardScrollHorizontalStyle: {
         backgroundColor: '#81749c',
         borderColor: '#DCDCE1',
-        height: 140,
+        height: 150,
+        margin: 10,
+        marginBottom: 2,
+        borderRadius: 10,
+        borderWidth: 2,
+    },
+    pedidoStyle: {
+        backgroundColor: '#fcfce2',
+        borderColor: '#DCDCE1',
+        height: 100,
         margin: 10,
         marginBottom: 2,
         borderRadius: 10,
@@ -410,6 +438,11 @@ export default StyleSheet.create({
         fontSize: 15,
         textAlign: "center",
         fontWeight: "bold"
+    },
+    tableCellTextCentrado2: {
+        color: '#4d3e6b',
+        fontSize: 15,
+        textAlign: "center",
     },
     modalContainer: {
         flex: 1,

@@ -74,7 +74,7 @@ const HomeClienteScreen = () => {
                      if(statusMesaAux === 'free'){
                         //SI ESTÁ LIBRE LA MESA
                         //meterlo en la lista de espera
-                        addClienteMesa(idClienteAux, numeroMesa, "enEspera");
+                        addClienteMesa(idClienteAux, auth.currentUser?.email, numeroMesa, "enEspera");
                         //cambiar el status de la mesa a ocupada
                         cambioMesaAOcupada(item.id);
                         //cambiar el status del cliente
