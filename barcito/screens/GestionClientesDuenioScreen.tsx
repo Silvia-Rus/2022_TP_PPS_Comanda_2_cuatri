@@ -186,11 +186,6 @@ const ClientManagment = () => {
             ))}
           </ScrollView> 
         </View> 
-      {/* 
-        <View>
-          <Modal backdropOpacity={0.5} animationIn="rotate" animationOut="rotate" isVisible={isModalSpinnerVisible}>
-          </Modal>
-        </View> */}
         </View> 
   );
 };

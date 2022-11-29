@@ -187,7 +187,7 @@ export default StyleSheet.create({
         fontWeight: 'bold',        
     },
     textCuenta:{
-        fontSize: 45,
+        fontSize: 30,
         marginTop: 0, 
         color: '#4d3e6b',
         fontWeight: 'bold',        
@@ -346,6 +346,16 @@ export default StyleSheet.create({
         height: 10,
         
     },
+    bodyPedido2: {
+       
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        backgroundColor: 'transparent',
+        flexDirection: 'column',
+        height: 3,
+        
+    },
     bodyPedido: {
        
         flex: 1,
@@ -372,10 +382,28 @@ export default StyleSheet.create({
         borderRadius: 10,
         borderWidth: 2,
     },
+    cardScrollPedidoStyle: {
+        backgroundColor: '#81749c',
+        borderColor: '#DCDCE1',
+        height: 45,
+        margin: 10,
+        marginBottom: 2,
+        borderRadius: 10,
+        borderWidth: 2,
+    },
     pedidoStyle: {
         backgroundColor: '#fcfce2',
         borderColor: '#DCDCE1',
-        height: 100,
+        height: 70,
+        margin: 10,
+        marginBottom: 2,
+        borderRadius: 10,
+        borderWidth: 2,
+    },
+    tiempoElaboracionStyle: {
+        backgroundColor: '#fcfce2',
+        borderColor: '#DCDCE1',
+        height: 30,
         margin: 10,
         marginBottom: 2,
         borderRadius: 10,

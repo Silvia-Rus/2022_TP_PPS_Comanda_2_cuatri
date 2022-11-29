@@ -11,12 +11,18 @@ const EnConstruccionScreen = (ruta) => {
 
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
 
-    async function handlerSignOut() {
-        await auth
-            .signOut()
-            .then(() => {navigation.replace(ruta)})
-            .catch((error: any) => alert(error.message))
-    }    
+    // async function handlerSignOut() {
+    //     await auth
+    //         .signOut()
+    //         .then(() => {navigation.replace(ruta)})
+    //         .catch((error: any) => alert(error.message))
+    //         navigation.replace(ruta)
+    // }  
+    
+     function handlerSignOut() {
+
+          navigation.replace(ruta);
+     } 
 
   return (
     <View style={styles.container}>         

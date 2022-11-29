@@ -20,13 +20,16 @@ import HomeClienteEsperaScreen from './screens/HomeClienteEsperaScreen';
 
 import GestionClienteDuenioScreen from './screens/GestionClientesDuenioScreen';
 import EncuestaEmpleadosDuenioScreen from './screens/EncuestaEmpleadosDuenioScreen';
-import EnConstruccionCocinaBarScreen from './screens/GestionPedidosCocinaBarScreen';
 import ChatScreen from './screens/ChatScreen';
 import GestionClientesMetreScreen from './screens/GestionClientesMetreScreen';
 import EncuestaLugarDeTrabajoMetreScreen from './screens/EncuestaLugarDeTrabajoMetreScreen';
-import GestionPedidosMozoScreen from './screens/GestionPedidosMozoScreen';
-import GestionPedidosCocinaBarScreen from './screens/GestionPedidosCocinaBarScreen';
+import GestionEnvioPedidosMozoScreen from './screens/GestionEnvioPedidosMozoScreen';
+import GestionServirPedidosMozoScreen from './screens/GestionServirPedidosMozoScreen';
+
 import GestionPedidosClienteScreen from './screens/GestionPedidosClienteScreen';
+import GestionPedidosComidaBarScreen from './screens/GestionPedidosComidaBarScreen';
+import GestionPedidosBebidaBarScreen from './screens/GestionPedidosBebidaBarScreen';
+
 
 import EncuestaLugarDeTrabajoMozoScreen from './screens/EncuestaLugarDeTrabajoMozoScreen';
 import EncuestaLugarDeTrabajoCocinaBarScreen from './screens/EncuestaLugarDeTrabajoCocinaBarScreen';
@@ -73,8 +76,11 @@ export type RootStackParamList = {
   EncuestaLugarDeTrabajoMozo: any;
   EncuestaLugarDeTrabajoCocinaBar: any;
   GestionPedidosCocinaBar: any;
-  GestionPedidosMozo: any;
+  GestionEnvioPedidosMozo: any;
+  GestionServirPedidosMozo: any;
   GestionPedidosCliente: any;
+  GestionPedidosComidaBar: any;
+  GestionPedidosBebidaBar: any;
   Menu: any;
 }
 
@@ -127,14 +133,15 @@ export default function App() {
        <Stack.Screen options={{ headerShown: false }} name="HomeMozo" component={HomeMozoScreen} />
        <Stack.Screen options={{ headerShown: false }} name="HomeCliente" component={HomeClienteScreen} />
        <Stack.Screen options={{ headerShown: false }} name="HomeClienteEspera" component={HomeClienteEsperaScreen} />
-       <Stack.Screen options={{ headerShown: false }} name="EnConstruccionCocinaBar" component={EnConstruccionCocinaBarScreen} />
        <Stack.Screen options={{ headerShown: true }} name="Chat" component={ChatScreen} />
        <Stack.Screen options={{ headerShown: false }} name="GestionClientesMetre" component={GestionClientesMetreScreen} />
        <Stack.Screen options={{ headerShown: false }} name="EncuestaEmpleadosDuenio" component={EncuestaEmpleadosDuenioScreen} />
        <Stack.Screen options={{ headerShown: false }} name="EncuestaLugarDeTrabajoMetre" component={EncuestaLugarDeTrabajoMetreScreen} />
-       <Stack.Screen options={{ headerShown: false }} name="GestionPedidosMozo" component={GestionPedidosMozoScreen} />
-       <Stack.Screen options={{ headerShown: false }} name="GestionPedidosCocinaBar" component={GestionPedidosCocinaBarScreen} />
+       <Stack.Screen options={{ headerShown: false }} name="GestionEnvioPedidosMozo" component={GestionEnvioPedidosMozoScreen} />
+       <Stack.Screen options={{ headerShown: false }} name="GestionServirPedidosMozo" component={GestionServirPedidosMozoScreen} />
        <Stack.Screen options={{ headerShown: false }} name="GestionPedidosCliente" component={GestionPedidosClienteScreen} />
+       <Stack.Screen options={{ headerShown: false }} name="GestionPedidosComidaBar" component={GestionPedidosComidaBarScreen} />
+       <Stack.Screen options={{ headerShown: false }} name="GestionPedidosBebidaBar" component={GestionPedidosBebidaBarScreen} />
        <Stack.Screen options={{ headerShown: false }} name="EncuestaLugarDeTrabajoMozo" component={EncuestaLugarDeTrabajoMozoScreen} />
        <Stack.Screen options={{ headerShown: false }} name="EncuestaLugarDeTrabajoCocinaBar" component={EncuestaLugarDeTrabajoCocinaBarScreen} />
        <Stack.Screen options={{ headerShown: false }} name="Menu" component={MenuScreen} />

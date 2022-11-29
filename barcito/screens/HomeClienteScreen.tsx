@@ -28,6 +28,8 @@ const HomeClienteScreen = () => {
       const [motivoRechazo, setMotivoRechazo] = useState("");
       const [scanned, setScanned] = useState(false);
       const [openQR, setOpenQR] = useState(false);
+      const [tienePedidos, setTienePedidos] = useState(false);
+
 
       const qrIcon = require("../assets/common/qr.png");
 
@@ -37,6 +39,11 @@ const HomeClienteScreen = () => {
             await BarCodeScanner.requestPermissionsAsync();
             })();
          }, []);
+      
+      useFocusEffect(
+            useCallback(() => {
+               getTienePedidos();
+        }, []))
 
       const handleOpenQR = () => {
          setScanned(false);
@@ -49,6 +56,31 @@ const HomeClienteScreen = () => {
 
       const handleMenu = () => {
          navigation.replace("Menu");
+      }
+      const handleJuegos = () => {
+         insertarToast("ir a juegos");
+      }
+      const handleEncuesta = () => {
+         insertarToast("ir a Encuestas");
+      }
+      const handlePedido = () => {
+            navigation.replace("GestionPedidosCliente");
+      }
+
+      const getTienePedidos = async () => {
+         try{
+            const q = query(collection(db, "pedidos"), where("mailCliente", "==", auth.currentUser?.email));
+            const querySnapshot = await getDocs(q);
+            querySnapshot.forEach(async (item) =>{
+               if(item.data().status != "Inactivo")
+               {
+                  setTienePedidos(true);
+                  return
+               }
+            });
+         }catch(error){console.log("ERROR CHEQUEANDO SI HAY PEDIDOS: "+error)                    
+         }finally{setLoading(false);}
+
       }
 
 
@@ -177,7 +209,15 @@ const HomeClienteScreen = () => {
                               style={[styles.buttonRole, styles.buttonOutlineRole]}
                               >
                                  <Text style={styles.buttonOutlineTextRole}>Menú</Text>
-                              </TouchableOpacity>   
+                              </TouchableOpacity> 
+                              {tienePedidos ?  
+                              <TouchableOpacity
+                              onPress={handlePedido}
+                              style={[styles.buttonRole, styles.buttonOutlineRole]}
+                              >
+                                 <Text style={styles.buttonOutlineTextRole}>Ver estado del pedido</Text>
+                              </TouchableOpacity> 
+                              :null}
                            </View>                      
                     
                         }
@@ -186,8 +226,26 @@ const HomeClienteScreen = () => {
                            onPress={handleChat}
                            style={[styles.buttonRole, styles.buttonOutlineRole]}
                            >
-                              <Text style={styles.buttonOutlineTextRole}>Chat con el mozo</Text>
+                              <Text style={styles.buttonOutlineTextRole}>Hablar con el mozo</Text>
                            </TouchableOpacity>
+                        :null}
+                        {tienePedidos ? 
+                           <View>
+                              <TouchableOpacity
+                              onPress={handleJuegos}
+                              style={[styles.buttonRole, styles.buttonOutlineRole]}
+                              >
+                                 <Text style={styles.buttonOutlineTextRole}>Jugar</Text>
+                              </TouchableOpacity>
+                              <TouchableOpacity
+                              onPress={handleEncuesta}
+                              style={[styles.buttonRole, styles.buttonOutlineRole]}
+                              >
+                                 <Text style={styles.buttonOutlineTextRole}>Hacer encuesta</Text>
+                              </TouchableOpacity>
+                             
+                            </View>
+                           
                         :null}
 
                      </View> 

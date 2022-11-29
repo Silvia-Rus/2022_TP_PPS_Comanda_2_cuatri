@@ -183,18 +183,20 @@ export const AddPedido = async (mailCliente,
                                 idMesa, 
                                 nombreProducto, 
                                 cantidad, 
+                                tipo,
                                 tiempoElaboracionTotal, 
                                 precioTotal) => {
     try
     {
-        await addDoc(collection(db, coleccionClienteMesa), {   
+        await addDoc(collection(db, coleccionPedido), {   
             mailCliente: mailCliente,
             idMesa: idMesa,
             nombreProducto: nombreProducto,
             cantidad: cantidad,
             tiempoElaboracionTotal: tiempoElaboracionTotal,
+            tipoProducto: tipo,
             precioTotal: precioTotal,
-            status: "pedido" ,
+            status: "Pedido" ,
             creationDate:new Date()  
         });  
     }

@@ -7,11 +7,12 @@ import styles from "../styles/Style";
 
 import { auth } from "../database/firebase";
 import Spinner from "../utils/SpinnerUtil";
+import insertarToast from '../utils/ToastUtil';
 
 
 const HomeMozoScreen = () => {
 
-    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
+    const navigation = useNavigation<NativeStackNavigationProp<any>>();
     const [loading, setLoading] = useState(false);
 
     async function handlerSignOut() {
@@ -25,9 +26,15 @@ const HomeMozoScreen = () => {
 
     // const displayName = auth.currentUser.email;
     
-    const handlerGestionPedidos = () => {
+    const handlerGestionEnvioPedidos = () => {
         setLoading(true);
-        navigation.replace('GestionPedidosMozo');
+        navigation.replace('GestionEnvioPedidosMozo');
+        setLoading(false);
+      }
+    
+     const handlerGestionServirPedidos = () => {
+        setLoading(true);
+        navigation.replace('GestionServirPedidosMozo');
         setLoading(false);
       }
 
@@ -53,10 +60,16 @@ const HomeMozoScreen = () => {
         <View style={styles.buttonContainer} >
              
                 <TouchableOpacity
-                    onPress={handlerGestionPedidos}
+                    onPress={handlerGestionEnvioPedidos}
                     style={[styles.buttonRole, styles.buttonOutlineRole]}
                     >
-                    <Text style={styles.buttonOutlineTextRole}>Gestión Pedidos</Text>
+                    <Text style={styles.buttonOutlineTextRole}>Envío de Pedidos a Cocina/Bar</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={handlerGestionServirPedidos}
+                    style={[styles.buttonRole, styles.buttonOutlineRole]}
+                    >
+                    <Text style={styles.buttonOutlineTextRole}>Servir Pedidos</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                         onPress={handlerChat}

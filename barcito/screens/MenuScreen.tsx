@@ -2,7 +2,6 @@
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import styles from "../styles/Style";
-
 import { Image, Text, TouchableOpacity, View, ScrollView, TextInput} from "react-native";
 import Modal from "react-native-modal";
 import React, { useCallback,  useState } from 'react'
@@ -10,10 +9,8 @@ import Spinner from "../utils/SpinnerUtil";
 import { auth, db, storage } from "../database/firebase";
 import { collection, query, where, getDocs, updateDoc, doc } from "firebase/firestore";
 import { getDownloadURL, ref } from 'firebase/storage'
-import { format } from 'date-fns'
-import emailjs from '@emailjs/browser';
 import insertarToast from "../utils/ToastUtil";
-import { cambioClienteAPending, cambioClienteARejected, cambioClienteAAccepted } from "../utils/ManejoEstadosClienteUtil";
+import { AddPedido } from "../utils/AddDocsUtil";
 
 const MenuScreen = () => {
 
@@ -27,9 +24,14 @@ const MenuScreen = () => {
     const [precioTotal, setPrecioTotal] = useState(0);
     const [tiempoElaboracion, setTiempoElaboracion] = useState(0);
     const [mesa, setMesa] = useState("");
+    const [productoPedidoNombre, setProductoPedidoNombre] = useState('');
+    const [productoPedidoPrecio, setProductoPedidoPrecio] = useState<any>();
+    const [productoPedidoTiempo, setProductoPedidoTiempo] = useState<any>();
+    const [productoPedidoTipo, setProductoPedidoTipo] = useState('');
+    const [cliente, setCliente] = useState("");
 
-    const [rejectMotive, setRejectMotive] = useState('');
-    const [rejectId, setRejectId] = useState('');
+
+    const [cantidad, setCantidad] = useState('');
 
     const confirmIcon = require("../assets/confirm.png");
     const cancelIcon = require("../assets/cancel.png");
@@ -37,6 +39,10 @@ const MenuScreen = () => {
      //RETURN
     const handleReturn = () => { 
         //insertarToast("Holi");
+        console.log("al salir: ")
+        console.log(productoPedidoNombre);
+        console.log(productoPedidoTiempo);
+        console.log(productoPedidoPrecio);
         navigation.replace("HomeCliente"); 
     }
 
@@ -45,41 +51,107 @@ const MenuScreen = () => {
         //navigation.replace("HomeCliente"); 
     }
 
+    const toggleModalCancel = () => {
+        setModalCancelVisible(!isModalCancelVisible);
+      };
+    
+    const handleLanzarElModal = async (nombre, tiempo, precio, tipo) => {
 
+        try{
+            setLoading(true)
+            setProductoPedidoNombre(nombre);
+            setProductoPedidoTiempo(tiempo);
+            setProductoPedidoPrecio(precio);
+            setProductoPedidoTipo(tipo);
+            toggleModalCancel();                                 
+        }
+        catch (error) { console.log(error) } 
+        finally{ setLoading(false); }
+    }
+
+    const handleCompletarPedido = async (cantidad) => {
+        try{
+            setLoading(true);
+            const precioTotal = productoPedidoPrecio * cantidad;
+            const tiempoElaboracionTotal = productoPedidoTiempo * cantidad;
+            AddPedido(auth.currentUser?.email, 
+                      mesa, 
+                      productoPedidoNombre, 
+                      cantidad,
+                      productoPedidoTipo, 
+                      tiempoElaboracionTotal,
+                      precioTotal)
+            getTiempoElaboracion();
+            getPrecioTotal();
+            insertarToast(productoPedidoNombre+" añadido.");
+            toggleModalCancel();
+        }
+        catch (error) { console.log(error) } 
+        finally{ setLoading(false); }
+    }
 
     //REFRESH DE LA DATA
     useFocusEffect(
         useCallback(() => {
+            getCliente();
             getComida();
             getBebida();
             getPostre();
             getTiempoElaboracion();
-            getPrecioTotal()
+            getPrecioTotal()                                                                                                                                                                                                                                                                                                    
             getMesa();
+            getTiempoElaboracion();
     }, []))
 
-    const aniadirdPedido = async (datos) => {
-
-        setLoading(true);
-        //addPedido
-        setLoading(false);
-        getTiempoElaboracion();
-        getPrecioTotal();
+    const getCliente = async () => {
+        try{
+            setLoading(true);
+            setCliente(auth.currentUser?.email);
+         }catch(error){console.log("ERROR CHEQUEANDO EL CLIENTE: "+error)                    
+         }finally{setLoading(false);}
 
     }
+ 
 
     const getTiempoElaboracion = async () => {
-        setLoading(true);
+        try{
+            setLoading(true);
+            //setTiempoElaboracion(0);
+            let acumulador = 0;
+            const q = query(collection(db, "pedidos"), where("mailCliente", "==", auth.currentUser?.email));
+            const querySnapshot = await getDocs(q);
+            querySnapshot.forEach(async (item) =>{
+               const statusPedido = item.data().status;
+               if(statusPedido != "Inactivo" || statusPedido != "Pagando" || statusPedido != "EnMesa")
+               {
+                acumulador = acumulador+item.data().tiempoElaboracionTotal;
+                console.log("nuevoTiempo "+ acumulador);
+                setTiempoElaboracion(acumulador);  
+               }
+            });
+         }catch(error){console.log("ERROR CHEQUEANDO EL TIEMPO DE ELABORACIÓN: "+error)                    
+         }finally{setLoading(false);}
 
-
-        setLoading(false);
     }
 
     const getPrecioTotal = async () => {
-        setLoading(true);
-
-
-        setLoading(false);   
+        try{
+            setLoading(true);
+            //setTiempoElaboracion(0);
+            let acumulador = 0;
+            const q = query(collection(db, "pedidos"), where("mailCliente", "==", auth.currentUser?.email));
+            const querySnapshot = await getDocs(q);
+            querySnapshot.forEach(async (item) =>{
+               const statusPedido = item.data().status;
+               if(statusPedido != "Inactivo")
+               {
+                acumulador = acumulador+item.data().precioTotal;
+                console.log("nuevoPrecio "+ acumulador);
+                setPrecioTotal(acumulador);  
+               }
+            });
+         }catch(error){console.log("ERROR CHEQUEANDO EL TIEMPO DE ELABORACIÓN: "+error)                    
+         }finally{setLoading(false);} 
     }
 
     const getMesa = async () => {
@@ -163,9 +235,12 @@ const MenuScreen = () => {
             {/* <View style={styles.bodyPedido}> */}
                 <View style={styles.pedidoStyle}>
                     <Text style={styles.textHomePequeñoCentrado}>Cuenta:</Text>
-                    <Text style={styles.textCuenta}>12000$</Text>
+                    <Text style={styles.textCuenta}>{precioTotal}$</Text>
                 </View>
             {/* </View> */}
+                <View style={styles.tiempoElaboracionStyle}>
+                    <Text style={styles.textHomePequeñoCentrado}>Tiempo de elaboración: {tiempoElaboracion} min.</Text>
+                </View>
            
             <View style={styles.bodyMenu}>
             {/* <View style={styles.containerMenu} > */}
@@ -178,21 +253,25 @@ const MenuScreen = () => {
                                          price: any; 
                                          elaborationTime: any;
                                          description: any;
+                                         type: any;
                                          creationDate: {toDate: () => Date; }; 
                                          id: string;}) => (               
-                    <View style={styles.cardScrollHorizontalStyle}>
-                        <View>      
-                            <Text style={styles.tableCellTextCentrado}> {item.name} -  ${item.price} - Elaboración: {item.elaborationTime} min. </Text> 
-                        </View>
-                        <View style={styles.imageIconContainer2}>
-                            <Image style={styles.cardImage} resizeMode="cover" source={{ uri: item.imageUrl1 }} />
-                            <Image style={styles.cardImage} resizeMode="cover" source={{ uri: item.imageUrl2 }} />
-                            <Image style={styles.cardImage} resizeMode="cover" source={{ uri: item.imageUrl3 }} />
-                        </View> 
-                        <View>      
-                            <Text style={styles.tableCellTextCentrado2}> {item.description} </Text> 
-                        </View>                    
-                    </View>              
+                    <TouchableOpacity onPress={() => handleLanzarElModal(item.name, item.elaborationTime, item.price, item.type)}>
+                        <View style={styles.cardScrollHorizontalStyle}>
+                            <View>      
+                                <Text style={styles.tableCellTextCentrado}> {item.name} -  ${item.price} - Elaboración: {item.elaborationTime} min. </Text> 
+                            </View>
+                            <View style={styles.imageIconContainer2}>
+                                <Image style={styles.cardImage} resizeMode="cover" source={{ uri: item.imageUrl1 }} />
+                                <Image style={styles.cardImage} resizeMode="cover" source={{ uri: item.imageUrl2 }} />
+                                <Image style={styles.cardImage} resizeMode="cover" source={{ uri: item.imageUrl3 }} />
+                            </View> 
+                            <View>      
+                                <Text style={styles.tableCellTextCentrado2}> {item.description} </Text> 
+                            </View>                                             
+                        </View>  
+                    </TouchableOpacity>
+
                 ))}
                 </ScrollView>
             </View>
@@ -206,18 +285,21 @@ const MenuScreen = () => {
                                             price: any; 
                                             elaborationTime: any;
                                             description: any;
+                                            type: any;
                                             creationDate: {toDate: () => Date; }; 
-                                            id: string;}) => (               
-                    <View style={styles.cardScrollHorizontalStyle}>
-                        <View>      
-                            <Text style={styles.tableCellTextCentrado}> {item.name} -  ${item.price} - Elaboración: {item.elaborationTime} min. </Text> 
-                        </View>
-                        <View style={styles.imageIconContainer}>
-                            <Image style={styles.cardImage} resizeMode="cover" source={{ uri: item.imageUrl1 }} />
-                            <Image style={styles.cardImage} resizeMode="cover" source={{ uri: item.imageUrl2 }} />
-                            <Image style={styles.cardImage} resizeMode="cover" source={{ uri: item.imageUrl3 }} />
-                        </View>                     
-                    </View>              
+                                            id: string;}) => ( 
+                    <TouchableOpacity onPress={() => handleLanzarElModal(item.name, item.elaborationTime, item.price, item.type)}>
+                        <View style={styles.cardScrollHorizontalStyle}>
+                            <View>      
+                                <Text style={styles.tableCellTextCentrado}> {item.name} -  ${item.price} - Elaboración: {item.elaborationTime} min. </Text> 
+                            </View>
+                            <View style={styles.imageIconContainer}>
+                                <Image style={styles.cardImage} resizeMode="cover" source={{ uri: item.imageUrl1 }} />
+                                <Image style={styles.cardImage} resizeMode="cover" source={{ uri: item.imageUrl2 }} />
+                                <Image style={styles.cardImage} resizeMode="cover" source={{ uri: item.imageUrl3 }} />
+                            </View>                     
+                        </View> 
+                    </TouchableOpacity>             
                     ))}
                 </ScrollView> 
             </View>
@@ -231,20 +313,55 @@ const MenuScreen = () => {
                                             price: any; 
                                             elaborationTime: any;
                                             description: any;
+                                            type: any;
                                             creationDate: {toDate: () => Date; }; 
-                                            id: string;}) => (               
-                    <View style={styles.cardScrollHorizontalStyle}>
-                        <View>      
-                            <Text style={styles.tableCellTextCentrado}> {item.name} -  ${item.price} - Elaboración: {item.elaborationTime} min. </Text> 
-                        </View>
-                        <View style={styles.imageIconContainer}>
-                            <Image style={styles.cardImage} resizeMode="cover" source={{ uri: item.imageUrl1 }} />
-                            <Image style={styles.cardImage} resizeMode="cover" source={{ uri: item.imageUrl2 }} />
-                            <Image style={styles.cardImage} resizeMode="cover" source={{ uri: item.imageUrl3 }} />
-                        </View>                     
-                    </View>              
+                                            id: string;}) => (  
+                     <TouchableOpacity onPress={() => handleLanzarElModal(item.name, item.elaborationTime, item.price, item.type)}>
+                        <View style={styles.cardScrollHorizontalStyle}>
+                            <View>      
+                                <Text style={styles.tableCellTextCentrado}> {item.name} -  ${item.price} - Elaboración: {item.elaborationTime} min. </Text> 
+                            </View>
+                            <View style={styles.imageIconContainer}>
+                                <Image style={styles.cardImage} resizeMode="cover" source={{ uri: item.imageUrl1 }} />
+                                <Image style={styles.cardImage} resizeMode="cover" source={{ uri: item.imageUrl2 }} />
+                                <Image style={styles.cardImage} resizeMode="cover" source={{ uri: item.imageUrl3 }} />
+                            </View>                     
+                        </View> 
+                    </TouchableOpacity>             
                     ))}
                 </ScrollView> 
+                <Modal backdropOpacity={0.5} isVisible={isModalCancelVisible}>
+                  <View style={styles.modalContainer}>              
+                      <View style={styles.modalBody}>
+                        <View style={styles.inputField}>
+                          <TextInput
+                            placeholder= "Cantidad"
+                            placeholderTextColor="white"
+                            multiline
+                            numberOfLines={4}
+                            keyboardType={'numeric'}
+                            style={styles.inputText}
+                            onChangeText={(text) => setCantidad(text)}
+                            secureTextEntry = {true}
+                          />
+                        </View>
+                        <View style={styles.buttonContainer} >
+                          <TouchableOpacity
+                            onPress={() => handleCompletarPedido(cantidad)}
+                            style={[styles.buttonRole, styles.buttonOutlineRole]}
+                          >
+                            <Text style={styles.buttonOutlineTextRole}>Pedir</Text>
+                          </TouchableOpacity>
+                          <TouchableOpacity
+                              onPress={toggleModalCancel}
+                              style={[styles.buttonRole, styles.buttonOutlineRole]}
+                          >
+                              <Text style={styles.buttonOutlineTextRole}>Volver</Text>
+                          </TouchableOpacity>
+                        </View>
+                      </View>
+                  </View>
+                </Modal>
             </View> 
    
             <View style={styles.buttonContainer} >
@@ -263,7 +380,7 @@ const MenuScreen = () => {
                     <Text style={styles.buttonOutlineTextRole}>Volver</Text>
                 </TouchableOpacity>
             </View>
-         
+        
              
           {/* 
             <View>

@@ -1,6 +1,6 @@
-import { useNavigation } from '@react-navigation/core';
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, KeyboardAvoidingView, Image } from 'react-native';
 import { RootStackParamList } from './../App';
 import styles from "../styles/Style";
@@ -8,12 +8,34 @@ import styles from "../styles/Style";
 import { auth, db } from "../database/firebase";
 import Spinner from "../utils/SpinnerUtil";
 import { collection, getDocs, query, where } from 'firebase/firestore';
+import insertarToast from "../utils/ToastUtil";
 
 
 const HomeCocinaBarScreen = () => {
 
-    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
+    const navigation = useNavigation<NativeStackNavigationProp<any>>();
     const [loading, setLoading] = useState(false);
+    const [tipoUsuario, setTipoUsuario] = useState("");
+
+    useFocusEffect(
+        useCallback(() => {
+            getTipoUsuario();
+           
+    }, []))
+
+    const getTipoUsuario = async () => {
+        try{
+            setLoading(true);
+            const q = query(collection(db, "userInfo"), where("mailCliente", "==", auth.currentUser?.email));
+            const querySnapshot = await getDocs(q);
+            querySnapshot.forEach(async (item) =>{
+                const tipoUsuarioAux = item.data().rol;
+                setTipoUsuario(tipoUsuarioAux);  
+
+               });   
+         }catch(error){console.log("ERROR CHEQUEANDO EL TIPO DE USUARIO: "+error)                    
+         }finally{setLoading(false);}
+    }
 
     async function handlerSignOut() {
         setLoading(true);
@@ -39,8 +61,27 @@ const HomeCocinaBarScreen = () => {
         setLoading(false);
       }
 
-    const handlerGestionPedidos = () => {
-        navigation.replace('EnConstruccionCocinaBar');
+    const handlerGestionPedidos = async () => {
+        try{
+            setLoading(true);
+            const q = query(collection(db, "userInfo"), where("email", "==", auth.currentUser?.email));
+            const querySnapshot = await getDocs(q);
+            querySnapshot.forEach(async (item) =>{
+                const tipoUsuarioAux = item.data().rol;
+                if(tipoUsuarioAux === 'Cocinero')
+                {
+                    navigation.replace("GestionPedidosComidaBar");
+                }
+                else
+                {
+                    navigation.replace("GestionPedidosBebidaBar");
+                }
+
+                
+               });   
+         }catch(error){console.log("ERROR CHEQUEANDO EL TIPO DE USUARIO: "+error)                    
+         }finally{setLoading(false);}
+        
       }
 
     const handlerEncuestaLugarTrabajo = () => {
@@ -70,7 +111,7 @@ const HomeCocinaBarScreen = () => {
                         onPress={handlerGestionPedidos}
                         style={[styles.buttonRole, styles.buttonOutlineRole]}
                     >
-                        <Text style={styles.buttonOutlineTextRole}>Gestionar Pedidos</Text>
+                        <Text style={styles.buttonOutlineTextRole}>Preparar Pedidos</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
@@ -98,3 +139,5 @@ const HomeCocinaBarScreen = () => {
 }
 
 export default HomeCocinaBarScreen;
+
+
