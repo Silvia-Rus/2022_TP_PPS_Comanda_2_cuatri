@@ -1,9 +1,19 @@
 import { StyleSheet } from 'react-native';
 
+const primaryColor = '#ffffff';
+const secondaryColor = '#3176bb';
+const tertiaryColor = '#b9b9b9';
+const fourthColor = '#3176bb';
+const buttonBorderRadius = 30;
+const buttonBorderRadiusImput = 20;
+const lilaClarito = '#81749c';
+const vainilla = '#fcfce2';
+const morado = '#4d3e6b';
+
 export default StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#3D4544',
+        backgroundColor: 'transparent',
         justifyContent: 'space-around',
     },
     backgroundImage: {
@@ -111,8 +121,23 @@ export default StyleSheet.create({
         alignSelf: 'center',
         textAlign: 'center',
     },
+
     buttonLayout: {
         backgroundColor: '#A4C3B2',
+        borderColor: '#A4C3B2',
+        marginTop: 15,
+        marginBottom: 15,
+        width: "90%",
+        height: 60,
+        padding: 15,
+        borderRadius: 5,
+        borderWidth: 0,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
+    buttonLayoutAmarillo: {
+        backgroundColor: vainilla,
         borderColor: '#A4C3B2',
         marginTop: 15,
         marginBottom: 15,
@@ -132,11 +157,79 @@ export default StyleSheet.create({
         alignSelf: 'center',
     },
     chartConfig:{
-        backgroundColor: "#A4C3B2",
-        backgroundGradientFrom: "#A4C3B2",
-        backgroundGradientTo: "#A4C3B2",
+        backgroundColor: vainilla,
+        backgroundGradientFrom: vainilla,
+        backgroundGradientTo: vainilla,
         decimalPlaces: 1, // optional, defaults to 2dp
+        //color: () => vainilla,
         color: () => `rgba(0, 0, 0, 0.5)`,
         labelColor: () => `black`,        
     },
+    buttonContainerArriba: {
+        width: '80%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: '10%',
+    },
+    buttonContainer: {
+        width: '80%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: '2%',
+    },
+    buttonOutlineTextRole: {
+        color: '#4d3e6b',
+        fontWeight: '700',
+        fontSize: 16,
+    },
+    buttonRole: {
+        backgroundColor: tertiaryColor,
+        width: '100%',
+        padding: 5,
+        borderRadius: buttonBorderRadius,
+        alignItems: 'center',
+    },
+    buttonOutlineRole: {
+        backgroundColor: '#81749c',
+        marginTop: 2,
+    },
+
+    spinContainer: {
+        position: 'absolute',
+        display: 'flex',
+        backgroundColor: 'rgba(0,0,0,0.5)',
+        alignItems: 'center',
+        justifyContent: 'center',
+        top: 0,
+        height: '100%',
+        width: '100%',
+        zIndex: 100,
+    },
+    inputContainer: {
+        width: '100%', 
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 20,             
+    },
+    buttonContainer2: {
+        width: '80%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: '2%',
+    },
+    buttonLogin: {
+        backgroundColor: '#4d3e6b',
+        width: '100%',
+        padding: 20,
+        borderRadius: buttonBorderRadiusImput,
+        alignItems: 'center',
+        
+    },
+    buttonText2: {
+        color: '#fcfce2',
+        fontWeight: '700',
+        fontSize: 16,
+    },
+
+
 });

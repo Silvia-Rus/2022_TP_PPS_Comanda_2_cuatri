@@ -15,6 +15,9 @@ import {
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { auth, db } from "../database/firebase";
 import { Badge } from "react-native-paper";
+import Spinner from "../utils/SpinnerUtil";
+
+
 
 
 const EstadisticasEncuestaCliente = () => {
@@ -37,6 +40,9 @@ const EstadisticasEncuestaCliente = () => {
   const [paymentMethodDebito, setPaymentMethodDebito] = useState(0);
   const [paymentMethodCredito, setPaymentMethodCredito] = useState(0);
   const win = Dimensions.get("window");
+  const [loading, setLoading] = useState(false);
+  
+
 
   const backgroundImage = require("../assets/common/background.png");
   const returnIcon = require("../assets/common/return.png");
@@ -128,7 +134,7 @@ const EstadisticasEncuestaCliente = () => {
 
   //RETURN
   const handleReturn = () => {
-    navigation.replace("TableControlPanel")
+    navigation.replace("HomeCliente")
   }
 
   //TOOGLE SPINNER
@@ -217,90 +223,76 @@ const EstadisticasEncuestaCliente = () => {
     setAverageWaiterEvaluation(sumWaiterEvaluations / countWaiterEvaulations);
  }
 
-  //HEADER
-  useLayoutEffect(() => {
-      navigation.setOptions({
-        headerLeft: () => (
-          <TouchableOpacity onPress={handleReturn}>
-              <Image source={returnIcon} style={styles.headerIcon}/>
-          </TouchableOpacity>
-        ),
-        headerTitle: () => (
-          <Text style={styles.headerText}>RESULTADOS DE ENCUESTAS</Text>
-        ),
-        headerTintColor: "transparent",
-        headerBackButtonMenuEnabled: false,
-        headerStyle: {
-          backgroundColor: 'rgba(61, 69, 68, 0.4);',
-        },         
-      });
-    }, []);
-
   return (
     <View style={styles.container}>
-      <ImageBackground source={backgroundImage} resizeMode="cover" style={styles.backgroundImage} imageStyle = {{opacity:0.5}}>
-      <ScrollView>
-      <View style={styles.body}>
-        
-        <View style={styles.buttonLayout}>
-          <Text style={styles.inputText}>CALIDAD DE LA COMIDA</Text>
-        </View>
+        {loading?
+            <View style={styles.spinContainer}><Spinner/></View>
+        : null} 
+         <View style={styles.body}>
+            <View style={styles.buttonContainerArriba} >
+                <View style={styles.buttonContainer} >
+                    <Text style={styles.buttonOutlineTextRole}>ESTADÍSTICAS</Text>
+                </View>
+            </View>
+            <ScrollView>
+                <View style={styles.inputContainer}>
+                    <View style={[styles.buttonRole, styles.buttonOutlineRole]}>
+                    <Text style={styles.inputText}>CALIDAD DE LA COMIDA</Text>
+                    </View>
 
-        <PieChart
-          data={foodQualityPieChartData}
-          width={win.width * 0.8}
-          height={win.width / 2}
-          chartConfig={styles.chartConfig}
-          accessor={"amount"}
-          backgroundColor={"#A4C3B2"}
-          paddingLeft={"0"}
-          center={[10, 0]}
-          absolute
-        />
+                    <PieChart
+                        data={foodQualityPieChartData}
+                        width={win.width * 0.8}
+                        height={win.width / 2}
+                        chartConfig={styles.chartConfig}
+                        accessor={"amount"}
+                        backgroundColor={"#fcfce2"}
+                        paddingLeft={"0"}
+                        center={[10, 0]}
+                        absolute
+                    />
+                    <View style={[styles.buttonRole, styles.buttonOutlineRole]}>
+                        <Text style={styles.inputText}>MEDIOS DE PAGO PREFERIDOS</Text>
+                    </View>
 
-        <View style={styles.buttonLayout}>
-          <Text style={styles.inputText}>MEDIOS DE PAGO PREFERIDOS</Text>
-        </View>
+                    <BarChart
+                    data={paymentMethodsBarChartData}
+                    yAxisLabel=""
+                    yAxisSuffix=""
+                    width={win.width * 0.8}
+                    height={win.width / 2}
+                    chartConfig={styles.chartConfig}
+                    />
+                    <View style={[styles.buttonRole, styles.buttonOutlineRole]}>
+                        <Text style={styles.inputText}>PROMEDIO CALIDAD ATENCION DE MOZOS</Text>
+                    </View>
+                    <View style={styles.buttonLayoutAmarillo}>
+                        <Text style={styles.inputText}>{Math.round(averageWaiterEvaluation)} %</Text>
+                    </View>
 
-        <BarChart
-          data={paymentMethodsBarChartData}
-          yAxisLabel=""
-          yAxisSuffix=""
-          width={win.width * 0.8}
-          height={win.width / 2}
-          chartConfig={styles.chartConfig}
-        />
+                    <View style={[styles.buttonRole, styles.buttonOutlineRole]}>
+                        <Text style={styles.inputText}>OPINIONES VARIAS</Text>
+                    </View>
 
-
-        <View style={styles.buttonLayout}>
-          <Text style={styles.inputText}>PROMEDIO CALIDAD ATENCION DE MOZOS</Text>
-          <Text style={styles.inputText}>{Math.round(averageWaiterEvaluation)} %</Text>
-        </View>
-
-        <View style={styles.buttonLayout}>
-        <Text style={styles.inputText}>OPINIONES VARIAS</Text>
-        </View>
-
-        <PieChart
-          data={clientsOpinionsProggressRingData}
-          width={win.width * 0.9}
-          height={win.width / 2}
-          chartConfig={styles.chartConfig}
-          accessor={"amount"}
-          backgroundColor={"#A4C3B2"}
-          paddingLeft={"0"}
-          center={[10, 0]}
-          absolute
-        />          
-      </View> 
-      </ScrollView>
-
-      <View>
-        <Modal backdropOpacity={0.5} animationIn="rotate" animationOut="rotate" isVisible={isModalSpinnerVisible}>
-        </Modal>
+                    <PieChart
+                        data={clientsOpinionsProggressRingData}
+                        width={win.width * 0.9}
+                        height={win.width / 2}
+                        chartConfig={styles.chartConfig}
+                        accessor={"amount"}
+                        backgroundColor={'#fcfce2'}
+                        paddingLeft={"0"}
+                        center={[10, 0]}
+                        absolute
+                    />          
+                    <View style={styles.buttonContainer2}>
+                        <TouchableOpacity onPress={handleReturn} style={styles.buttonLogin}>
+                            <Text style={styles.buttonText2}>VOLVER</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View> 
+            </ScrollView>
       </View>
-      
-      </ImageBackground>           
     </View> 
   );
 };
