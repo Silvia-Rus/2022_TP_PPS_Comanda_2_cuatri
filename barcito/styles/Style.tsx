@@ -67,12 +67,7 @@ export default StyleSheet.create({
         alignItems: 'center',
         marginTop: '2%',
     },
-    buttonContainerArriba: {
-        width: '80%',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: '10%',
-    },
+
     button: {
         backgroundColor: '#4d3e6b',
         width: '100%',

@@ -20,6 +20,11 @@ import HomeClienteEsperaScreen from './screens/HomeClienteEsperaScreen';
 
 import GestionClienteDuenioScreen from './screens/GestionClientesDuenioScreen';
 import EncuestaEmpleadosDuenioScreen from './screens/EncuestaEmpleadosDuenioScreen';
+import EncuestaClienteScreen from './screens/EncuestaClienteScreen';
+
+import EstadisticasEncuestaClienteScreen from './screens/EstadisticasEncuestaClienteScreen';
+
+
 import ChatScreen from './screens/ChatScreen';
 import GestionClientesMetreScreen from './screens/GestionClientesMetreScreen';
 import EncuestaLugarDeTrabajoMetreScreen from './screens/EncuestaLugarDeTrabajoMetreScreen';
@@ -75,6 +80,9 @@ export type RootStackParamList = {
   EncuestaLugarDeTrabajoMetre: any;
   EncuestaLugarDeTrabajoMozo: any;
   EncuestaLugarDeTrabajoCocinaBar: any;
+  EncuestaCliente: any;
+  EstadisticasEncuestaCliente: any;
+
   GestionPedidosCocinaBar: any;
   GestionEnvioPedidosMozo: any;
   GestionServirPedidosMozo: any;
@@ -134,6 +142,8 @@ export default function App() {
        <Stack.Screen options={{ headerShown: false }} name="HomeCliente" component={HomeClienteScreen} />
        <Stack.Screen options={{ headerShown: false }} name="HomeClienteEspera" component={HomeClienteEsperaScreen} />
        <Stack.Screen options={{ headerShown: true }} name="Chat" component={ChatScreen} />
+       <Stack.Screen options={{ headerShown: false }} name="EncuestaCliente" component={EncuestaClienteScreen} />
+       <Stack.Screen options={{ headerShown: false }} name="EstadisticasEncuestaCliente" component={EstadisticasEncuestaClienteScreen} />
        <Stack.Screen options={{ headerShown: false }} name="GestionClientesMetre" component={GestionClientesMetreScreen} />
        <Stack.Screen options={{ headerShown: false }} name="EncuestaEmpleadosDuenio" component={EncuestaEmpleadosDuenioScreen} />
        <Stack.Screen options={{ headerShown: false }} name="EncuestaLugarDeTrabajoMetre" component={EncuestaLugarDeTrabajoMetreScreen} />

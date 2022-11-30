@@ -4,7 +4,6 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, KeyboardAvoidingView, Image, TextInput } from 'react-native';
 import { RootStackParamList } from './../App';
 import styles from "../styles/Style";
-import Toast from 'react-native-simple-toast';
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { auth, db } from "../database/firebase";
 import Spinner from "../utils/SpinnerUtil";
@@ -29,7 +28,7 @@ const HomeClienteScreen = () => {
       const [scanned, setScanned] = useState(false);
       const [openQR, setOpenQR] = useState(false);
       const [tienePedidos, setTienePedidos] = useState(false);
-
+      const [dataNumeroConfirmados, setDataNumeroConfirmados] = useState(0);
 
       const qrIcon = require("../assets/common/qr.png");
 
@@ -43,6 +42,7 @@ const HomeClienteScreen = () => {
       useFocusEffect(
             useCallback(() => {
                getTienePedidos();
+               getPedidoConfirmado();
         }, []))
 
       const handleOpenQR = () => {
@@ -57,14 +57,37 @@ const HomeClienteScreen = () => {
       const handleMenu = () => {
          navigation.replace("Menu");
       }
+
       const handleJuegos = () => {
          insertarToast("ir a juegos");
       }
-      const handleEncuesta = () => {
-         insertarToast("ir a Encuestas");
+
+      const handleEstadisticas = () => {
+         navigation.replace("EstadisticasEncuestaCliente");
+      }
+
+      const handleEncuesta = async () => {
+         setLoading(true);
+         const q = query(collection(db, "clienteMesa"), where("mailCliente", "==", auth.currentUser?.email));
+         const querySnapshot = await getDocs(q);
+         querySnapshot.forEach(async (doc) => {
+            if(doc.data().status == "Encuestada")
+            {
+               insertarToast("Ya ha realizado la encuesta.");
+            }
+            else if(doc.data().status == "Asignada")
+            {
+               navigation.replace("EncuestaCliente");
+            }
+         });
+         setLoading(false);
       }
       const handlePedido = () => {
             navigation.replace("GestionPedidosCliente");
+      }
+
+      const handlePedirCuenta = () => {
+         insertarToast("Pedir cuenta");
       }
 
       const getTienePedidos = async () => {
@@ -83,6 +106,21 @@ const HomeClienteScreen = () => {
 
       }
 
+      const getPedidoConfirmado = async () => {
+         setLoading(true); 
+         setDataNumeroConfirmados(0);   
+         try {
+         const q = query(collection(db, "pedidos"), where("mailCliente", "==", auth.currentUser?.email));
+         const querySnapshot = await getDocs(q);
+         querySnapshot.forEach(async (doc) => {
+             if(doc.data().status == "Confirmado")
+             {
+                 setDataNumeroConfirmados(querySnapshot.size);     
+             }
+         });
+         } catch(error){console.log("ERROR GETPEDIDOCONFIRMADO: "+error)                    
+         } finally{setLoading(false);}
+     }
 
       const handleBarCodeScanned = async ({ data }) => {
          setScanned(true);
@@ -218,8 +256,15 @@ const HomeClienteScreen = () => {
                                  <Text style={styles.buttonOutlineTextRole}>Ver estado del pedido</Text>
                               </TouchableOpacity> 
                               :null}
+                               {dataNumeroConfirmados > 0 ?  
+                              <TouchableOpacity
+                              onPress={handlePedirCuenta}
+                              style={[styles.buttonRole, styles.buttonOutlineRole]}
+                              >
+                                 <Text style={styles.buttonOutlineTextRole}>Pedir la cuenta</Text>
+                              </TouchableOpacity> 
+                              :null}
                            </View>                      
-                    
                         }
                         {clientStatus == 'Sentado'? 
                            <TouchableOpacity
@@ -242,12 +287,16 @@ const HomeClienteScreen = () => {
                               style={[styles.buttonRole, styles.buttonOutlineRole]}
                               >
                                  <Text style={styles.buttonOutlineTextRole}>Hacer encuesta</Text>
-                              </TouchableOpacity>
-                             
-                            </View>
-                           
+                              </TouchableOpacity> 
+                            </View>  
                         :null}
-
+                           <TouchableOpacity
+                              onPress={handleEstadisticas}
+                              style={[styles.buttonRole, styles.buttonOutlineRole]}
+                              >
+                                 <Text style={styles.buttonOutlineTextRole}>Estadísticas</Text>
+                           </TouchableOpacity>
+                          
                      </View> 
                      } 
                         {/* <View style={styles.inputContainer}> */}

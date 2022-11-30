@@ -1,15 +1,14 @@
 
 import { addDoc, collection, runTransaction } from "firebase/firestore";
 import { auth, db, storage } from "../database/firebase";
-import Toast from 'react-native-simple-toast';
+import insertarToast from "../utils/ToastUtil";
 
 const coleccionUsers = "userInfo";
 const coleccionMesas = "tableInfo";
 const coleccionProductos = "productInfo";
 const coleccionClienteMesa = "clienteMesa";
 const coleccionPedido = "pedidos";
-
-
+const coleccionEncuestasCliente = "encuestaCliente";
 
 export const addDuenioEmpleado = async (imageValue : string, 
                                         values, 
@@ -30,10 +29,7 @@ export const addDuenioEmpleado = async (imageValue : string,
     catch (error:any) 
     {
         console.log("ERROR GRABANDO DUEÑO/EMPLEADO EN BD: "+error.code);
-        Toast.showWithGravity(
-            "ERROR GRABANDO DUEÑO/EMPLEADO EN BD: "+error.code,
-            Toast.LONG, 
-            Toast.CENTER);
+        insertarToast("ERROR GRABANDO DUEÑO/EMPLEADO EN BD: "+error.code);
     }
 }
 
@@ -58,10 +54,7 @@ try
     catch (error:any) 
     {
         console.log("ERROR GRABANDO CLIENTE EN BD: "+error.code);
-        Toast.showWithGravity(
-            "ERROR GRABANDO CLIENTE EN BD: "+error.code,
-            Toast.LONG, 
-            Toast.CENTER);
+        insertarToast("ERROR GRABANDO CLIENTE EN BD: "+error.code);
     }
 }
 export const addClienteAnonimo = async (imageValue : string, 
@@ -81,10 +74,7 @@ export const addClienteAnonimo = async (imageValue : string,
     catch (error:any) 
     {
         console.log("ERROR GRABANDO CLIENTE EN BD: "+error.code);
-        Toast.showWithGravity(
-            "ERROR GRABANDO CLIENTE EN BD: "+error.code,
-            Toast.LONG, 
-            Toast.CENTER);
+        insertarToast("ERROR GRABANDO CLIENTE EN BD: "+error.code);
     }
 }
 
@@ -109,10 +99,7 @@ export const addMesa = async (imageValue : string,
     catch (error:any) 
     {
         console.log("ERROR GRABANDO MESA EN BD: "+error.code);
-        Toast.showWithGravity(
-        "ERROR GRABANDO MESA EN BD: "+error.code,
-        Toast.LONG, 
-        Toast.CENTER);
+        insertarToast("ERROR GRABANDO MESA EN BD: "+error.code);
     }
 }
 
@@ -148,10 +135,7 @@ export const addProducto = async (imageValue1 : string,
     catch (error:any) 
     {
         console.log("ERROR GRABANDO PRODUCTO EN BD: "+error.code);
-        Toast.showWithGravity(
-        "ERROR GRABANDO PRODUCTO EN BD: "+error.code,
-        Toast.LONG, 
-        Toast.CENTER);
+        insertarToast("ERROR GRABANDO PRODUCTO EN BD: "+error.code);
     }
 }
 
@@ -161,7 +145,7 @@ export const addClienteMesa = async (idCliente : string,
                                     estado) => {
     try
     {
-        await addDoc(collection(db, coleccionPedido), {   
+        await addDoc(collection(db, coleccionClienteMesa), {   
             idCliente: idCliente,
             mailCliente: mailCliente,
             idMesa: idMesa,
@@ -172,10 +156,7 @@ export const addClienteMesa = async (idCliente : string,
     catch (error:any) 
     {
         console.log("ERROR GRABANDO EN LISTA DE ESPERA: "+error.code);
-        Toast.showWithGravity(
-        "ERROR GRABANDO CLIENTE MESA EN BD: "+error.code,
-        Toast.LONG, 
-        Toast.CENTER);
+        insertarToast("ERROR GRABANDO EN LISTA DE ESPERA: "+error.code);
     }
 }
 
@@ -203,10 +184,32 @@ export const AddPedido = async (mailCliente,
     catch (error:any) 
     {
         console.log("ERROR GRABANDO EL PEDIDO: "+error.code);
-        Toast.showWithGravity(
-            "ERROR GRABANDO EL PEDIDO: "+error.code,
-            Toast.LONG, 
-            Toast.CENTER);
+        insertarToast("ERROR GRABANDO EL PEDIDO: "+error.code);
+    }
+
+}
+
+export const AddEncuestaCliente = async (values) => {
+    try
+    {
+        await addDoc(collection(db, coleccionEncuestasCliente), {   
+            waiterEvaluation: Math.round(values.waiterEvaluation * 100),
+            payMethod: values.payMethod,
+            foodQuality: values.foodQuality,
+            clean: values.clean,
+            dirty: values.dirty,
+            quickDelivery: values.quickDelivery,
+            slowDelivery: values.slowDelivery,
+            happy: values.happy,
+            sad: values.sad,
+            personalComments: values.personalComments,
+            creationDate: new Date(),
+        });  
+    }
+    catch (error:any) 
+    {
+        console.log("ERROR GRABANDO LA ENCUESTA DE CLIENTE: "+error.code);
+        insertarToast("ERROR GRABANDO LA ENCUESTA DE CLIENTE: "+error.code);
     }
 
 }

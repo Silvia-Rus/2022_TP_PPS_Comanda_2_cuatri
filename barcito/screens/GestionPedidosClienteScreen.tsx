@@ -43,6 +43,10 @@ const GestionPedidosClienteScreen = () => {
         navigation.replace("HomeCliente"); 
     }
 
+    const handlePedirLaCuenta = () => {
+        insertarToast("Pedir la cuenta.");
+    }
+
     //REFRESH DE LA DATA
     useFocusEffect(
         useCallback(() => {
@@ -89,6 +93,8 @@ const GestionPedidosClienteScreen = () => {
             setLoading(true)
             cambioPedidoAConfirmado(idPedido);
             getPedido();
+            getPedidoConfirmado();
+            getPedidoServido();
             toggleModalCancel(); 
             insertarToast("Pedido confirmado.");                                
         }
@@ -196,6 +202,7 @@ const GestionPedidosClienteScreen = () => {
     const getPedidoServido = async () => {
         setLoading(true); 
         setDataServidos([]); 
+        setDataNumeroServidos(0);  
         try {
             const q = query(collection(db, "pedidos"), where("mailCliente", "==", auth.currentUser?.email));
             const querySnapshot = await getDocs(q);
@@ -303,6 +310,15 @@ const GestionPedidosClienteScreen = () => {
             </Modal>                                 
             </View>
             <View style={styles.buttonContainer} >
+            {dataNumeroConfirmados > 0 ?
+                <TouchableOpacity
+                onPress={handlePedirLaCuenta}
+                style={[styles.buttonRole, styles.buttonOutlineRole]}
+                >
+                    <Text style={styles.buttonOutlineTextRole}>Pedir la cuenta</Text>
+
+                </TouchableOpacity>
+            :null}
                 <TouchableOpacity
                     onPress={handleReturn}
                     style={[styles.buttonRole, styles.buttonOutlineRole]}

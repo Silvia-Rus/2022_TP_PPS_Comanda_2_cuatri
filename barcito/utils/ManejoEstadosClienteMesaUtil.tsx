@@ -10,9 +10,11 @@ const cambioEstadoClienteMesa = async (id, estado) => {
     await updateDoc(ref, {status:estado});
 }
 
-const cambioClienteMesaAAsignada = (id) => {
+export const cambioClienteMesaAAsignada = (id) => {
     cambioEstadoClienteMesa(id, 'Asignada');
 }
 
-
-export default cambioClienteMesaAAsignada;
+export const cambioClienteMesaAEncuestada = (id) => {
+    console.log("el id de ClienteMesa: "+id);
+    cambioEstadoClienteMesa(id, 'Encuestada');
+}
