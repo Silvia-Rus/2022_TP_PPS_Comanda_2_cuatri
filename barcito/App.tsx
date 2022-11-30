@@ -2,43 +2,43 @@ import React, { useEffect } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from './screens/LoginScreen';
 import IndexScreen from './screens/IndexScreen';
-import HomeScreen from './screens/HomeScreen';
-import RegistroDuenioScreen2 from './screens/RegistroDuenioScreen2';
-import RegistroEmpleadoScreen from './screens/RegistroEmpleadoScreen';
-import RegistroClienteRegistradoScreen from './screens/RegistroClienteRegistradoScreen';
-import RegistroClienteAnonimoScreen from './screens/RegistroClienteAnonimoScreen';
-import RegistroMesaScreen from './screens/RegistroMesaScreen';
-import RegistroComidaScreen from './screens/RegistroComidaScreen';
-import RegistroBebidaScreen from './screens/RegistroBebidaScreen';
+import HomeScreen from './screens/Homes/HomeScreen';
+import RegistroDuenioScreen2 from './screens/Registros/RegistroDuenioScreen2';
+import RegistroEmpleadoScreen from './screens/Registros/RegistroEmpleadoScreen';
+import RegistroClienteRegistradoScreen from './screens/Registros/RegistroClienteRegistradoScreen';
+import RegistroClienteAnonimoScreen from './screens/Registros/RegistroClienteAnonimoScreen';
+import RegistroMesaScreen from './screens/Registros/RegistroMesaScreen';
+import RegistroComidaScreen from './screens/Registros/RegistroComidaScreen';
+import RegistroBebidaScreen from './screens/Registros/RegistroBebidaScreen';
 
-import HomeDuenioScreen from './screens/HomeDuenioScreen';
-import HomeCocinaBarScreen from './screens/HomeCocinaBarScreen';
-import HomeMetreScreen from './screens/HomeMetreScreen';
-import HomeMozoScreen from './screens/HomeMozoScreen';
-import HomeClienteScreen from './screens/HomeClienteScreen';
-import HomeClienteEsperaScreen from './screens/HomeClienteEsperaScreen';
+import HomeDuenioScreen from './screens/Homes/HomeDuenioScreen';
+import HomeCocinaBarScreen from './screens/Homes/HomeCocinaBarScreen';
+import HomeMetreScreen from './screens/Homes/HomeMetreScreen';
+import HomeMozoScreen from './screens/Homes/HomeMozoScreen';
+import HomeClienteScreen from './screens/Homes/HomeClienteScreen';
+import HomeClienteEsperaScreen from './screens/Homes/HomeClienteEsperaScreen';
 
-import GestionClienteDuenioScreen from './screens/GestionClientesDuenioScreen';
-import EncuestaEmpleadosDuenioScreen from './screens/EncuestaEmpleadosDuenioScreen';
-import EncuestaClienteScreen from './screens/EncuestaClienteScreen';
+import GestionClienteDuenioScreen from './screens/GestionClientes/GestionClientesDuenioScreen';
+import EncuestaEmpleadosDuenioScreen from './screens/Encuestas/EncuestaEmpleadosDuenioScreen';
+import EncuestaClienteScreen from './screens/Encuestas/EncuestaClienteScreen';
 
-import EstadisticasEncuestaClienteScreen from './screens/EstadisticasEncuestaClienteScreen';
-
-
-import ChatScreen from './screens/ChatScreen';
-import GestionClientesMetreScreen from './screens/GestionClientesMetreScreen';
-import EncuestaLugarDeTrabajoMetreScreen from './screens/EncuestaLugarDeTrabajoMetreScreen';
-import GestionEnvioPedidosMozoScreen from './screens/GestionEnvioPedidosMozoScreen';
-import GestionServirPedidosMozoScreen from './screens/GestionServirPedidosMozoScreen';
-
-import GestionPedidosClienteScreen from './screens/GestionPedidosClienteScreen';
-import GestionPedidosComidaBarScreen from './screens/GestionPedidosComidaBarScreen';
-import GestionPedidosBebidaBarScreen from './screens/GestionPedidosBebidaBarScreen';
+import EstadisticasEncuestaClienteScreen from './screens/Estadisticas/EstadisticasEncuestaClienteScreen';
 
 
-import EncuestaLugarDeTrabajoMozoScreen from './screens/EncuestaLugarDeTrabajoMozoScreen';
-import EncuestaLugarDeTrabajoCocinaBarScreen from './screens/EncuestaLugarDeTrabajoCocinaBarScreen';
-import MenuScreen from './screens/MenuScreen';
+import ChatScreen from './screens/GestionClientes/ChatScreen';
+import GestionClientesMetreScreen from './screens/GestionClientes/GestionClientesMetreScreen';
+import EncuestaLugarDeTrabajoMetreScreen from './screens/Encuestas/EncuestaLugarDeTrabajoMetreScreen';
+import GestionEnvioPedidosMozoScreen from './screens/GestionPedidos/GestionEnvioPedidosMozoScreen';
+import GestionServirPedidosMozoScreen from './screens/GestionPedidos/GestionServirPedidosMozoScreen';
+
+import GestionPedidosClienteScreen from './screens/GestionPedidos/GestionPedidosClienteScreen';
+import GestionPedidosComidaBarScreen from './screens/GestionPedidos/GestionPedidosComidaBarScreen';
+import GestionPedidosBebidaBarScreen from './screens/GestionPedidos/GestionPedidosBebidaBarScreen';
+
+
+import EncuestaLugarDeTrabajoMozoScreen from './screens/Encuestas/EncuestaLugarDeTrabajoMozoScreen';
+import EncuestaLugarDeTrabajoCocinaBarScreen from './screens/Encuestas/EncuestaLugarDeTrabajoCocinaBarScreen';
+import MenuScreen from './screens/GestionPedidos/MenuScreen';
 
 
 
