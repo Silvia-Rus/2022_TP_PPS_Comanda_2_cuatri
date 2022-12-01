@@ -42,12 +42,6 @@ const EstadisticasEncuestaCliente = () => {
   const win = Dimensions.get("window");
   const [loading, setLoading] = useState(false);
   
-
-
-  const backgroundImage = require("../assets/common/background.png");
-  const returnIcon = require("../assets/common/return.png");
- 
-
   //CONFIG DE GRAFICOS
 
   const fill = 'rgb(134, 65, 244)'

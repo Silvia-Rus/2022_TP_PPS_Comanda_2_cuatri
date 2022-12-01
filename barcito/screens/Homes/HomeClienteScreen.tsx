@@ -30,7 +30,7 @@ const HomeClienteScreen = () => {
       const [tienePedidos, setTienePedidos] = useState(false);
       const [dataNumeroConfirmados, setDataNumeroConfirmados] = useState(0);
 
-      const qrIcon = require("../assets/common/qr.png");
+      const qrIcon = require("../../assets/common/qr.png");
 
       useEffect(() => {
          (async () => {
@@ -83,11 +83,11 @@ const HomeClienteScreen = () => {
          setLoading(false);
       }
       const handlePedido = () => {
-            navigation.replace("GestionPedidosCliente");
+         navigation.replace("GestionPedidosCliente");
       }
 
       const handlePedirCuenta = () => {
-         insertarToast("Pedir cuenta");
+         navigation.replace("PedirCuenta");
       }
 
       const getTienePedidos = async () => {
@@ -231,7 +231,7 @@ const HomeClienteScreen = () => {
                </View>            
             :
                <View style={styles.buttonContainer}>
-                  <Image style={styles.logoHomeDos} resizeMode="contain" source={require('../assets/logo.png')} />
+                  <Image style={styles.logoHomeDos} resizeMode="contain" source={require('../../assets/logo.png')} />
                   <View style={styles.inputContainer}>    
 
                      {clientStatus == 'Pendent'? 

@@ -1,5 +1,6 @@
 
 import { addDoc, collection, runTransaction } from "firebase/firestore";
+import { ProgressViewIOSComponent } from "react-native";
 import { auth, db, storage } from "../database/firebase";
 import insertarToast from "../utils/ToastUtil";
 
@@ -160,12 +161,37 @@ export const addClienteMesa = async (idCliente : string,
     }
 }
 
+export const addCuenta = async (mailCliente: string,
+                                idMesa,
+                                propina,
+                                pedido,
+                                total) => {
+    try
+    {
+        await addDoc(collection(db, "cuenta"), {   
+            mailCliente: mailCliente,
+            idMesa: idMesa,
+            propina: propina,
+            pedido: pedido,
+            total: total,
+            estado: "Pedida",
+            creationDate:new Date()          
+        });  
+    }
+    catch (error:any) 
+    {
+        console.log("ERROR GRABANDO EN LISTA DE ESPERA: "+error.code);
+        insertarToast("ERROR GRABANDO EN LISTA DE ESPERA: "+error.code);
+    }
+}
+
 export const AddPedido = async (mailCliente, 
                                 idMesa, 
                                 nombreProducto, 
                                 cantidad, 
                                 tipo,
-                                tiempoElaboracionTotal, 
+                                tiempoElaboracionTotal,
+                                precioUnitario, 
                                 precioTotal) => {
     try
     {
@@ -176,6 +202,7 @@ export const AddPedido = async (mailCliente,
             cantidad: cantidad,
             tiempoElaboracionTotal: tiempoElaboracionTotal,
             tipoProducto: tipo,
+            precioUnitario: precioUnitario,
             precioTotal: precioTotal,
             status: "Pedido" ,
             creationDate:new Date()  

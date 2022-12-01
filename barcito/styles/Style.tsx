@@ -68,6 +68,20 @@ export default StyleSheet.create({
         marginTop: '2%',
     },
 
+    buttonContainerArriba: {
+        width: '80%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: '10%',
+    },
+    buttonContainerPropina: {
+        width: '40%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: '2%',
+        marginBottom: '2%'
+    },
+
     button: {
         backgroundColor: '#4d3e6b',
         width: '100%',
@@ -386,7 +400,27 @@ export default StyleSheet.create({
         borderRadius: 10,
         borderWidth: 2,
     },
+
+    cardScrollCuentaStyle: {
+        backgroundColor: '#81749c',
+        borderColor: '#DCDCE1',
+        height: 24,
+        margin: 10,
+        marginBottom: 2,
+        borderRadius: 10,
+        borderWidth: 2,
+    },
     pedidoStyle: {
+        backgroundColor: '#fcfce2',
+        borderColor: '#DCDCE1',
+        height: 70,
+        margin: 10,
+        marginBottom: 2,
+        borderRadius: 10,
+        borderWidth: 2,
+    },
+
+    propinaStyle: {
         backgroundColor: '#fcfce2',
         borderColor: '#DCDCE1',
         height: 70,

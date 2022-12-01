@@ -25,3 +25,11 @@ export const cambioPedidoAServido = (id) => {
 export const cambioPedidoAConfirmado = (id) => {
     cambioEstadoPedido(id, 'Confirmado');
 }
+
+export const cambioPedidoAInactivo = (id) => {
+    cambioEstadoPedido(id, 'Inactivo');
+}
+
+export const cambioPedidoAPagando = (id) => {
+    cambioEstadoPedido(id, 'Pagando');
+}

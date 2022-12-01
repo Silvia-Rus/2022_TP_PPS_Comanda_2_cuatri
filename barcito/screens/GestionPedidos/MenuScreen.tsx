@@ -33,9 +33,6 @@ const MenuScreen = () => {
 
     const [cantidad, setCantidad] = useState('');
 
-    const confirmIcon = require("../assets/confirm.png");
-    const cancelIcon = require("../assets/cancel.png");
-
      //RETURN
     const handleReturn = () => { 
         //insertarToast("Holi");
@@ -80,6 +77,7 @@ const MenuScreen = () => {
                       cantidad,
                       productoPedidoTipo, 
                       tiempoElaboracionTotal,
+                      productoPedidoPrecio,
                       precioTotal)
             getTiempoElaboracion();
             getPrecioTotal();

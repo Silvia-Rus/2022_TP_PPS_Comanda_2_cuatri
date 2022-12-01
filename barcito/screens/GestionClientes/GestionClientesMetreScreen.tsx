@@ -27,8 +27,8 @@ const ClientManagment = () => {
   const [rejectMotive, setRejectMotive] = useState('');
   const [rejectId, setRejectId] = useState('');
 
-  const confirmIcon = require("../assets/confirm.png");
-  const cancelIcon = require("../assets/cancel.png");
+  const confirmIcon = require("../../assets/confirm.png");
+  const cancelIcon = require("../../assets/cancel.png");
   
 
   //RETURN

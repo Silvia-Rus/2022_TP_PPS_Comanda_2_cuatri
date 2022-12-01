@@ -94,7 +94,7 @@ const HomeCocinaBarScreen = () => {
         <View style={styles.spinContainer}><Spinner/></View>
     : null}
     {<Image
-        source={require('../assets/logo.png')}
+        source={require('../../assets/logo.png')}
         resizeMode="contain"
         style={styles.logoHome}
     />}

@@ -27,8 +27,8 @@ const ChatScreen = () => {
   const user = auth?.currentUser?.email || '';
   const [loading, setLoading] = useState(false);
 
-  const returnIcon = require("../assets/common/return.png");
-  const sendIcon = require("../assets/common/send.png");
+  const returnIcon = require("../../assets/common/return.png");
+  const sendIcon = require("../../assets/common/send.png");
 
   useFocusEffect(
     

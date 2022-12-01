@@ -44,7 +44,7 @@ const GestionPedidosClienteScreen = () => {
     }
 
     const handlePedirLaCuenta = () => {
-        insertarToast("Pedir la cuenta.");
+        navigation.replace("PedirCuenta"); 
     }
 
     //REFRESH DE LA DATA
@@ -134,7 +134,7 @@ const GestionPedidosClienteScreen = () => {
             const querySnapshot = await getDocs(q);
             querySnapshot.forEach(async (item) =>{
                const statusPedido = item.data().status;
-               if(statusPedido != "Inactivo")
+               if(statusPedido != "Inactivo" && statusPedido != "Pagando")
                {
                 acumulador = acumulador+item.data().precioTotal;
                 //console.log("nuevoPrecio "+ acumulador);
@@ -151,7 +151,11 @@ const GestionPedidosClienteScreen = () => {
             const q = query(collection(db, "clienteMesa"), where("mailCliente", "==", auth.currentUser?.email), where("status", "==", "Asignada"));
             const querySnapshot = await getDocs(q);
             querySnapshot.forEach(async (item) =>{
-               setMesa(item.data().idMesa);       
+                const statusClienteMesa = item.data().status;
+                if(statusClienteMesa != "Inactivo")
+                {
+                    setMesa(item.data().idMesa);       
+                }           
             });
          }catch(error){console.log("ERROR CHEQUEANDO EL ID DE LA MESA: "+error)                    
          }finally{setLoading(false);}
@@ -167,7 +171,7 @@ const GestionPedidosClienteScreen = () => {
             const q = query(collection(db, "pedidos"), where("mailCliente", "==", auth.currentUser?.email));
             const querySnapshot = await getDocs(q);
             querySnapshot.forEach(async (doc) => {
-                if(doc.data().status != "Inactivo" && doc.data().status != "Servido" && doc.data().status != "Confirmado"){            
+                if(doc.data().status != "Inactivo" && doc.data().status != "Servido" && doc.data().status != "Confirmado" && doc.data().status != "Pagando"){            
                     const res: any = { ...doc.data(), id: doc.id };
                     setDataPedido((arr: any) => [...arr, { ...res, id: doc.id }]
                             .sort((a, b) => (a.status < b.status ? 1 : a.status > b.status ? -1 : 0))) 
@@ -187,7 +191,7 @@ const GestionPedidosClienteScreen = () => {
         const q = query(collection(db, "pedidos"), where("mailCliente", "==", auth.currentUser?.email));
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach(async (doc) => {
-            if(doc.data().status == "Confirmado")
+            if(doc.data().status == "Confirmado" || doc.data().status == "Pagando" )
             {
                 const res: any = { ...doc.data(), id: doc.id };
                 setDataConfirmados((arr: any) => [...arr, { ...res, id: doc.id }]
@@ -230,13 +234,13 @@ const GestionPedidosClienteScreen = () => {
                 <Text style={styles.buttonOutlineTextRole}>PEDIDO</Text>
               </View>
             </View>
-                <View style={styles.pedidoStyle}>
-                    <Text style={styles.textHomePequeñoCentrado}>Cuenta:</Text>
-                    <Text style={styles.textCuenta}>{precioTotal}$</Text>
-                </View>
-                <View style={styles.tiempoElaboracionStyle}>
-                    <Text style={styles.textHomePequeñoCentrado}>Tiempo de elaboración: {tiempoElaboracion} min.</Text>
-                </View>
+            <View style={styles.pedidoStyle}>
+                <Text style={styles.textHomePequeñoCentrado}>Cuenta:</Text>
+                <Text style={styles.textCuenta}>{precioTotal}$</Text>
+            </View>
+            <View style={styles.tiempoElaboracionStyle}>
+                <Text style={styles.textHomePequeñoCentrado}>Tiempo de elaboración: {tiempoElaboracion} min.</Text>
+            </View>
             <View style={styles.bodyPedido2}>
 
             {dataNumeroServidos > 0 ?

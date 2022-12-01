@@ -159,7 +159,7 @@ const RegistroMesaScreen = () => {
                 <View style={styles.cameraQrContainer}>
                 {!image?
                     <TouchableOpacity onPress={handleCamera}>
-                    <Image style={styles.cameraIcon} resizeMode="cover" source={require('../assets/camara.png')} />
+                    <Image style={styles.cameraIcon} resizeMode="cover" source={require('../../assets/camara.png')} />
                     </TouchableOpacity> 
                     :
                     <View>

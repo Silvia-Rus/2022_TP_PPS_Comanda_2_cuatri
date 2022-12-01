@@ -27,7 +27,7 @@ const HomeClienteEsperaScreen = () => {
     return(
         <View style={styles.container}>
             {<Image
-            source={require('../assets/logo.png')}
+            source={require('../../assets/logo.png')}
             resizeMode="contain"
             style={styles.logoHome}
             />}
