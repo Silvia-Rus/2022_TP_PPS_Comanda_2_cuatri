@@ -35,6 +35,8 @@ import GestionPedidosClienteScreen from './screens/GestionPedidos/GestionPedidos
 import GestionPedidosComidaBarScreen from './screens/GestionPedidos/GestionPedidosComidaBarScreen';
 import GestionPedidosBebidaBarScreen from './screens/GestionPedidos/GestionPedidosBebidaBarScreen';
 import PedirCuentaScreen from './screens/GestionPedidos/PedirCuentaScreen';
+import GestionCobrarCuentaMozoScreen from './screens/GestionPedidos/GestionCobrarCuentaMozoScreen';
+
 
 
 import EncuestaLugarDeTrabajoMozoScreen from './screens/Encuestas/EncuestaLugarDeTrabajoMozoScreen';
@@ -90,6 +92,7 @@ export type RootStackParamList = {
   GestionPedidosCliente: any;
   GestionPedidosComidaBar: any;
   GestionPedidosBebidaBar: any;
+  GestionCobrarCuentaMozo: any;
   PedirCuenta: any;
   Menu: any;
 }
@@ -152,6 +155,8 @@ export default function App() {
        <Stack.Screen options={{ headerShown: false }} name="GestionEnvioPedidosMozo" component={GestionEnvioPedidosMozoScreen} />
        <Stack.Screen options={{ headerShown: false }} name="GestionServirPedidosMozo" component={GestionServirPedidosMozoScreen} />
        <Stack.Screen options={{ headerShown: false }} name="GestionPedidosCliente" component={GestionPedidosClienteScreen} />
+       <Stack.Screen options={{ headerShown: false }} name="GestionCobrarCuentaMozo" component={GestionCobrarCuentaMozoScreen} />
+
        <Stack.Screen options={{ headerShown: false }} name="GestionPedidosComidaBar" component={GestionPedidosComidaBarScreen} />
        <Stack.Screen options={{ headerShown: false }} name="PedirCuenta" component={PedirCuentaScreen} />
        <Stack.Screen options={{ headerShown: false }} name="GestionPedidosBebidaBar" component={GestionPedidosBebidaBarScreen} />

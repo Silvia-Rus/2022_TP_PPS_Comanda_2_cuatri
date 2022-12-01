@@ -10,8 +10,12 @@ const cambioEstadoMesa = async (id, estado) => {
     await updateDoc(ref, {status:estado});
 }
 
-const cambioMesaAOcupada = (id) => {
+export const cambioMesaAOcupada = (id) => {
+    
     cambioEstadoMesa(id, 'ocupada');
 }
 
-export default cambioMesaAOcupada;
+export const cambioMesaAFree = (id) => {
+    cambioEstadoMesa(id, 'free');
+}
+

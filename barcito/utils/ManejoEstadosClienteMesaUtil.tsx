@@ -15,6 +15,9 @@ export const cambioClienteMesaAAsignada = (id) => {
 }
 
 export const cambioClienteMesaAEncuestada = (id) => {
-    console.log("el id de ClienteMesa: "+id);
     cambioEstadoClienteMesa(id, 'Encuestada');
+}
+
+export const cambioClienteMesaAInactivo = (id) => {
+    cambioEstadoClienteMesa(id, 'Inactivo');
 }

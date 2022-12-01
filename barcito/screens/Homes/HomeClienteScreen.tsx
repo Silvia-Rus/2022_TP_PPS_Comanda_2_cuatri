@@ -11,7 +11,7 @@ import { doc, collection, getDocs, query, where, updateDoc, QuerySnapshot } from
 import { addClienteMesa } from "../../utils/AddDocsUtil";
 import { Camera } from "expo-camera";
 import insertarToast from "../../utils/ToastUtil";
-import cambioMesaAOcupada from "../../utils/ManejoEstadosMesaUtil";
+import { cambioMesaAOcupada } from "../../utils/ManejoEstadosMesaUtil";
 import { cambioClienteAWaiting, cambioClienteARejected, cambioClienteAAccepted } from "../../utils/ManejoEstadosClienteUtil";
 
 

@@ -37,6 +37,9 @@ const HomeMozoScreen = () => {
         navigation.replace('GestionServirPedidosMozo');
         setLoading(false);
       }
+      const handlerGestionCobrarPedidos = () => {      
+        navigation.replace('GestionCobrarCuentaMozo');
+      }
 
     const handlerChat = () => {
         navigation.replace('Chat');
@@ -70,6 +73,12 @@ const HomeMozoScreen = () => {
                     style={[styles.buttonRole, styles.buttonOutlineRole]}
                     >
                     <Text style={styles.buttonOutlineTextRole}>Servir Pedidos</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={handlerGestionCobrarPedidos}
+                    style={[styles.buttonRole, styles.buttonOutlineRole]}
+                    >
+                    <Text style={styles.buttonOutlineTextRole}>Cobrar Pedidos</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                         onPress={handlerChat}

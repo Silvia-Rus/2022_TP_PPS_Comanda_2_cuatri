@@ -33,3 +33,7 @@ export const cambioPedidoAInactivo = (id) => {
 export const cambioPedidoAPagando = (id) => {
     cambioEstadoPedido(id, 'Pagando');
 }
+
+export const cambioPedidoAPagado = (id) => {
+    cambioEstadoPedido(id, 'Pagado');
+}
