@@ -42,6 +42,10 @@ const HomeDuenioScreen = () => {
     const handlerGestionClientes = () => {
         navigation.replace('GestionClienteDuenio');
       }
+    
+      const handlerGestionReservas = () => {
+        navigation.replace('ReservaDuenio');
+      }
 
     const handlerEncuestaEmpleados = () => {
         navigation.replace('EncuestaEmpleadosDuenio');
@@ -52,6 +56,8 @@ const HomeDuenioScreen = () => {
      {loading ?
         <View style={styles.spinContainer}><Spinner/></View>
     : null}
+    <Text style={styles.textRole}>Dueño</Text>
+
     {<Image
         source={require('../../assets/logo.png')}
         resizeMode="contain"
@@ -84,6 +90,12 @@ const HomeDuenioScreen = () => {
                     >
                         <Text style={styles.buttonOutlineTextRole}>Gestionar Clientes</Text>
                 </TouchableOpacity>
+                <TouchableOpacity
+                        onPress={handlerGestionReservas}
+                        style={[styles.buttonRole, styles.buttonOutlineRole]}
+                    >
+                        <Text style={styles.buttonOutlineTextRole}>Gestionar Reservas</Text>
+                </TouchableOpacity>
 
                 <TouchableOpacity
                         onPress={handlerEncuestaEmpleados}
@@ -102,9 +114,7 @@ const HomeDuenioScreen = () => {
                     </TouchableOpacity>         
                 </View>
             </View>
-            <Text style={styles.textHomePequeño}>duenio@barcito.com</Text>
-
-        
+            <Text style={styles.textHomePequeño}>{auth.currentUser?.email}</Text>        
     </View>
   );
 }

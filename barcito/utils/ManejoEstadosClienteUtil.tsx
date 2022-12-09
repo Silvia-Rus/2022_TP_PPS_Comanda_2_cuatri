@@ -3,7 +3,6 @@ import { updateDoc, doc } from "firebase/firestore";
 
 const nombreColeccion = "userInfo";
 
-
 const cambioEstadoCliente = async (id, estado) => {
 
     const ref = doc(db, nombreColeccion, id);

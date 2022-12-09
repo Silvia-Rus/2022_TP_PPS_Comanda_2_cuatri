@@ -1,6 +1,12 @@
 import React, { useEffect } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from './screens/LoginScreen';
+import LoginReservasScreen from './screens/LoginReservasScreen';
+import ReservaClientesScreen from './screens/ReservaClientesScreen';
+import ReservaDuenioScreen from './screens/ReservaDuenioScreen';
+
+
+
 import IndexScreen from './screens/IndexScreen';
 import HomeScreen from './screens/Homes/HomeScreen';
 import RegistroDuenioScreen2 from './screens/Registros/RegistroDuenioScreen2';
@@ -60,6 +66,9 @@ import { DarkTheme, DefaultTheme, NavigationContainer } from '@react-navigation/
 export type RootStackParamList = {
   RegistroClienteRegistrado: any;
   Login: any;
+  LoginReservas: any;
+  ReservaClientes: any;
+  ReservaDuenio: any;
   Home: any;
   Index: any;
   SignUp: any;
@@ -135,6 +144,9 @@ export default function App() {
        <Stack.Screen options={{ headerShown: false }} name="RegistroDuenio2" component={RegistroDuenioScreen2} />
        <Stack.Screen options={{ headerShown: false }} name="HomeDuenio" component={HomeDuenioScreen} />
        <Stack.Screen options={{ headerShown: false }} name="Login" component={LoginScreen} />
+       <Stack.Screen options={{ headerShown: false }} name="LoginReservas" component={LoginReservasScreen} />
+       <Stack.Screen options={{ headerShown: false }} name="ReservaClientes" component={ReservaClientesScreen} />
+       <Stack.Screen options={{ headerShown: false }} name="ReservaDuenio" component={ReservaDuenioScreen} />
        <Stack.Screen options={{ headerShown: false }} name="RegistroComida" component={RegistroComidaScreen} />
        <Stack.Screen options={{ headerShown: false }} name="RegistroBebida" component={RegistroBebidaScreen} />
        <Stack.Screen options={{ headerShown: false }} name="RegistroMesa" component={RegistroMesaScreen} />

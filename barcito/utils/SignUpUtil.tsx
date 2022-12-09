@@ -17,6 +17,8 @@ import { addClienteRegistrado, addDuenioEmpleado, addClienteAnonimo } from "./Ad
 import LanzarCamara from "./CameraUtil";
 import CargarImagen from "./CargarImagenUtil";
 import ValidacionCamposUsuario from "./ValidacionCamposUsuariosUtil"
+import { sendPushNotification } from "./PushNotificationUtil";
+
 
 
 const SignUp = (rol : string) => {
@@ -185,6 +187,8 @@ const SignUp = (rol : string) => {
                 else if(rol === 'clienteRegistrado'){
                     console.log("en el add: "+values);
                     addClienteRegistrado(imageValue, values, checked)
+                    sendPushNotification( {title:"Nuevo CLIENTE", description:"Cliente en la puerta"});
+
                 }
                 else if(rol === 'clienteAnonimo'){
                     addClienteAnonimo(imageValue, values, checked)

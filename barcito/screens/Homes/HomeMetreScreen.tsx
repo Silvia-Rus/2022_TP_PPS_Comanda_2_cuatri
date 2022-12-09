@@ -38,6 +38,8 @@ const HomeMozoScreen = () => {
      {loading ?
         <View style={styles.spinContainer}><Spinner/></View>
     : null}
+    <Text style={styles.textRole}>Metre</Text>
+
     {<Image
         source={require('../../assets/logo.png')}
         resizeMode="contain"
@@ -69,7 +71,7 @@ const HomeMozoScreen = () => {
                     </TouchableOpacity>         
                 </View>
             </View>
-            <Text style={styles.textHomePequeño}>metre@barcito.com</Text>
+            <Text style={styles.textHomePequeño}>{auth.currentUser?.email}</Text>
 
         
     </View>

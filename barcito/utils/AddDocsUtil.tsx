@@ -241,4 +241,27 @@ export const AddEncuestaCliente = async (values) => {
 
 }
 
+export const AddReserva = async (idCliente, mailCliente, nombreCliente, apellidoCliente, imageCliente, fechaReserva, horaReserva) => {
+    try
+    {
+        await addDoc(collection(db, "Reservas"), { 
+            idCliente: idCliente, 
+            mailCliente: mailCliente,
+            nombreCliente: nombreCliente, 
+            apellidoCliente: apellidoCliente,
+            fechaReserva: fechaReserva,
+            imageCliente: imageCliente,
+            horaReserva: horaReserva,
+            status: "activa",
+            creationDate: new Date(),
+        });  
+    }
+    catch (error:any) 
+    {
+        console.log("ERROR GRABANDO LA RESERVA: "+error.code);
+        insertarToast("ERROR GRABANDO LA RESERVA: "+error.code);
+    }
+
+}
+
     

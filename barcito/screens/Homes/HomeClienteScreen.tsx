@@ -11,6 +11,8 @@ import { doc, collection, getDocs, query, where, updateDoc, QuerySnapshot } from
 import { addClienteMesa } from "../../utils/AddDocsUtil";
 import { Camera } from "expo-camera";
 import insertarToast from "../../utils/ToastUtil";
+import { sendPushNotification } from "../../utils/PushNotificationUtil";
+
 import { cambioMesaAOcupada } from "../../utils/ManejoEstadosMesaUtil";
 import { cambioClienteAWaiting, cambioClienteARejected, cambioClienteAAccepted } from "../../utils/ManejoEstadosClienteUtil";
 
@@ -151,6 +153,8 @@ const HomeClienteScreen = () => {
                         cambioClienteAWaiting(idClienteAux);
                         //toast
                         insertarToast("Estás en lista de espera. Espera a que te asignen la mesa.")
+                        sendPushNotification( {title:"CLIENTE ESPERANDO MESA", description: "Hay un nuevo cliente en la lista de espera"} );
+
                         //va a la botonera pero solo algunos botones
                         checkClientStatus();
 
@@ -214,6 +218,8 @@ const HomeClienteScreen = () => {
             {loading?
                <View style={styles.spinContainer}><Spinner/></View>
             : null}
+            <Text style={styles.textRole}>Cliente</Text>
+
             {clientStatus == 'Accepted' ?
                <View style={styles.buttonContainer}>
                   <Text style={styles.textHomeMedianoDos}>Escanee el QR de la mesa</Text> 
@@ -307,6 +313,7 @@ const HomeClienteScreen = () => {
                         >
                            <Text style={styles.buttonText}>Salir</Text>
                         </TouchableOpacity>
+                        <Text style={styles.textHomePequeño}>{auth.currentUser?.email}</Text>        
                         {/* </View> */}
                   </View>
                </View>  

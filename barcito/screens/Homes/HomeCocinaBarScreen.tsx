@@ -26,12 +26,11 @@ const HomeCocinaBarScreen = () => {
     const getTipoUsuario = async () => {
         try{
             setLoading(true);
-            const q = query(collection(db, "userInfo"), where("mailCliente", "==", auth.currentUser?.email));
+            const q = query(collection(db, "userInfo"), where("email", "==", auth.currentUser?.email));
             const querySnapshot = await getDocs(q);
             querySnapshot.forEach(async (item) =>{
                 const tipoUsuarioAux = item.data().rol;
                 setTipoUsuario(tipoUsuarioAux);  
-
                });   
          }catch(error){console.log("ERROR CHEQUEANDO EL TIPO DE USUARIO: "+error)                    
          }finally{setLoading(false);}
@@ -75,9 +74,7 @@ const HomeCocinaBarScreen = () => {
                 else
                 {
                     navigation.replace("GestionPedidosBebidaBar");
-                }
-
-                
+                }               
                });   
          }catch(error){console.log("ERROR CHEQUEANDO EL TIPO DE USUARIO: "+error)                    
          }finally{setLoading(false);}
@@ -93,6 +90,8 @@ const HomeCocinaBarScreen = () => {
      {loading ?
         <View style={styles.spinContainer}><Spinner/></View>
     : null}
+    <Text style={styles.textRole}>{tipoUsuario}</Text>
+
     {<Image
         source={require('../../assets/logo.png')}
         resizeMode="contain"
@@ -131,7 +130,7 @@ const HomeCocinaBarScreen = () => {
                     </TouchableOpacity>         
                 </View>
             </View>
-            <Text style={styles.textHomePequeño}>bartender@barcito</Text>
+            <Text style={styles.textHomePequeño}>{auth.currentUser?.email}</Text>
 
         
     </View>
@@ -139,5 +138,3 @@ const HomeCocinaBarScreen = () => {
 }
 
 export default HomeCocinaBarScreen;
-
-

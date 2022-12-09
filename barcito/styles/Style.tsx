@@ -115,6 +115,29 @@ export default StyleSheet.create({
         borderRadius: buttonBorderRadius,
         alignItems: 'center',
     },
+
+    buttonReserva: {
+        backgroundColor: tertiaryColor,
+        width: '100%',
+        padding: 5,
+        borderRadius: buttonBorderRadius,
+        alignItems: 'center',
+    },
+    buttonOutlineRoleReserva: {
+        backgroundColor: '#4d3e6b',
+        marginTop: 20,
+        marginBottom: 15,
+    },
+
+
+    buttonOutlineLogin: {
+        backgroundColor: primaryColor,
+        marginTop: 5,
+        borderColor: '#4d3e6b',
+        borderWidth: 5,
+    },
+
+
     buttonError: {
         backgroundColor: 'red',
         width: '100%',
@@ -136,12 +159,7 @@ export default StyleSheet.create({
         borderColor: '#6e9987',
         borderWidth: 5,
     },
-    buttonOutlineLogin: {
-        backgroundColor: primaryColor,
-        marginTop: 5,
-        borderColor: '#4d3e6b',
-        borderWidth: 5,
-    },
+
     buttonOutlineRole: {
         backgroundColor: '#81749c',
         marginTop: 2,
@@ -160,6 +178,12 @@ export default StyleSheet.create({
         color: '#4d3e6b',
         fontWeight: '700',
         fontSize: 16,
+    },
+
+    textRole: {
+        color: '#4d3e6b',
+        fontWeight: '700',
+        fontSize: 30,
     },
   
     spinnerTextStyle: {
@@ -559,6 +583,16 @@ export default StyleSheet.create({
         borderRadius:20, 
         margin:10,
         backgroundColor: 'white',
+    },
+
+    logoGoogle: {
+        height:40, 
+        width:210, 
+        // width: '50%',
+        // height: '15%',
+        borderRadius:20, 
+        margin:10,
+        backgroundColor: 'transparent',
     },
 
 
