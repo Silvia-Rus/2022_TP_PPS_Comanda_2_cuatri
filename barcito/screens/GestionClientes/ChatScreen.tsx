@@ -10,10 +10,8 @@ import { auth, db } from "../../database/firebase";
 import { GiftedChat, Send } from 'react-native-gifted-chat';
 import HomeMozoScreen from "../Homes/HomeMetreScreen";
 import insertarToast from "../../utils/ToastUtil";
-
-// import { splitUserFromEmail } from "../../utils/utils";
-//import { sendPushNotification } from "../pushNotification/PushNotification";
-
+import { sendPushNotification } from "../../utils/PushNotificationUtil";
+import { deepCopy } from "@firebase/util";
 
 const ChatScreen = () => {
 
@@ -42,14 +40,36 @@ const ChatScreen = () => {
         const querySnapshot1 = await getDocs(query1);
         querySnapshot1.forEach(async (doc) => {
                 const rolAux = doc.data().rol;
-                const nameAux = doc.data().name;
                 setRol(rolAux);
-                setNombre(nameAux);
-                console.log("el rol en el check"+rolAux)
+                const nameAux = doc.data().name;
+                if(rolAux == 'Mozo')
+                {
+                  setNombre('Mozo ('+nameAux+')');
+                }
+                else if(rolAux == "clienteRegistrado" || rolAux == "clienteAnonimo")
+                {
+                  const query2 = query(collection(db, "clienteMesa"),where("mailCliente", "==", auth.currentUser?.email));
+                  const querySnapshot2 = await getDocs(query2);
+                  querySnapshot2.forEach(async (doc) => {
+                    const statusMesaAux = doc.data().status;
+                    const idMesaAux = doc.data().idMesa;
+                    if(statusMesaAux == "Asignada" || statusMesaAux == "Encuestada")
+                    {
+                      setNombre("Mesa "+idMesaAux);
+                    }
+                    else
+                    {
+                      setNombre(nameAux);
+                    }
+                  })
+                } 
+                else
+                {
+                  setNombre(nameAux);
+                }              
         });
         setLoading(false);
   }
-
 
   useLayoutEffect(() => {
     const unsubscribe = onSnapshot(query(collection(db, "chat"), orderBy("createdAt", "desc")), (snapshot =>
@@ -64,7 +84,7 @@ const ChatScreen = () => {
   }, [])
 
   const onSend = useCallback((messages = []) => {
-    //sendPushNotification( {title:"Nueva Consulta", description:"Tienes una consulta de " + auth.currentUser?.email});
+    sendPushNotification( {title:"NUEVO MENSAJE", description:"Tienes una consulta de " + auth.currentUser?.email});
     setMessages(previousMessages =>
         GiftedChat.append(previousMessages, messages))
     const {
@@ -82,15 +102,11 @@ const ChatScreen = () => {
 
   //RETURN
   const handleReturn = async () => {
-        insertarToast("llega al handle");
-        insertarToast(auth.currentUser?.email);
         const query1 = query(collection(db, "userInfo"),where("email", "==", auth.currentUser?.email));
 
         const querySnapshot1 = await getDocs(query1);
         console.log(querySnapshot1);
         querySnapshot1.forEach(async (doc) => {
-            insertarToast("llega aquí");
-
                 const rolAux = doc.data().rol;
                 if(rolAux === 'Mozo')
                 {

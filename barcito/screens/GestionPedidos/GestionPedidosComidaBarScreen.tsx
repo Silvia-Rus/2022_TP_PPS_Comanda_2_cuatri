@@ -11,6 +11,7 @@ import { db, storage } from "../../database/firebase";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import insertarToast from "../../utils/ToastUtil";
 import { cambioPedidoAPreparado } from "../../utils/ManejoEstadosPedidoUtil";
+import { sendPushNotification } from "../../utils/PushNotificationUtil";
 
 
 const GestionPedidosComidaBarScreen = () => {
@@ -71,10 +72,11 @@ const GestionPedidosComidaBarScreen = () => {
   }
 
 
-  const enviarAPreparar= async () => {
+  const enviarAServir = async () => {
     try {
       setLoading(true);
       cambioPedidoAPreparado(idPedido);
+      sendPushNotification( {title:"PEDIDO LISTO", description:"Hay un pedido listo para servir"});
       toggleModalCancel();
       getPedido();
       //toggleSpinnerAlert();
@@ -141,7 +143,7 @@ const GestionPedidosComidaBarScreen = () => {
                     <View style={styles.modalBody}>
                         <View style={styles.buttonContainer} >
                             <TouchableOpacity
-                            onPress={() => enviarAPreparar()}
+                            onPress={() => enviarAServir()}
                             style={[styles.buttonRole, styles.buttonOutlineRole]}
                             >
                             <Text style={styles.buttonOutlineTextRole}>Está Listo</Text>

@@ -11,11 +11,11 @@ const IndexScreen = () => {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
 
     const handlerAccederClienteRegistrado = () => {  
-        navigation.replace('RegistroClienteRegistrado'); /// CAMBIAR
+        navigation.replace('RegistroClienteRegistrado'); 
     }
 
     const handlerAccederClienteAnonimo = () => {  
-        navigation.replace('RegistroClienteAnonimo'); /// CAMBIAR
+        navigation.replace('RegistroClienteAnonimo'); 
     }
 
     const handlerSignIn = () => {

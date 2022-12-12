@@ -34,10 +34,6 @@ const SignUp = (rol : string) => {
         confirmPassword:string
         rol:string;
       }
-
-    //const RegistroDuenioScreen = () => {
-        //CONSTANTES
-        //const navigation = useNavigation<NativeStackNavigationProp<any>>();
         const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
         const [apellidoForm, setApellido] = useState("Apellido");
         const [nombreForm, setNombre] = useState("Nombre");
@@ -51,7 +47,6 @@ const SignUp = (rol : string) => {
         const {getValues, formState:{}, reset, setValue} = useForm<NewUser>();
         const [image, setImage] = useState("");
         const [loading, setLoading] = useState(false);
-        //const [placeholderColor, setPlaceholderColor] = useState("white");
         const [isModalSpinnerVisible, setModalSpinnerVisible] = useState(false);
         const check = (value) => {
             switch(value){
@@ -85,7 +80,7 @@ const SignUp = (rol : string) => {
         //HANDLERS
         //RETURN
         const handleReturn = () => {
-            if(rol === 'clienteAnonimo')        {navigation.replace('HomeCliente');}
+            if     (rol === 'clienteAnonimo')   {navigation.replace('HomeCliente');}
             else if(rol === 'clienteRegistrado'){navigation.replace('HomeClienteEspera');}
             else                                {navigation.replace('HomeDuenio');}
         }
@@ -142,7 +137,8 @@ const SignUp = (rol : string) => {
         //SUBMIT DEL FORM
         const onSubmit = async () => {
             const values=getValues();
-            console.log("values:" + values);
+            console.log("llega al on submit?");
+            console.log("values:" + values.email);
             let error=false;
       
             //VALIDACION CAMPOS
@@ -150,10 +146,8 @@ const SignUp = (rol : string) => {
             console.log("la validacion "+validacion);
             if(validacion === false)
             {
-                console.log("entra a campos obligatorios");
                 insertarToast("Todos los campos y la imagen son requeridos.")
-                insertarToast("Compruebe que todos los campos son correctis.")
-
+                insertarToast("Compruebe que todos los campos son correctos.")
                 return;
             }          
             
@@ -161,13 +155,20 @@ const SignUp = (rol : string) => {
             toggleSpinnerAlert();
             try {
               console.log(auth.currentUser?.email);
-              //CREACION DE USUARIO
 
                 if(rol !== 'clienteAnonimo')
                 {   
-                    await createUserWithEmailAndPassword(auth,values.email,values.password);
+                    await createUserWithEmailAndPassword(auth, values.email.trim(), values.password);
                     console.log(auth.currentUser?.email);
                 }
+                else
+                {
+                    await createUserWithEmailAndPassword(auth, 'anonimo@anonimo.com', '123456');
+                    console.log(auth.currentUser?.email);
+                }
+                
+
+
 
                 if(rol === 'duenio' || rol === 'empleado'){
                    //DESLOGUEO DEL USUARIO CREADO Y REESTABLECIMIENTO DEL USUARIO ORIGINAL
@@ -185,12 +186,12 @@ const SignUp = (rol : string) => {
                     addDuenioEmpleado(imageValue, values, checked);
                 }
                 else if(rol === 'clienteRegistrado'){
-                    console.log("en el add: "+values);
-                    addClienteRegistrado(imageValue, values, checked)
-                    sendPushNotification( {title:"Nuevo CLIENTE", description:"Cliente en la puerta"});
 
+                    addClienteRegistrado(imageValue, values, checked)
+                    sendPushNotification( {title:"NUEVO CLIENTE", description:"Aceptar-Rechazar"});
                 }
                 else if(rol === 'clienteAnonimo'){
+                    console.log("crea el cliente anonimo?");
                     addClienteAnonimo(imageValue, values, checked)
                 }
                 insertarToast("Usuario creado exitosamente");    
@@ -236,30 +237,10 @@ const SignUp = (rol : string) => {
         }, 3000);
         };
 
-        //HEADER
-        // useLayoutEffect(() => {
-        //     navigation.setOptions({
-        //     headerLeft: () => (
-        //         <TouchableOpacity onPress={handleReturn}>
-        //             <Image source={returnIcon} style={styles.headerIcon}/>
-        //         </TouchableOpacity>
-        //     ),
-        //     headerTitle: () => (
-        //         <Text style={styles.headerText}>ALTA DE DUEÑO / SUPERVISOR</Text>
-        //     ),
-        //     headerTintColor: "transparent",
-        //     headerBackButtonMenuEnabled: false,
-        //     headerStyle: {
-        //         backgroundColor: 'rgba(61, 69, 68, 0.4);',
-        //     },         
-        //     });
-        // }, []);
-
         //MANEJADORES RADIOBUTTONS
         const pressDueño = () => {
             setChecked('Dueño');
         }
-
         const pressSupervisor = () => {
             setChecked('Supervisor');
         }
@@ -405,8 +386,6 @@ const SignUp = (rol : string) => {
             </View>
         : null
         }   
-
-        
          {rol == 'empleado' ?
             <View style={styles.buttonContainer} >
                 <View style={styles.inputFieldRadioLayout}>

@@ -16,16 +16,16 @@ import { sendPushNotification } from "../../utils/PushNotificationUtil";
 import { cambioMesaAOcupada } from "../../utils/ManejoEstadosMesaUtil";
 import { cambioClienteAWaiting, cambioClienteARejected, cambioClienteAAccepted } from "../../utils/ManejoEstadosClienteUtil";
 
-
-
 const HomeClienteScreen = () => {
 
       const navigation = useNavigation<NativeStackNavigationProp<any>>();
       const [loading, setLoading] = useState(false);
       const [data, setData] = useState<any>([]);
       const [clientStatus, setClientStatus] = useState("");
+      const [displayName, setDisplayName] = useState("");
       const [numeroMesa, setNumeroMesa] = useState("");
       const [mesaStatus, setMesaStatus] = useState("");
+      const [estaRechazado, setEstaRechazado] = useState(false);
       const [motivoRechazo, setMotivoRechazo] = useState("");
       const [scanned, setScanned] = useState(false);
       const [openQR, setOpenQR] = useState(false);
@@ -45,6 +45,7 @@ const HomeClienteScreen = () => {
             useCallback(() => {
                getTienePedidos();
                getPedidoConfirmado();
+               getEstaRehazado();
         }, []))
 
       const handleOpenQR = () => {
@@ -92,6 +93,21 @@ const HomeClienteScreen = () => {
          navigation.replace("PedirCuenta");
       }
 
+      const getEstaRehazado = async () => {
+         try{
+            const q = query(collection(db, "userInfo"), where("email", "==", auth.currentUser?.email));
+            const querySnapshot = await getDocs(q);
+            querySnapshot.forEach(async (item) =>{
+               if(item.data().clientStatus == "Rejected")
+               {
+                  setEstaRechazado(true);
+                  return
+               }
+            });
+         }catch(error){console.log("ERROR CHEQUEANDO SI ESTÁ RECHAZADO: "+error)                    
+         }finally{setLoading(false);}
+      }
+
       const getTienePedidos = async () => {
          try{
             const q = query(collection(db, "pedidos"), where("mailCliente", "==", auth.currentUser?.email));
@@ -105,7 +121,6 @@ const HomeClienteScreen = () => {
             });
          }catch(error){console.log("ERROR CHEQUEANDO SI HAY PEDIDOS: "+error)                    
          }finally{setLoading(false);}
-
       }
 
       const getPedidoConfirmado = async () => {
@@ -130,8 +145,6 @@ const HomeClienteScreen = () => {
          const dataSplit = data.split("@");
          const qrType = dataSplit[0];
          const numeroMesa = dataSplit[1];
-         console.log(qrType);
-         console.log(numeroMesa);
          if(qrType === 'mesa'){
             try{
                setLoading(true);
@@ -154,7 +167,6 @@ const HomeClienteScreen = () => {
                         //toast
                         insertarToast("Estás en lista de espera. Espera a que te asignen la mesa.")
                         sendPushNotification( {title:"CLIENTE ESPERANDO MESA", description: "Hay un nuevo cliente en la lista de espera"} );
-
                         //va a la botonera pero solo algunos botones
                         checkClientStatus();
 
@@ -182,7 +194,17 @@ const HomeClienteScreen = () => {
       useFocusEffect(
             useCallback(() => {
                checkClientStatus();
+               checkDisplayName();
          }, []))
+      
+      const checkDisplayName = async () => {
+         
+         setDisplayName(auth.currentUser?.email);
+         if(auth.currentUser?.email === 'anonimo@anonimo.com')
+         {
+            setDisplayName("Anónimo");
+         }
+      }
       
       const checkClientStatus = async () => {
          setLoading(true);
@@ -280,7 +302,7 @@ const HomeClienteScreen = () => {
                               <Text style={styles.buttonOutlineTextRole}>Hablar con el mozo</Text>
                            </TouchableOpacity>
                         :null}
-                        {tienePedidos ? 
+                        {tienePedidos && !estaRechazado ? 
                            <View>
                               <TouchableOpacity
                               onPress={handleJuegos}
@@ -313,8 +335,7 @@ const HomeClienteScreen = () => {
                         >
                            <Text style={styles.buttonText}>Salir</Text>
                         </TouchableOpacity>
-                        <Text style={styles.textHomePequeño}>{auth.currentUser?.email}</Text>        
-                        {/* </View> */}
+                        <Text style={styles.textHomePequeñoCentrado}>{displayName}</Text>        
                   </View>
                </View>  
             }                     

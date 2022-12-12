@@ -11,6 +11,7 @@ import { db, storage } from "../../database/firebase";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import insertarToast from "../../utils/ToastUtil";
 import { cambioPedidoAEnPreparacion } from "../../utils/ManejoEstadosPedidoUtil";
+import { sendPushNotification } from "../../utils/PushNotificationUtil";
 
 
 const GestionEnvioPedidosMozoScreen = () => {
@@ -58,13 +59,11 @@ const GestionEnvioPedidosMozoScreen = () => {
       cambioPedidoAEnPreparacion(idPedido);
       toggleModalCancel();
       getPedidos();
-      //toggleSpinnerAlert();
+      sendPushNotification( {title:"NUEVO PEDIDO", description:"Nuevo pedido para peprarar."});
       setTimeout(() => { insertarToast("Pedido enviado.")}, 4000);      
     } catch (error) { console.log(error) } 
       finally{ setLoading(false);}
   }
-
-
 
   const handleLanzarModal = (id) => {
     try {

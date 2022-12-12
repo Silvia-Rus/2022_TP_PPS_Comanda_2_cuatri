@@ -66,6 +66,7 @@ export const addClienteAnonimo = async (imageValue : string,
         await addDoc(collection(db, coleccionUsers), {   
             name:values.nombre,
             rol:checked,
+            email: "anonimo@anonimo.com",
             image:imageValue,
             clientStatus: "Accepted",
             rejectedReason: "",

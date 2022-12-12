@@ -84,7 +84,7 @@ const LoginScreen = () => {
 
     const loginManager = async (userMail) => {
 
-        const q = query(collection(db, "userInfo"), where("email", "==", userMail));
+        const q = query(collection(db, "userInfo"), where("email", "==", email));
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
             setRol(doc.data().rol);
@@ -96,9 +96,6 @@ const LoginScreen = () => {
                 Toast.LONG, 
                 Toast.CENTER);
         } 
-    
-        // toggleSpinnerAlert();
-        // setLoading(false);
     }; 
 
     useFocusEffect(

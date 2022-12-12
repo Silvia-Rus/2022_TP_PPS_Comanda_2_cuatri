@@ -92,17 +92,18 @@ const ClientManagment = () => {
   }
 
   //MANEJADORES DE ENVIAR CORREO
+
   const handleAcceptEmail = (mail) => {
-    emailjs.send("service_agvubrf","template_9207la9",{
+    emailjs.send("service_zfjb3hf","template_d067oo9",{
       to_name: mail,
-      }, 'B503gv6hA_xtZPpgT');
+      }, 'PYSZY-oSeD8BKlxZJ');
   }
 
   const handleRejectEmail = (mail, reason) => {
-    emailjs.send("service_agvubrf","template_628y1sz",{
+    emailjs.send("service_zfjb3hf","template_45t4rzk",{
       to_name: mail,
       motive: reason,
-      }, 'B503gv6hA_xtZPpgT');
+      },'PYSZY-oSeD8BKlxZJ');
   }
 
   return (

@@ -6,6 +6,7 @@ import ReservaClientesScreen from './screens/ReservaClientesScreen';
 import ReservaDuenioScreen from './screens/ReservaDuenioScreen';
 
 
+import { notificationsConfiguration } from './utils/PushNotificationUtil';
 
 import IndexScreen from './screens/IndexScreen';
 import HomeScreen from './screens/Homes/HomeScreen';
@@ -112,7 +113,8 @@ export default function App() {
 
   const [lottieLoad, setLottieLoad] = React.useState(false);
 
-  useEffect(() => {
+  useEffect(() => { 
+    notificationsConfiguration();
     setTimeout(() => {
       setLottieLoad(true)
     }, 4000);

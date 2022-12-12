@@ -13,6 +13,7 @@ import insertarToast from "../utils/ToastUtil";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import DatePicker from 'react-native-date-picker'
 import { format } from "date-fns";
+import { sendPushNotification } from "../utils/PushNotificationUtil";
 
 
 
@@ -86,14 +87,13 @@ const ReservaClientesScreen = () => {
         });
         }catch(error){console.log("ERROR CHEQUEANDO LOS DATOS DEL CLIENTE: "+error)                    
         }finally{setLoading(false);}
-
     }
 
-    const handlerConfirmarReserva = async () => {
-        
+    const handlerConfirmarReserva = async () => { 
         //addReserva
         AddReserva(idCliente, mailCliente, nombreCliente, apellidoCliente,imageCliente, dateString, horaString);
-        insertarToast("Reserva confirmada el día: "+dateString+" a las "+horaString);
+        insertarToast("Reserva el día: "+dateString+" a las "+horaString);
+        sendPushNotification( {title:"NUEVA RESERVA", description:"Hay una nueva reserva "});
       }
 
       async function handlerSignOut() {

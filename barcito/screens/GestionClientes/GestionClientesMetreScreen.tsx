@@ -33,7 +33,7 @@ const ClientManagment = () => {
 
   //RETURN
   const handleReturn = () => {
-    navigation.replace("HomeDuenio");
+    navigation.replace("HomeMetre");
   }
 
   //REFRESH DE LA DATA
