@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { transparent } from "react-native-paper/lib/typescript/styles/themes/v2/colors";
 
 const primaryColor = '#ffffff';
 const secondaryColor = '#3176bb';
@@ -443,6 +444,42 @@ export default StyleSheet.create({
         borderRadius: 10,
         borderWidth: 2,
     },
+
+     headerTablaStyle: {
+        backgroundColor: lilaClarito,
+        borderColor: ' black',
+        borderWidth: 1,
+        borderBottomColor: 'black',
+
+    },
+
+    filaTablaStyle: {
+        backgroundColor: vainilla,
+        borderColor: '#4d3e6b',
+        borderBottomColor: '#4d3e6b',
+        borderRightColor: '#4d3e6b',
+        //borderRadius: 10,
+        borderWidth: 1,
+        borderRightWidth: 1,
+    },
+
+    textoHeaderStyle: {
+        color: '#4d3e6b',
+        fontWeight: '700',
+        fontSize: 16,
+        borderRightColor: 'black',
+    },
+
+    celdaTablaStyle: {
+        borderRightWidth: 0,
+        borderRightColor: 'black',
+    },
+    
+   containerTabla: {
+     backgroundColor: "transparent",
+     //padding: 15,
+     width: '97%'
+  },
 
     propinaStyle: {
         backgroundColor: '#fcfce2',

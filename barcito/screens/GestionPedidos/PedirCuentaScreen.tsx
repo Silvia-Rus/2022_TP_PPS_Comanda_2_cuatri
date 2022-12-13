@@ -15,6 +15,9 @@ import { BarCodeScanner } from "expo-barcode-scanner";
 import { Camera } from "expo-camera";
 
 import { addCuenta } from "../../utils/AddDocsUtil";
+import { DataTableRow } from "react-native-paper/lib/typescript/components/DataTable/DataTableRow";
+import DataTableCell from "react-native-paper/lib/typescript/components/DataTable/DataTableCell";
+import { DataTable } from "react-native-paper";
 
 
 
@@ -184,7 +187,7 @@ const PedirCuentaScreen = () => {
                 setPrecioTotal(precioTotal); 
                }
             });
-         }catch(error){console.log("ERROR CHEQUEANDO EL TIEMPO DE ELABORACIÓN: "+error)                    
+         }catch(error){console.log("ERROR CHEQUEANDO EL PRECIO DEL PEDIDO: "+error)                    
          }finally{setLoading(false);} 
     }
 
@@ -271,26 +274,36 @@ const PedirCuentaScreen = () => {
                 </TouchableOpacity>
             </View>
 
-            <View style={styles.bodyPedido2}>
-                <ScrollView> 
+            {/* <View style={styles.bodyPedido2}> */}
+                {/* <ScrollView>  */}
                     {/* {dataNumeroConfirmados > 0 ?
                         <Text style={styles.textHomePequeñoCentrado}>Confirmados</Text> 
                     :null} */}
-                    {dataConfirmados.map((item: {nombreProducto: any;
-                                            cantidad: any; 
-                                            precioUnitario: any;                   
-                                            precioTotal: any;
-                                            status: any;}
-                                           ) => (            
-                             <View>
-                                <View>      
-                                    <Text style={styles.tableCellTextCentrado}> {item.nombreProducto}  -  Precio: ${item.precioUnitario}  -  Cantidad: {item.cantidad}  -  ${item.precioTotal} </Text> 
-                                </View>                                           
-                            </View> 
-                    ))}
-                </ScrollView> 
+                    <DataTable style={styles.containerTabla}>
+                        <DataTable.Header style={styles.headerTablaStyle} >
+                                <DataTable.Title style={[[{flex: 2}], styles.celdaTablaStyle]} textStyle={styles.textoHeaderStyle} >PRODUCTO</DataTable.Title>
+                                <DataTable.Title style={styles.celdaTablaStyle} textStyle={styles.textoHeaderStyle}>PRECIO</DataTable.Title>
+                                <DataTable.Title style={styles.celdaTablaStyle}  textStyle={styles.textoHeaderStyle}>CANT. </DataTable.Title>
+                                <DataTable.Title textStyle={styles.textoHeaderStyle}>SUBTOT. </DataTable.Title>
+                        </DataTable.Header>  
+                            {dataConfirmados.map((item: {nombreProducto: any;
+                                                    cantidad: any; 
+                                                    precioUnitario: any;                   
+                                                    precioTotal: any;
+                                                    status: any;}
+                                                ) => (            
+                                    <DataTable.Row  style={styles.filaTablaStyle}>     
+                                            <DataTable.Cell style={[[{flex: 2}], styles.celdaTablaStyle]} textStyle={styles.buttonOutlineTextRole}>{item.nombreProducto}</DataTable.Cell>
+                                            <DataTable.Cell style={styles.celdaTablaStyle} textStyle={styles.buttonOutlineTextRole}>${item.precioUnitario} </DataTable.Cell>
+                                            <DataTable.Cell style={styles.celdaTablaStyle} textStyle={styles.buttonOutlineTextRole}>{item.cantidad} </DataTable.Cell>
+                                            <DataTable.Cell textStyle={styles.buttonOutlineTextRole}>${item.precioTotal} </DataTable.Cell> 
+                                    </DataTable.Row>                                           
+                                
+                            ))}
+                    </DataTable>
+                {/* </ScrollView>  */}
                                
-            </View>
+            {/* </View> */}
             <View style={styles.buttonContainer} >
                 <TouchableOpacity
                         onPress={handleConfirmarLaCuenta}

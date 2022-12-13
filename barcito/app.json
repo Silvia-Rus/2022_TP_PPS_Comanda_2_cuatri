@@ -7,9 +7,9 @@
     "icon": "./assets/LOGOS/cubiertos_cuadrado.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/splash2.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#4d3e6b"
     },
     "updates": {
       "fallbackToCacheTimeout": 0

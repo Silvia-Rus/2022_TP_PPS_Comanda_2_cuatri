@@ -13,6 +13,10 @@ import { getDownloadURL, ref } from 'firebase/storage'
 import insertarToast from "../../utils/ToastUtil";
 import { AddPedido } from "../../utils/AddDocsUtil";
 import { cambioPedidoAConfirmado, cambioPedidoAServido } from "../../utils/ManejoEstadosPedidoUtil";
+import { DataTable } from "react-native-paper";
+import { DataTableHeader } from "react-native-paper/lib/typescript/components/DataTable/DataTableHeader";
+import DataTableCell from "react-native-paper/lib/typescript/components/DataTable/DataTableCell";
+import { DataTableRow } from "react-native-paper/lib/typescript/components/DataTable/DataTableRow";
 
 
 const GestionPedidosClienteScreen = () => {
@@ -57,7 +61,6 @@ const GestionPedidosClienteScreen = () => {
             getTiempoElaboracion();
             getPrecioTotal()                                                                                                                                                                                                                                                                                                    
             getMesa();
-            getTiempoElaboracion();
     }, []))
 
     const getCliente = async () => {
@@ -113,9 +116,10 @@ const GestionPedidosClienteScreen = () => {
             const querySnapshot = await getDocs(q);
             querySnapshot.forEach(async (item) =>{
                const statusPedido = item.data().status;
-               if(statusPedido != "Inactivo" || statusPedido != "Pagando" || statusPedido != "EnMesa")
+               const tiempoElaboracion = Number(item.data().tiempoElaboracionTotal) / Number(item.data().cantidad);
+               if(statusPedido != "Inactivo" && tiempoElaboracion > acumulador)
                {
-                acumulador = acumulador+item.data().tiempoElaboracionTotal;
+                acumulador = tiempoElaboracion;
                 //console.log("nuevoTiempo "+ acumulador);
                 setTiempoElaboracion(acumulador);  
                }
@@ -134,7 +138,7 @@ const GestionPedidosClienteScreen = () => {
             const querySnapshot = await getDocs(q);
             querySnapshot.forEach(async (item) =>{
                const statusPedido = item.data().status;
-               if(statusPedido != "Inactivo" && statusPedido != "Pagando")
+               if(statusPedido != "Inactivo")
                {
                 acumulador = acumulador+item.data().precioTotal;
                 //console.log("nuevoPrecio "+ acumulador);
@@ -252,7 +256,8 @@ const GestionPedidosClienteScreen = () => {
                                         precioTotal: any;
                                         status: any;
                                         id: string}) => ( 
-                        <TouchableOpacity onPress={() => handleLanzarModal(item.id)}> 
+                        <TouchableOpacity onPress={() => handleLanzarModal(item.id)}>
+                         
                         <View style={styles.cardScrollPedidoStyle}>
                             <View>      
                                 <Text style={styles.tableCellTextCentrado}> {item.nombreProducto} -  Cantidad: {item.cantidad} - ${item.precioTotal}. </Text> 
