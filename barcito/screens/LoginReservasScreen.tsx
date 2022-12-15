@@ -209,14 +209,14 @@ const LoginReservasScreen = () => {
                         <Text style={styles.buttonOutlineTextRole}>Cliente registrado</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity
+                    {/* <TouchableOpacity
                         onPress={()=> (
                             promptAsync()
                         )}
                         style={[styles.buttonRole, styles.buttonOutlineRole]}
                     >
                         <Text style={styles.buttonOutlineTextRole}>Acceso con google</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </View>
         </View>
     );

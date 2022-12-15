@@ -120,18 +120,18 @@ const MenuScreen = () => {
             const querySnapshot = await getDocs(q);
             querySnapshot.forEach(async (item) =>{
                const statusPedido = item.data().status;
-               if(statusPedido != "Inactivo" || statusPedido != "Pagando" || statusPedido != "EnMesa")
+               const tiempoElaboracion = Number(item.data().tiempoElaboracionTotal) / Number(item.data().cantidad);
+               if(statusPedido != "Inactivo" && tiempoElaboracion > acumulador)
                {
-                acumulador = acumulador+item.data().tiempoElaboracionTotal;
-                console.log("nuevoTiempo "+ acumulador);
+                acumulador = tiempoElaboracion;
+                //console.log("nuevoTiempo "+ acumulador);
                 setTiempoElaboracion(acumulador);  
                }
             });
          }catch(error){console.log("ERROR CHEQUEANDO EL TIEMPO DE ELABORACIÓN: "+error)                    
          }finally{setLoading(false);}
-
     }
-
+    
     const getPrecioTotal = async () => {
         try{
             setLoading(true);
@@ -148,7 +148,7 @@ const MenuScreen = () => {
                 setPrecioTotal(acumulador);  
                }
             });
-         }catch(error){console.log("ERROR CHEQUEANDO EL TIEMPO DE ELABORACIÓN: "+error)                    
+         }catch(error){console.log("ERROR CHEQUEANDO EL PRECIO: "+error)                    
          }finally{setLoading(false);} 
     }
 

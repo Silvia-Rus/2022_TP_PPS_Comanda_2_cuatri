@@ -12,7 +12,7 @@ import { collection, query, where, getDocs, updateDoc, doc } from "firebase/fire
 import { getDownloadURL, ref } from 'firebase/storage'
 import insertarToast from "../../utils/ToastUtil";
 import { AddPedido } from "../../utils/AddDocsUtil";
-import cambioPedidoAPagado  from "../../utils/ManejoEstadosPedidoUtil";
+import { cambioPedidoAPagado }  from "../../utils/ManejoEstadosPedidoUtil";
 import { cambioClienteMesaAInactivo } from "../../utils/ManejoEstadosClienteMesaUtil";
 import { cambioMesaAFree } from "../../utils/ManejoEstadosMesaUtil";
 import { cambioClienteAPending } from "../../utils/ManejoEstadosClienteUtil";

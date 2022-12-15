@@ -82,7 +82,9 @@ const GestionPedidosComidaBarScreen = () => {
       //toggleSpinnerAlert();
       setTimeout(() => { insertarToast("Pedido enviado.")}, 4000);      
     } catch (error) { console.log(error) } 
-      finally{ setLoading(false);}
+      finally{
+ 
+        setLoading(false);}
   }
 
   const handleLanzarModal = (id) => {

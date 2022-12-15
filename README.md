@@ -47,9 +47,15 @@ Sánchez, Pedro
 | - | Cobrar pedido | Rus |  Hecho | Rama gestión |
 | - | QR propinas | Rus |  Hecho | Rama gestión |
 | - | Encuesta clientes | Rus |  Hecho | Rama Encuestas |
-| - | Generar reservas agendadas | Pedro |  Nueva | Rama gestión |
-| - | Notificaciones push | Pedro |  Nueva | Rama notificaciones |
-| - | Login con red social | Pedro |  Nueva | Rama login |
+
+
+### BARCITO - SEMANA 5
+
+| # | Tarea | Responsable | Estado | Rama |
+| :------: | :------: | :------: | :------: | :------: |
+| - | Generar reservas agendadas | Rus |  Hecho | Rama gestión |
+| - | Notificaciones push | Rus |  Hecho | Rama notificaciones |
+| - | Login con red social | Rus |  Hecho | Rama login |
 
 
 

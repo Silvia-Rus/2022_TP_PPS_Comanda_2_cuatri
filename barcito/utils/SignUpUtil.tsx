@@ -193,6 +193,8 @@ const SignUp = (rol : string) => {
                 else if(rol === 'clienteAnonimo'){
                     console.log("crea el cliente anonimo?");
                     addClienteAnonimo(imageValue, values, checked)
+                    sendPushNotification( {title:"NUEVO CLIENTE", description:"Aceptar-Rechazar"});
+
                 }
                 insertarToast("Usuario creado exitosamente");    
                 reset();

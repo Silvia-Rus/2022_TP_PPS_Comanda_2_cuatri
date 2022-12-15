@@ -19,7 +19,6 @@ import { parseJSON } from "date-fns/esm";
 export let admin = false;
 WebBrowser.maybeCompleteAuthSession(); 
 
-
 const LoginScreen = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -45,6 +44,7 @@ const LoginScreen = () => {
             setAccessToken(response.authentication.accessToken);
             accessToken && fetchUserInfo();
         }
+
     }, [response, accessToken])
 
     async function fetchUserInfo() {
@@ -55,12 +55,10 @@ const LoginScreen = () => {
         setUser(useInfo);
         await signInWithEmailAndPassword(auth, useInfo.email, "123456")
             .then((userCredential: { user: any; }) => {
-                console.log("llega aqui");
                 const user = userCredential.user;
                 loginManager(auth.currentUser?.email) 
                 Redireccionador(rol);
-                //navigation.replace('Home');
-                setLoading(false)
+                setLoading(false)      
             })
             .catch(error => {
                 switch (error.code) {
@@ -78,24 +76,19 @@ const LoginScreen = () => {
             }).finally(() => { setLoading(false) });
     }
 
-    //const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
     const navigation = useNavigation<NativeStackNavigationProp<any>>();
-
-
     const loginManager = async (userMail) => {
-
-        const q = query(collection(db, "userInfo"), where("email", "==", email));
+        setLoading(true);
+        const q = query(collection(db, "userInfo"), where("email", "==", userMail));
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
             setRol(doc.data().rol);
         });
                 
         if(querySnapshot.size  == 0){
-            Toast.showWithGravity(
-                "USUARIO NO ENCONTRADO",
-                Toast.LONG, 
-                Toast.CENTER);
+           insertarToast("USUARIO NO ENCONTRADO");
         } 
+        setLoading(false);
     }; 
 
     useFocusEffect(
@@ -106,9 +99,12 @@ const LoginScreen = () => {
     
     const Redireccionador = (rol) => {
 
+       
         if(rol === 'Dueño' || rol === 'Supervisor')
         {
+            setLoading(true);
             navigation.replace("HomeDuenio");
+            setLoading(false);
         }
         else if(rol === 'Mozo')
         {
@@ -178,9 +174,8 @@ const LoginScreen = () => {
     // }
 
     const cocinaBarLogin = () => {
-        //setEmail("cocinero@barcito.com");
-        setEmail("bartender@barcito.com");
-
+        setEmail("cocinero@barcito.com");
+        //setEmail("bartender@barcito.com");
         setPassword("123456");
         admin = false;
     }
@@ -199,7 +194,7 @@ const LoginScreen = () => {
 
     const clienteAnonimoLogin = () => {
         //setEmail("empleado@rus.com");
-        setEmail("silviarus.biblio@gmail.com");
+        setEmail("anonimo@anonimo.com");
         setPassword("123456");
         admin = false;
     }
@@ -274,7 +269,7 @@ const LoginScreen = () => {
                             onPress={handlerBack}
                             style={[styles.buttonLogin, styles.buttonOutlineLogin]}
                         >
-                            <Text style={styles.buttonOutlineText}>Volverr</Text>
+                            <Text style={styles.buttonOutlineText}>Volver</Text>
                         </TouchableOpacity>
                     </View>
 

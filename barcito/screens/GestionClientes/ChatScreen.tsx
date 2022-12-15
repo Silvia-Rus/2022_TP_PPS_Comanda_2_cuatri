@@ -44,7 +44,7 @@ const ChatScreen = () => {
                 const nameAux = doc.data().name;
                 if(rolAux == 'Mozo')
                 {
-                  setNombre('Mozo ('+nameAux+')');
+                  setNombre('Mozo');
                 }
                 else if(rolAux == "clienteRegistrado" || rolAux == "clienteAnonimo")
                 {

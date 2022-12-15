@@ -22,7 +22,7 @@ import { auth, db } from "../../database/firebase";
 //IMPORTS DEL FORM
 import Slider from "@react-native-community/slider";
 import { RadioButton } from "react-native-paper";
-//import { Picker } from "@react-native-picker/picker";
+import { Picker } from "@react-native-picker/picker";
 import Checkbox from "expo-checkbox";
 
 import insertarToast from "../../utils/ToastUtil";
@@ -268,7 +268,7 @@ const EncuestaClienteScreen = () => {
               <View style={[styles.buttonRole, styles.buttonOutlineRole]}>
                 <Text style={styles.buttonOutlineTextRole}>PRESENTACION / CALIDAD DE LA COMIDA</Text>
               </View>
-              {/* <View style={styles.pickerButtonLayout}>
+              <View style={styles.pickerButtonLayout}>
                 <Picker
                   style={styles.defaultPicker}
                   selectedValue={foodQuality}
@@ -293,7 +293,7 @@ const EncuestaClienteScreen = () => {
                     value="mala"
                   />
                 </Picker>
-              </View> */}
+              </View>
               <View style={[styles.buttonRole, styles.buttonOutlineRole]}>
                 <Text style={styles.buttonOutlineTextRole}>¿QUÉ REPRESENTA MEJOR SU EXPERIENCIA?</Text>
               </View>
