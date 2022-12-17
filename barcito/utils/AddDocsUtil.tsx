@@ -151,7 +151,7 @@ export const addClienteMesa = async (idCliente : string,
             idCliente: idCliente,
             mailCliente: mailCliente,
             idMesa: idMesa,
-            status: estado ,
+            status: estado,
             creationDate:new Date()          
         });  
     }
@@ -253,6 +253,8 @@ export const AddReserva = async (idCliente, mailCliente, nombreCliente, apellido
             fechaReserva: fechaReserva,
             imageCliente: imageCliente,
             horaReserva: horaReserva,
+            idMesa: "",
+            numeroMesa: "",
             status: "activa",
             creationDate: new Date(),
         });  
