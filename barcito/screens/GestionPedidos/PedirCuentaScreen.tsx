@@ -194,10 +194,14 @@ const PedirCuentaScreen = () => {
     const getMesa = async () => {
         try{
             setLoading(true);
-            const q = query(collection(db, "clienteMesa"), where("mailCliente", "==", auth.currentUser?.email), where("status", "==", "Asignada"));
+            const q = query(collection(db, "clienteMesa"), where("mailCliente", "==", auth.currentUser?.email));
             const querySnapshot = await getDocs(q);
             querySnapshot.forEach(async (item) =>{
-               setMesa(item.data().idMesa);       
+               const statusAux = item.data().status;
+               if(statusAux == "Asignada" || statusAux == "Encuestada")
+               {
+                setMesa(item.data().idMesa);       
+               }
             });
          }catch(error){console.log("ERROR CHEQUEANDO EL ID DE LA MESA: "+error)                    
          }finally{setLoading(false);}

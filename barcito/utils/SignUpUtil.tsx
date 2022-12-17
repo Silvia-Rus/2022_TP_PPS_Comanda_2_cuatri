@@ -19,8 +19,6 @@ import CargarImagen from "./CargarImagenUtil";
 import ValidacionCamposUsuario from "./ValidacionCamposUsuariosUtil"
 import { sendPushNotification } from "./PushNotificationUtil";
 
-
-
 const SignUp = (rol : string) => {
 
     // console.log("estoy en el útil!!");
@@ -191,9 +189,9 @@ const SignUp = (rol : string) => {
                     sendPushNotification( {title:"NUEVO CLIENTE", description:"Aceptar-Rechazar"});
                 }
                 else if(rol === 'clienteAnonimo'){
-                    console.log("crea el cliente anonimo?");
+                    console.log("crea el cliente anonimooooo?");
                     addClienteAnonimo(imageValue, values, checked)
-                    sendPushNotification( {title:"NUEVO CLIENTE", description:"Aceptar-Rechazar"});
+                    //sendPushNotification( {title:"NUEVO CLIENTE", description:"Aceptar-Rechazar"});
 
                 }
                 insertarToast("Usuario creado exitosamente");    

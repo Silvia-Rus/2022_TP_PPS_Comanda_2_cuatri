@@ -12,12 +12,15 @@ import { collection, query, where, getDocs, updateDoc, doc } from "firebase/fire
 import { getDownloadURL, ref } from 'firebase/storage'
 import { format } from 'date-fns'
 import insertarToast from "../../utils/ToastUtil";
-import { cambioClienteASentado, cambioClienteARejected, cambioClienteAAccepted } from "../../utils/ManejoEstadosClienteUtil";
+import { cambioClienteASentado, cambioClienteARejected, cambioClienteAAccepted, cambioClienteAWaiting } from "../../utils/ManejoEstadosClienteUtil";
 import { cambioClienteMesaAAsignada } from "../../utils/ManejoEstadosClienteMesaUtil";
+import { addClienteMesa } from "../../utils/AddDocsUtil";
+import { cambioMesaAOcupada } from "../../utils/ManejoEstadosMesaUtil";
+import { sendPushNotification } from "../../utils/PushNotificationUtil";
 
 
 
-const ClientManagment = () => {
+const GestionClientesMetreScreen = () => {
 
   //CONSTANTES
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
@@ -25,7 +28,10 @@ const ClientManagment = () => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<any>([]);
   const [rejectMotive, setRejectMotive] = useState('');
-  const [rejectId, setRejectId] = useState('');
+  const [idCliente, setIdCliente] = useState('');
+  const [mailCliente, setMailCliente] = useState('');
+  const [idMesa, setIdMesa] = useState('');
+  const [numeroMesa, setNumeroMesa] = useState('');
 
   const confirmIcon = require("../../assets/confirm.png");
   const cancelIcon = require("../../assets/cancel.png");
@@ -64,47 +70,64 @@ const ClientManagment = () => {
   }
 
   //Asigna la mesa
-  const handleConfirm = async (id) => {
+  const handleConfirm = async (id, mail) => {
     try {
       setLoading(true);
-      cambioClienteASentado(id);
-      //buscar el id del ClienteMesa
-      const query1 = query(collection(db, "clienteMesa"), where("idCliente", "==", id), where("status", "==", "enEspera"));
-      const querySnapshot1 = await getDocs(query1);
-      querySnapshot1.forEach(async (doc) => {
-        const idMesaAux = doc.id;
-        //modificar el estado
-        cambioClienteMesaAAsignada(idMesaAux);
-        getDocuments();
-        insertarToast("Mesa asignada");
-      });
+      toggleModalCancel();
+      setIdCliente(id);
+      setMailCliente(mail);
+      getDocuments();
+
     } catch (error) { console.log(error) } 
       finally{ setLoading(false); }
   } 
 
   const handleCancel = async (id) => {
-    setRejectId(id);
     toggleModalCancel();      
   }
-  
-  const completeReject = async (mail) => {
-    try {
+
+  const completeConfirmacion = async () => {
+    try{
       setLoading(true);
-      cambioClienteARejected(rejectId, rejectMotive);
-      toggleModalCancel();
-      getDocuments();
-      //toggleSpinnerAlert();
-      setTimeout(() => { insertarToast("Cliente rechazado.")}, 4000);      
-    } catch (error) { console.log(error) } 
-      finally{ setLoading(false);}
-  }
+      const q = query(collection(db, "tableInfo"), where("tableNumber", "==", numeroMesa));
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach(async (item) =>{
+         const statusMesaAux = item.data().status;
+         const q2 = query(collection(db, "userInfo"), where("email", "==", mailCliente));
+         const querySnapshot2 = await getDocs(q2);
+         querySnapshot2.forEach(async (item2) =>{
+            const idClienteAux = item2.id;
+            if(statusMesaAux === 'free'){
+               //SI ESTÁ LIBRE LA MESA
+               //meterlo en la lista de espera
+               addClienteMesa(idClienteAux, mailCliente, numeroMesa, "Asignada");
+               //cambiar el status de la mesa a ocupada
+               cambioMesaAOcupada(item.id);
+               //cambiar el status del cliente
+               cambioClienteASentado(idClienteAux);
+               //toast
+               insertarToast("Mesa asignada.")
+               getDocuments();
+               toggleModalCancel();
+            }
+            else{
+               //NO ESTÁ LIBRE LA MESA
+               insertarToast("Esta mesa no está libre. Elija otra.")
+            }
+         })
+      });
+
+   }catch(error){console.log("ERROR CHEQUEANDO ESTATUS DE LA MESA: "+error)                    
+   }finally{setLoading(false);}
+}
+  
 
   return (
     <View style={styles.container} >
         {loading?
           <View style={styles.spinContainer}><Spinner/></View>
         : null}
-          <View style={styles.buttonContainerArriba} >
+        <View style={styles.buttonContainerArriba} >
           <Text style={styles.textHomePequeño}>Lista de espera</Text> 
           <View style={styles.buttonContainer} >
                       <TouchableOpacity
@@ -127,7 +150,7 @@ const ClientManagment = () => {
               <View style={styles.cardStyle}>
                 <View style={styles.imageIconContainer}>
                   <Image style={styles.cardImage} resizeMode="cover" source={{ uri: item.imageUrl }} />
-                  <TouchableOpacity onPress={() => handleConfirm(item.id)}>
+                  <TouchableOpacity onPress={() => handleConfirm(item.id, item.email)}>
                       <Image source={confirmIcon} style={styles.cardIcon} />
                   </TouchableOpacity>
                   <TouchableOpacity onPress={() => handleCancel(item.id)}>
@@ -157,21 +180,22 @@ const ClientManagment = () => {
                       <View style={styles.modalBody}>
                         <View style={styles.inputField}>
                           <TextInput
-                            placeholder= "Motivo de Rechazo"
+                            placeholder= "Mesa"
                             placeholderTextColor="white"
                             multiline
                             numberOfLines={4}
+                            keyboardType={'numeric'}
                             style={styles.inputText}
-                            onChangeText={(text) => setRejectMotive(text)}
+                            onChangeText={(text) => setNumeroMesa(text)}
                             secureTextEntry = {true}
                           />
                         </View>
                         <View style={styles.buttonContainer} >
                           <TouchableOpacity
-                            onPress={() => completeReject(item.email)}
+                            onPress={() => completeConfirmacion()}
                             style={[styles.buttonRole, styles.buttonOutlineRole]}
                           >
-                            <Text style={styles.buttonOutlineTextRole}>Rechazar</Text>
+                            <Text style={styles.buttonOutlineTextRole}>Asignar mesa</Text>
                           </TouchableOpacity>
                           <TouchableOpacity
                               onPress={toggleModalCancel}
@@ -197,5 +221,5 @@ const ClientManagment = () => {
   );
 };
 
-export default ClientManagment;
+export default GestionClientesMetreScreen;
 

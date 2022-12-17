@@ -173,10 +173,17 @@ const LoginScreen = () => {
     //     admin = true;
     // }
 
-    const cocinaBarLogin = () => {
+    const barLogin = () => {
+        //setEmail("cocinero@barcito.com");
+        setEmail("bartender@barcito.com");
+        setPassword("123456"); 
+        admin = false;
+    }
+
+    const cocinaLogin = () => {
         setEmail("cocinero@barcito.com");
         //setEmail("bartender@barcito.com");
-        setPassword("123456");
+        setPassword("123456"); 
         admin = false;
     }
 
@@ -246,13 +253,13 @@ const LoginScreen = () => {
                         <TextInput placeholder="Correo electrónico"
                             value={email}
                             onChangeText={text => setEmail(text)}
-                            style={styles.input}
+                            style={styles.input2}
                         />
 
                         <TextInput placeholder="Contraseña"
                             value={password}
                             onChangeText={text => setPassword(text)}
-                            style={styles.input}
+                            style={styles.input2}
                             secureTextEntry
                         />
                     </View>
@@ -260,14 +267,14 @@ const LoginScreen = () => {
                     <View style={styles.buttonContainer} >
                         <TouchableOpacity
                             onPress={handlerLogin}
-                            style={styles.buttonLogin}
+                            style={styles.buttonLogin2}
                         >
                             <Text style={styles.buttonText}>Iniciar Sesión</Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity
                             onPress={handlerBack}
-                            style={[styles.buttonLogin, styles.buttonOutlineLogin]}
+                            style={[styles.buttonLogin2, styles.buttonOutlineLogin]}
                         >
                             <Text style={styles.buttonOutlineText}>Volver</Text>
                         </TouchableOpacity>
@@ -281,11 +288,18 @@ const LoginScreen = () => {
                             <Text style={styles.buttonOutlineTextRole}>Dueño</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            onPress={cocinaBarLogin}
+                            onPress={barLogin}
                             style={[styles.buttonRole, styles.buttonOutlineRole]}
                         >
-                            <Text style={styles.buttonOutlineTextRole}>Cocina / Bar</Text>
+                            <Text style={styles.buttonOutlineTextRole}>Bar</Text>
                         </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={cocinaLogin}
+                            style={[styles.buttonRole, styles.buttonOutlineRole]}
+                        >
+                            <Text style={styles.buttonOutlineTextRole}>Cocina</Text>
+                        </TouchableOpacity>
+                        
                         <TouchableOpacity
                             onPress={metreLogin}
                             style={[styles.buttonRole, styles.buttonOutlineRole]}

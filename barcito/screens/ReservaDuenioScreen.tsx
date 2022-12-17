@@ -16,7 +16,7 @@ import insertarToast from "../utils/ToastUtil";
 import { cambioReservaAceptada, cambioReservaARechazada  } from "../utils/ManejoEstadosReservaUtil";
 import { cambioClienteAAccepted, cambioClienteASentado } from "../utils/ManejoEstadosClienteUtil";
 import { addClienteMesa } from "../utils/AddDocsUtil";
-import { cambioMesaAOcupada } from "../utils/ManejoEstadosMesaUtil";
+import { cambioMesaAOcupada, cambioMesaAReservada } from "../utils/ManejoEstadosMesaUtil";
 
 
 
@@ -91,19 +91,12 @@ const ClientManagment = () => {
       const q4 = query(collection(db, "tableInfo"), where("tableNumber", "==", idMesa));
       const querySnapshot4 = await getDocs(q4);
       querySnapshot4.forEach(async (doc) => {
-        if(doc.data().status == 'free')
-        {           
-            cambioReservaAceptada(reservaId); 
-            cambioClienteASentado(clienteId); 
-            cambioMesaAOcupada(doc.id); 
-            addClienteMesa(clienteId, clienteMail, idMesa, "Asignada"); 
+          
+            cambioReservaAceptada(reservaId, doc.id, doc.data().tableNumber); 
+            cambioMesaAReservada(doc.id); 
             insertarToast("Reserva aceptada");
             toggleModalCancel();
-        }
-        else
-        {
-            insertarToast("Esta mesa está ocupada");
-        }
+
       });
   
       getDocuments();

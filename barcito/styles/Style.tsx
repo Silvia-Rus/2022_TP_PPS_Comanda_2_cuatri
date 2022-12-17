@@ -53,12 +53,24 @@ export default StyleSheet.create({
         width: '80%',
         marginTop: 10,
     },
+
     input: {
         backgroundColor: primaryColor,
         paddingHorizontal: 15,
         paddingVertical: 10,
         borderRadius: buttonBorderRadiusImput,
         borderColor: '#4d3e6b',
+        borderWidth: 5,
+        marginTop: '5%',
+    },
+
+    input2: {
+        backgroundColor: primaryColor,
+        paddingHorizontal: 15,
+        paddingVertical: 10,
+        borderRadius: buttonBorderRadiusImput,
+        borderColor: '#4d3e6b',
+        height: 40,
         borderWidth: 5,
         marginTop: '5%',
     },
@@ -104,6 +116,16 @@ export default StyleSheet.create({
     buttonLogin: {
         backgroundColor: '#4d3e6b',
         width: '100%',
+        padding: 20,
+        borderRadius: buttonBorderRadiusImput,
+        alignItems: 'center',
+        
+    },
+
+    buttonLogin2: {
+        backgroundColor: '#4d3e6b',
+        width: '100%',
+        
         padding: 20,
         borderRadius: buttonBorderRadiusImput,
         alignItems: 'center',
@@ -419,7 +441,7 @@ export default StyleSheet.create({
     cardScrollPedidoStyle: {
         backgroundColor: '#81749c',
         borderColor: '#DCDCE1',
-        height: 45,
+        height: 65,
         margin: 10,
         marginBottom: 2,
         borderRadius: 10,

@@ -4,7 +4,7 @@ import LoginScreen from './screens/LoginScreen';
 import LoginReservasScreen from './screens/LoginReservasScreen';
 import ReservaClientesScreen from './screens/ReservaClientesScreen';
 import ReservaDuenioScreen from './screens/ReservaDuenioScreen';
-
+import HomeClienteQRReservasScreen from './screens/Homes/HomeClienteQRReservasScreen';
 
 import { notificationsConfiguration } from './utils/PushNotificationUtil';
 
@@ -85,6 +85,7 @@ export type RootStackParamList = {
   HomeMozo: any;
   HomeCliente: any;
   HomeClienteEspera: any;
+  HomeClienteQRReservas: any;
   GestionClienteDuenio: any;
   EnConstruccionCocinaBar: any;
   Chat: any;
@@ -160,6 +161,7 @@ export default function App() {
        <Stack.Screen options={{ headerShown: false }} name="HomeMozo" component={HomeMozoScreen} />
        <Stack.Screen options={{ headerShown: false }} name="HomeCliente" component={HomeClienteScreen} />
        <Stack.Screen options={{ headerShown: false }} name="HomeClienteEspera" component={HomeClienteEsperaScreen} />
+       <Stack.Screen options={{ headerShown: false }} name="HomeClienteQRReservas" component={HomeClienteQRReservasScreen} />
        <Stack.Screen options={{ headerShown: true }} name="Chat" component={ChatScreen} />
        <Stack.Screen options={{ headerShown: false }} name="EncuestaCliente" component={EncuestaClienteScreen} />
        <Stack.Screen options={{ headerShown: false }} name="EstadisticasEncuestaCliente" component={EstadisticasEncuestaClienteScreen} />
@@ -170,7 +172,7 @@ export default function App() {
        <Stack.Screen options={{ headerShown: false }} name="GestionServirPedidosMozo" component={GestionServirPedidosMozoScreen} />
        <Stack.Screen options={{ headerShown: false }} name="GestionPedidosCliente" component={GestionPedidosClienteScreen} />
        <Stack.Screen options={{ headerShown: false }} name="GestionCobrarCuentaMozo" component={GestionCobrarCuentaMozoScreen} />
-
+      
        <Stack.Screen options={{ headerShown: false }} name="GestionPedidosComidaBar" component={GestionPedidosComidaBarScreen} />
        <Stack.Screen options={{ headerShown: false }} name="PedirCuenta" component={PedirCuentaScreen} />
        <Stack.Screen options={{ headerShown: false }} name="GestionPedidosBebidaBar" component={GestionPedidosBebidaBarScreen} />

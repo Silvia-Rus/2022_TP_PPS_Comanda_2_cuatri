@@ -153,8 +153,10 @@ const GestionCobrarCuentaMozoScreen = () => {
                         <TouchableOpacity onPress={() => handleLanzarModal(item.id, item.mailCliente, item.idMesa)}> 
                             <View style={styles.cardScrollPedidoStyle}>
                                 <View>      
-                                    <Text style={styles.tableCellTextCentrado}> Mesa: {item.idMesa} -  Cliente: {item.mailCliente} </Text> 
-                                    <Text style={styles.tableCellTextCentrado}>  Precio pedido ${item.pedido} - Propina ${item.propina} - Total ${item.total} </Text> 
+                                    <Text style={styles.tableCellTextCentrado}> Mesa: {item.idMesa} </Text> 
+                                    <Text style={styles.tableCellTextCentrado}> Pedido ${item.pedido} - Propina ${item.propina}  </Text> 
+                                    <Text style={styles.tableCellTextCentrado}> Total ${item.total} </Text> 
+
                                 </View>                                           
                             </View>
                         </TouchableOpacity>                     

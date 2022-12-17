@@ -14,7 +14,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import DatePicker from 'react-native-date-picker'
 import { format } from "date-fns";
 import { sendPushNotification } from "../utils/PushNotificationUtil";
-
+import moment from 'moment';
 
 
 const ReservaClientesScreen = () => {
@@ -90,10 +90,25 @@ const ReservaClientesScreen = () => {
     }
 
     const handlerConfirmarReserva = async () => { 
-        //addReserva
-        AddReserva(idCliente, mailCliente, nombreCliente, apellidoCliente,imageCliente, dateString, horaString);
-        insertarToast("Reserva el día: "+dateString+" a las "+horaString);
-        sendPushNotification( {title:"NUEVA RESERVA", description:"Hay una nueva reserva "});
+        
+        const diaReserva = dateString;
+        const horaReserva = horaString;
+        const ahora = moment();
+        const reserva = moment(diaReserva+" "+horaReserva, 'DD-MM-YYYY hh:mmA');
+        const diferencia= ahora.diff(reserva, 'minutes');
+        console.log("diferencia reserva "+diferencia);
+
+        if(diferencia >  0)
+        {
+            insertarToast("Elija una hora posterior a la actual.")
+        }
+        else
+        {
+            AddReserva(idCliente, mailCliente, nombreCliente, apellidoCliente,imageCliente, dateString, horaString);
+            insertarToast("Reserva el día: "+dateString+" a las "+horaString);
+            sendPushNotification( {title:"NUEVA RESERVA", description:"Hay una nueva reserva "});
+        } 
+      
       }
 
       async function handlerSignOut() {
@@ -148,7 +163,7 @@ const ReservaClientesScreen = () => {
                         <DateTimePicker
                         mode = 'time'
                         value={hora}
-                        minuteInterval={30}
+                        minuteInterval={5}
                         onChange={onChangeHora}
                         />
                      </View>

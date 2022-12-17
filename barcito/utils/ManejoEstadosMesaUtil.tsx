@@ -19,3 +19,7 @@ export const cambioMesaAFree = (id) => {
     cambioEstadoMesa(id, 'free');
 }
 
+export const cambioMesaAReservada = (id) => {
+    cambioEstadoMesa(id, 'reservada');
+}
+

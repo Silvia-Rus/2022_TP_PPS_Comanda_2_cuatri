@@ -1,10 +1,10 @@
 # 2022_TP_PPS_Comanda_2_cuatri
-El barcito de Pedro y Rus.
+Barcito
 
 ### INTEGRANTES:
 
 Rus Mata, Silvia
-Sánchez, Pedro
+
 
 ## CRONOGRAMA
 
@@ -48,9 +48,7 @@ Sánchez, Pedro
 | - | QR propinas | Rus |  Hecho | Rama gestión |
 | - | Encuesta clientes | Rus |  Hecho | Rama Encuestas |
 
-
 ### BARCITO - SEMANA 5
-
 | # | Tarea | Responsable | Estado | Rama |
 | :------: | :------: | :------: | :------: | :------: |
 | - | Generar reservas agendadas | Rus |  Hecho | Rama gestión |
